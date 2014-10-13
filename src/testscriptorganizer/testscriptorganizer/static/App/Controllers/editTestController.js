@@ -1,7 +1,7 @@
 ﻿function editTestController($scope, testService, testStepService, $modal, $routeParams) {
     $scope.loadTest = function () {
         if ($routeParams.testId == 0) {
-            testService.save({ Id: 0, Name: '', TestSuiteId: $routeParams.testSuiteId })
+            testService.save({ id: 0, name: 'Test 0', testSuite: $routeParams.testSuiteId })
                 .$promise.then(
                     function (value) {
                         $scope.test = value;

@@ -10,7 +10,7 @@ Search:
 
 Order By:
 <select ng-model="orderProp">
-  <option value="name">Alphabetical</option>
+  <option value="name">Name</option>
 </select>
 </div>
 <br />
@@ -19,12 +19,12 @@ Order By:
 <table class="table table-striped table-condensed table-bordered">
     <tr ng-repeat="test in tests | filter:query | orderBy:orderProp">
       <td><a href="#/edittest/{{test.id}}">{{test.name}}</a></td>
-       <td><button tsoclick="createTestSession/{{test.id}}">Start Test</button></td>
-      <td><button ng-click="edit(test.id)">Edit</button></td>
-      <td><button ng-click="delete(test.id)">Delete</button></td>
+       <td><button tsoclick="createTestSession/{{test.id}}" class="btn btn-warning">Start Test</button></td>
+      <td><button class="btn btn-primary" ng-click="edit(test.id)">Edit</button></td>
+      <td><button class="btn btn-danger" ng-click="delete(test.id)">Delete</button></td>
     </tr>
 </table>
 
-<button class="btn" tsoclick="addtest/0/{{testSuiteId}}">Add a Test</button>
+<button class="btn btn-primary" tsoclick="addtest/0/{{testSuiteId}}">Add a Test</button>
         </div>
     </div>

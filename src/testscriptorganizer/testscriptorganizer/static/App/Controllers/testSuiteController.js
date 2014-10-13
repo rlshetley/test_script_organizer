@@ -32,26 +32,8 @@
         });
     };
 
-    $scope.edit = function (testSuite) {
-        var modalInstance = $modal.open({
-            templateUrl: 'static/App/Views/TestSuiteModalDialog.html',
-            controller: modalTestSuiteController,
-            resolve:
-            {
-                testSuite: function () {
-                    return testSuite;
-                },
-                title: function () {
-                    return "Edit Test Suite";
-                }
-            }
-        });
-
-        modalInstance.result.then(function (data) {
-            testSuiteService.update(data);
-        },
-        function () {
-        });
+    $scope.saveTestSuite = function (testSuite) {
+        testSuiteService.update(testSuite);
     };
 
     $scope.remove = function (id) {

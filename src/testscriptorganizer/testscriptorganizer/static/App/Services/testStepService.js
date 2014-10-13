@@ -6,6 +6,6 @@
             {},
             {
                 update: { method: 'PUT', isArray: false },
-                getByTest: { method: 'GET', url: 'api/teststeps/bytest', isArray: true }
+                getByTest: { method: 'GET', url: 'api/teststepsbytest', isArray: true }
             });
     });

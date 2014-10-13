@@ -1,6 +1,6 @@
-﻿function createTestSessionController($scope, testService, testSessionService, testEventService, $routeParams, $location) {
+﻿function createTestSessionController($scope, testService, testSessionService, testEventService, testEventResultsService, $routeParams, $location) {
     $scope.loadTest = function () {
-        testService.get({ Id: $scope.testId })
+        testService.get({ id: $scope.testId })
             .$promise.then(function (value) {
                 $scope.test = value;
             });
@@ -9,8 +9,8 @@
     $scope.startTest = function () {
         var now = moment();
 
-        $scope.testSession.Id = 0;
-        $scope.testSession.testId = $scope.testId;
+        $scope.testSession.id = 0;
+        $scope.testSession.test = $scope.testId;
         $scope.testSession.startDate = now.toJSON();
         $scope.testSession.finishDate = now.toJSON();
 
@@ -19,9 +19,9 @@
                 function (value) {
                     $scope.testSession = value;
 
-                    if ($scope.testEventId)
+                    if ($scope.testEvent)
                     {
-                        testEventService.addSession({ testEventId: $scope.testEventId, sessionId: value.id });
+                        testEventResultsService.save({ testEvent: $scope.testEventId, testSession: value.id });
                     }
 
                     $scope.loadFirstTest();

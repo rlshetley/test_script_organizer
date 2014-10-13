@@ -11,7 +11,7 @@
             <input ng-model="query">
             Order By:
             <select ng-model="orderProp">
-                <option value="name">Alphabetical</option>
+                <option value="name">Name</option>
             </select>
         </div>
         <br />
@@ -21,10 +21,9 @@
                     <td>Project Name</td>
                     <td></td>
                     <td></td>
-                    <td></td>
                 </tr>
             </thead>
-            <tr ng-repeat="project in projects | filter:query | orderBy:orderProp">
+            <tr ng-repeat="project in projects | filter:query | orderBy:orderProp | offset: currentPage*itemsPerPage | limitTo: itemsPerPage">
                 <td>
                     <span editable-text="project.name" e-name="name" e-form="rowform">
                         <a href="#/testSuites/{{project.id}}">{{project.name}}</a>
@@ -49,6 +48,20 @@
                     </div>
                 </td>
             </tr>
+            <tfoot>
+                <tr>
+                  <td colspan="3">
+                    <div class="pagination">
+                        <span>Page {{currentPage + 1}} of {{ pageCount() }}</span>
+
+                        <a href ng-click="prevPage()">« Prev</a>
+
+                          <a href ng-click="nextPage()">Next »</a>
+
+                    </div>
+                  </td>
+                </tr>
+            </tfoot>
         </table>
         <button class="btn btn-primary" ng-click="add()">
             Add a Project

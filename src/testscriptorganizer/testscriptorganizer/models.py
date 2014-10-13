@@ -38,13 +38,8 @@ class TestEvent(models.Model):
     name = models.CharField(max_length=255) 
     date = models.DateTimeField()
     testSuite = models.ForeignKey(TestSuite)
+    project = models.ForeignKey(Project)
 
 class TestEventResult(models.Model):
     testSession = models.ForeignKey(TestSession)
     testEvent = models.ForeignKey(TestEvent) 
-    
-class User(models.Model):
-    userName = models.CharField(max_length=25) 
-    firstName = models.CharField(max_length=50) 
-    lastName = models.CharField(max_length=50) 
-    email = models.CharField(max_length=100) 

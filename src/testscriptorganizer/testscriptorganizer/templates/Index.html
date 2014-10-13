@@ -1,25 +1,27 @@
 ﻿<!DOCTYPE html>
-<html  ng-app="tso" xmlns="http://www.w3.org/1999/xhtml">
+<html ng-app="tso" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Test Script Organizer</title>
-    <script src="{{ STATIC_URL }}Scripts/jquery-2.1.1.min.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/jquery-ui-1.10.4.min.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/bootstrap.min.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/angular.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/angular-resource.min.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/angular-route.min.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/angular-cookies.min.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/angular-ui/ui-bootstrap.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/angular-ui/ui-bootstrap-tpls.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/ng-grid.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/moment.min.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/q.min.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}Scripts/angular-xeditable/js/xeditable.min.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}App/app.js"  type="text/javascript"></script>
+    <!-- bower:js -->
+    <script src="../static/scripts/jquery/jquery.js"></script>
+    <script src="../static/scripts/angular/angular.js"></script>
+    <script src="../static/scripts/angular-xeditable/dist/js/xeditable.js"></script>
+    <script src="../static/scripts/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../static/scripts/angular-route/angular-route.js"></script>
+    <script src="../static/scripts/angular-cookies/angular-cookies.js"></script>
+    <script src="../static/scripts/angular-resource/angular-resource.js"></script>
+    <script src="../static/scripts/moment/moment.js"></script>
+    <script src="../static/scripts/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <!-- endbower -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../static/scripts/angular-xeditable/dist/css/xeditable.css" />
+    <link rel="stylesheet" href="../static/scripts/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <script src="{{ STATIC_URL }}App/app.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}App/config.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}App/directives.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}App/Services/projectService.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}App/Services/testService.js" type="text/javascript"></script> 
+    <script src="{{ STATIC_URL }}App/Services/testService.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}App/Services/testStepService.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}App/Services/testSessionService.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}App/Services/testResultService.js" type="text/javascript"></script>
@@ -47,28 +49,26 @@
     <script src="{{ STATIC_URL }}App/Controllers/logoutController.js"></script>
     <script src="{{ STATIC_URL }}App/Directives/tsoclick.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}App/Directives/uiSortable.js" type="text/javascript"></script>
-    <link href="{{ STATIC_URL }}Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}Content/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}Content/ng-grid.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}Scripts/angular-xeditable/css/xeditable.css" rel="stylesheet" type="text/css" />
+
+    <link href="../static/scripts/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top" role="navigation" ng-controller="menuController">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Test Script Organizer</a>
-            </div>
+        </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav" ng-show="loggedIn">
-                    <li>
-                        <a href="#/admin/user">User Administration</a>
-                    </li>
-                </ul>
-            
-                <ul class="nav navbar-nav navbar-right" ng-show="loggedIn">
-                  <li>
+            <ul class="nav navbar-nav" ng-show="loggedIn">
+                <li>
+                    <a href="#/admin/user">User Administration</a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right" ng-show="loggedIn">
+                <li>
                     <a href="#/logout">Logout</a>
-                  </li>
-                </ul>
+                </li>
+            </ul>
         </div>
     </nav>
 

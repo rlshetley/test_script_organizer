@@ -1,4 +1,4 @@
-﻿var tsoApp = angular.module('tso', ['ui.bootstrap', 'ngResource', 'ngRoute', 'ui.sortable', 'ngCookies', 'ngGrid', 'xeditable']).
+﻿var tsoApp = angular.module('tso', ['ui.bootstrap', 'ngResource', 'ngRoute', 'ui.sortable', 'ngCookies', 'xeditable']).
   config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
       $routeProvider
           .when(
@@ -110,9 +110,10 @@ tsoApp.run(function (editableOptions) {
     editableOptions.theme = 'bs3';
 });
 
-//tsoApp.config(['$httpProvider', function ($httpProvider) {
-//    // django and angular both support csrf tokens. This tells
-//    // angular which cookie to add to what header.
-//    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-//    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-//}]);
+tsoApp.filter('offset', function () {
+    return function (input, start) {
+        start = parseInt(start, 10);
+        return input.slice(start);
+    };
+});
+

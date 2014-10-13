@@ -5,6 +5,6 @@
             {},
             {
                 update: { method: 'PUT', isArray: false },
-                getByProject: { method: 'GET', url: 'api/testsuites', isArray: true }
+                getByProject: { method: 'GET', url: 'api/testsuitesbyproject', isArray: true }
             });
     });
