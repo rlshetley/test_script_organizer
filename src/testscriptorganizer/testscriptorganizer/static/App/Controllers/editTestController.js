@@ -21,7 +21,7 @@
     };
 
     $scope.loadTestSteps = function () {
-        testStepService.getByTest({ TestId: $scope.test.id })
+        testStepService.getByTest({ testId: $scope.test.id })
                 .$promise.then(
                     function (value) {
                         $scope.testSteps = value;
@@ -37,12 +37,12 @@
             {
                 testStep: function () {
                     return {
-                        Id: 0,
-                        Name: '',
-                        Action: '',
-                        ExpectedResult: '',
-                        Description: '',
-                        TestId: $scope.test.id
+                        id: 0,
+                        name: '',
+                        action: '',
+                        expectedResult: '',
+                        description: '',
+                        test: $scope.test.id
                     };
                 },
                 title: function ()
@@ -69,7 +69,7 @@
             testStepService.save(testStep)
                 .$promise.then(function (data)
                 {
-                    $scope.testSteps.push(testStep);
+                    $scope.testSteps.push(data);
                 });
         },
         function () {
@@ -83,12 +83,12 @@
             .then(
                 function (value) {
                     var modalInstance = $modal.open({
-                        templateUrl: 'App/Views/TestStepModalDialog.html',
+                        templateUrl: 'static/App/Views/TestStepModalDialog.html',
                         controller: modalTestStepController,
                         resolve:
                         {
                             testStep: function () {
-                                return editTestStep;
+                                return value;
                             },
                             title: function ()
                             {

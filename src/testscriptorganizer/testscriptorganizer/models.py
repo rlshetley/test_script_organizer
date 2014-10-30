@@ -32,7 +32,7 @@ class TestResult(models.Model):
     actualResult = models.CharField(max_length=255)
     comments = models.CharField(max_length=255)
     testSession = models.ForeignKey(TestSession)
-    isPass = models.BooleanField()
+    isPass = models.BooleanField(default=False)
 
 class TestEvent(models.Model):
     name = models.CharField(max_length=255) 
