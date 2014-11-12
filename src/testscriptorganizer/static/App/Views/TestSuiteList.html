@@ -1,0 +1,49 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Test Suites</h3>
+    </div>
+    <div class="panel-body">
+        <div>
+    Search:
+    <input ng-model="query">
+    Order By:
+    <select ng-model="orderProp">
+        <option value="name">Name</option>
+    </select>
+</div>
+<br />
+        <table class="table table-striped table-condensed table-bordered">
+            <tr ng-repeat="testSuite in testSuites | filter:query | orderBy:orderProp">
+                <td>
+                    <span editable-text="testSuite.name" e-name="name" e-form="rowform">
+                        <a href="#/tests/{{testSuite.id}}">{{testSuite.name}}</a>
+                    </span>
+                </td>
+                <td>
+                    <a href="#/testEvents/{{testSuite.id}}">Test Events</a>
+                </td>
+                <td>
+                    <button ng-click="createTestEvent(testSuite.id)" class="btn btn-warning">Create Test Event</button>
+                </td>
+                <td style="white-space: nowrap">
+                    <!-- form -->
+                    <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline" onaftersave="saveTestSuite(testSuite)">
+                        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                            Save
+                        </button>
+                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                            Cancel
+                        </button>
+                    </form>
+                    <div class="buttons" ng-show="!rowform.$visible">
+                        <button class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
+                        <button class="btn btn-danger" ng-click="delete(testSuite.id)">Del</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <button class="btn btn-primary" ng-click="add()">
+            Add a Test Suite</button>
+    </div>
+</div>

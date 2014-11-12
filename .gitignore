@@ -1,0 +1,4 @@
+/src/testscriptorganizer/__pycache__/*
+/src/testscriptorganizer/migrations/*
+/src/testscriptorganizer/node_modules/*
+/src/testscriptorganizer/static/Scripts/*
