@@ -2,3 +2,4 @@
 /src/testscriptorganizer/migrations/*
 /src/testscriptorganizer/node_modules/*
 /src/testscriptorganizer/static/Scripts/*
+/src/TestScriptOrganizer.db
