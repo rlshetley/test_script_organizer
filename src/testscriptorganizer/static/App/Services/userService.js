@@ -9,15 +9,17 @@
 
     function userService($http, $resource, $rootScope, $cookieStore, $q)
 	{
-		this.isLogged = false;
-		this.userName = '';
-		this.userRoles = [];
-		this.userId = 0;
+        var scope = this;
+    
+		scope.isLogged = false;
+		scope.userName = '';
+		scope.userRoles = [];
+		scope.userId = 0;
 
 		return{
-			isLogged: this.isLogged,
-			username: this.userName,
-			userId: this.userId,
+			isLogged: scope.isLogged,
+			username: scope.userName,
+			userId: scope.userId,
 			login: login,
 			isInRole: isInRole,
 			checkLogin: checkLogin,
@@ -37,7 +39,7 @@
 					$cookieStore.put('djangotoken', data.token);
 					$http.defaults.headers.common['Authorization'] = 'Token ' + data.token;
 
-					this.isLogged = true;
+					scope.isLogged = true;
 
 					// Notify anyone who is listening that the log in event has happened
 					$rootScope.$broadcast('loggedIn', true);

@@ -2,10 +2,6 @@ from django.conf.urls import patterns, include, url
 from rest_framework import routers
 from testscriptorganizer import viewsets
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
-
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'projects', viewsets.ProjectViewSet)
 router.register(r'testsuites', viewsets.TestSuiteViewSet)
@@ -17,6 +13,7 @@ router.register(r'testevents', viewsets.TestEventViewSet)
 router.register(r'testeventResults', viewsets.TestEventResultViewSet)
 router.register(r'users', viewsets.UserAdminViewSet)
 router.register(r'roles', viewsets.RoleAdminViewSet)
+router.register(r'permissions', viewsets.PermissionViewSet)
 
 urlpatterns = patterns('',
     url(r'^api/', include(router.urls)),

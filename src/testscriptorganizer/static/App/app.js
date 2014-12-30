@@ -133,6 +133,13 @@ app.run(['$rootScope', 'userService', '$location', function ($rootScope, userSer
         //{
         //    $location.path('/projects');
         //}
+        
+        if (!userService.checkLogin()){
+            $location.path('/login');
+        }
+        else{
+            $rootScope.$broadcast('loggedIn', true);
+        }
 
         // Need to check the roles for the user
         // Only check the role if there 
