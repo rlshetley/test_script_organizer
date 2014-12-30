@@ -21,17 +21,19 @@
                     <th></th>
                 </tr>
             </thead>
-            <tr ng-repeat="testEvent in testEvents | filter:query | orderBy:orderProp">
-                <td>
-                    <a href="#/testEvent/{{testEvent.id}}">{{testEvent.name}}</a>
-                </td>
-                <td>
-                    {{testEvent.date | date:'MM-dd-yyyy'}}
-                </td>
-                <td>
-                    <button ng-click="delete(testEvent.id)">Delete</button>
-                </td>
-            </tr>
+            <tbody>
+                <tr ng-repeat="testEvent in testEvents | filter:query | orderBy:orderProp">
+                    <td>
+                        <a href="#/testEvent/{{testEvent.id}}">{{testEvent.name}}</a>
+                    </td>
+                    <td>
+                        {{testEvent.date | date:'MM-dd-yyyy'}}
+                    </td>
+                    <td>
+                        <button ng-click="delete(testEvent.id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>
