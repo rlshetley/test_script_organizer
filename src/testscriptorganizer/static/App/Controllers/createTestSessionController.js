@@ -6,71 +6,67 @@
         .controller('createTestSessionController', createTestSessionController);
 
     createTestSessionController.$inject = [
-		'$scope', 
-		'testService', 
-		'testSessionService', 
-		'testEventService',
-		'testEventResultsService',
-		'$routeParams',
-		'$location'];
-	
-	function createTestSessionController(
-		$scope, 
-		testService, 
-		testSessionService, 
-		testEventService, 
-		testEventResultsService, 
-		$routeParams, 
-		$location) {
-		
-		$scope.loadTest = function () {
-			testService.get({ id: $scope.testId })
-				.$promise.then(function (value) {
-					$scope.test = value;
-				});
-		}
+        '$scope',
+        'testService',
+        'testSessionService',
+        'testEventService',
+        'testEventResultsService',
+        '$routeParams',
+        '$location'];
 
-		$scope.startTest = function () {
-			var now = moment();
+    function createTestSessionController(
+        $scope,
+        testService,
+        testSessionService,
+        testEventService,
+        testEventResultsService,
+        $routeParams,
+        $location) {
 
-			$scope.testSession.id = 0;
-			$scope.testSession.test = $scope.testId;
-			$scope.testSession.startDate = now.toJSON();
-			$scope.testSession.finishDate = now.toJSON();
+        $scope.loadTest = function () {
+            testService.get({ id: $scope.testId })
+                .$promise.then(function (value) {
+                    $scope.test = value;
+                });
+        }
 
-			var result = testSessionService.save($scope.testSession)
-				.$promise.then(
-					function (value) {
-						$scope.testSession = value;
+        $scope.startTest = function () {
+            var now = moment();
 
-						if ($scope.testEvent)
-						{
-							testEventResultsService.save({ testEvent: $scope.testEventId, testSession: value.id });
-						}
+            $scope.testSession.id = 0;
+            $scope.testSession.test = $scope.testId;
+            $scope.testSession.startDate = now.toJSON();
+            $scope.testSession.finishDate = now.toJSON();
 
-						$scope.loadFirstTest();
-					}
-				);
-		}
+            var result = testSessionService.save($scope.testSession)
+                .$promise.then(
+                    function (value) {
+                        $scope.testSession = value;
 
-		$scope.loadFirstTest = function () {
-			$location.path('/executeTest/' + $scope.testSession.id + '/' + $scope.testId);
-		}
+                        if ($scope.testEvent){
+                            testEventResultsService.save({ testEvent: $scope.testEventId, testSession: value.id });
+                        }
 
-		$scope.testId = $routeParams.testId;
+                        $scope.loadFirstTest();
+                    }
+                );
+        }
 
-		if ($routeParams.testEventId)
-		{
-			$scope.testEventId = $routeParams.testEventId;
-		}
+        $scope.loadFirstTest = function () {
+            $location.path('/executeTest/' + $scope.testSession.id + '/' + $scope.testId);
+        }
 
-		$scope.test;
+        $scope.testId = $routeParams.testId;
 
-		$scope.testSession = {};
+        if ($routeParams.testEventId){
+            $scope.testEventId = $routeParams.testEventId;
+        }
 
-		$scope.loadTest();
-	};
-	
+        $scope.test;
+
+        $scope.testSession = {};
+
+        $scope.loadTest();
+    };
+
 })();
-
-

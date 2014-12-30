@@ -50,7 +50,7 @@ USE_TZ = True
 #project directories
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__)).replace('\\', '/')
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media")
-STATIC_ROOT = os.path.join(PROJECT_ROOT, "static") 
+STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
 TEMPLATE_ROOT = os.path.join(PROJECT_ROOT, "templates")
 
 STATIC_URL = '/static/'
@@ -122,6 +122,11 @@ LOGGING = {
         },
     },
     'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'propagate': True,
+            'level': 'INFO',
+        },
         'django.request': {
             'handlers': ['file'],
             'level': 'DEBUG',

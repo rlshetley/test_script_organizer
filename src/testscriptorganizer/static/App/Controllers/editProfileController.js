@@ -7,23 +7,18 @@
 
     editProfileController.$inject = ['$scope', 'profileService', 'userService'];
 
-	function editProfileController($scope, profileService, userService)
-	{
-		$scope.load = function ()
-		{
-			profileService.profile.query({ Id: userService.userId }).$promise
-				.then(function (data)
-				{
-					$scope.user = data;
-				});
-		};
+    function editProfileController($scope, profileService, userService){
 
-		$scope.user;
+        $scope.load = function (){
+            profileService.profile.query({ Id: userService.userId })
+                .$promise.then(
+                    function (data){
+                        $scope.user = data;
+                    });
+        };
 
-		$scope.load();
-	}
+        $scope.user;
+
+        $scope.load();
+    }
 })();
-
-
-
-

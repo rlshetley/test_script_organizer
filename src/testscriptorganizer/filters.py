@@ -1,7 +1,8 @@
 import django_filters
 
-from testscriptorganizer import models
 from rest_framework import filters
+
+from testscriptorganizer import models
 
 class TestSuiteFilter(django_filters.FilterSet):
     project = django_filters.CharFilter(name="project__id")

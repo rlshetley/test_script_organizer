@@ -13,23 +13,15 @@
     <br />
     <label class="control-label">Email</label>
     <input id="email" name="email" type="email" ng-model="user.email"/>
-
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading">Roles</div>
-        <div class="panel-body">
-            <label ng-repeat="role in roles">
-            <input type="checkbox" value="{{role.name}}" ng-model="role.selected" > 
-                {{role.name}}
-            </label>
-            <br />
-        </div>
-    </div>
+    <br />
+    <label class="control-label">Is Active</label>
+    <input id="isActive" name="isActive" type="checkbox" ng-model="user.is_active"/>
+    <br />
+    <label class="control-label">Is Admin User</label>
+    <input id="isAdmin" name="isAdmin" type="checkbox" ng-model="user.is_staff"/>
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">
-        Save</button>
-    <button class="btn btn-warning" ng-click="cancel()">
-        Cancel</button>
+    <button class="btn btn-primary" ng-click="ok()">Save</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>
