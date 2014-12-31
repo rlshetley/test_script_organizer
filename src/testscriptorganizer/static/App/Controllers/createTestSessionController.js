@@ -23,7 +23,7 @@
         $routeParams,
         $location) {
 
-        $scope.loadTest = function () {
+        this.init = function () {
             testService.get({ id: $scope.testId }).$promise
                 .then(
                     function (value) {
@@ -78,7 +78,7 @@
 
         $scope.testSession = {};
 
-        $scope.loadTest();
+        this.init();
     };
 
 })();

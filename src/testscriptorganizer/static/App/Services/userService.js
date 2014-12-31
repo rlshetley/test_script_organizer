@@ -19,6 +19,7 @@
         return{
             isLogged: scope.isLogged,
             username: scope.userName,
+            name: '',
             userId: scope.userId,
             login: login,
             isInRole: isInRole,
@@ -56,7 +57,7 @@
         function logout () {
             $cookieStore.remove('djangotoken');
             $http.defaults.headers.common['Authorization'] = undefined;
-            
+
             // Notify anyone who is listening that the log in event has happened
             $rootScope.$broadcast('loggedIn', false);
         };

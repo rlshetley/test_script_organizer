@@ -8,7 +8,7 @@
     completeTestController.$inject = ['$scope', 'testResultService', 'testSessionService', '$routeParams'];
 
     function completeTestController($scope, testResultService, testSessionService, $routeParams) {
-        $scope.loadTestResults = function () {
+        this.init = function () {
             testResultService.getByTestSession({ testSessionId: $scope.testSessionId }).$promise
                     .then(
                         function (value) {
@@ -31,6 +31,6 @@
 
         $scope.testResults;
 
-        $scope.loadTestResults();
+        this.init();
     };
 })();

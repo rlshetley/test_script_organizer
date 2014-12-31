@@ -7,14 +7,12 @@
 
     menuController.$inject = ['$scope', 'userService'];
 
-	function menuController($scope, userService)
-	{
-		$scope.name = "Ray Shetley";
+	function menuController($scope, userService){
+		$scope.name = userService.name;
 
 		$scope.loggedIn = userService.isLogged;
 
-		$scope.$on('loggedIn', function (event, value)
-		{
+		$scope.$on('loggedIn', function (event, value){
 			$scope.loggedIn = value;
 		});
 
@@ -25,5 +23,3 @@
 		};
 	};
 })();
-
-
