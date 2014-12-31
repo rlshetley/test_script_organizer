@@ -7,58 +7,69 @@
 
     executeTestController.$inject = ['$scope', 'testStepService', 'testResultService', '$routeParams', '$location'];
 
-	function executeTestController($scope, testStepService, testResultService, $routeParams, $location) {
+    function executeTestController($scope, testStepService, testResultService, $routeParams, $location) {
 
-		$scope.loadTestSteps = function () {
-			testStepService.getByTest({ TestId: $routeParams.testId })
-					.$promise.then(
-						function (value) {
-							$scope.testSteps = value;
+        $scope.nextStep = function () {
+            var nextStep = $scope.testStep.stepNumber + 1;
 
-							angular.forEach($scope.testSteps, function (testStep, key) {
-								if (testStep.stepNumber == 1) {
-									$scope.testStep = testStep;
-								}
-							});
-						}
-					);
-		};
+            $scope.testResult.testSessionId = $scope.testSessionId;
+            $scope.testResult.testStepId = $scope.testStep.id;
 
-		$scope.nextStep = function () {
-			var nextStep = $scope.testStep.stepNumber + 1;
+            testResultService.save($scope.testResult).$promise
+                .then(
+                    function (value) {
 
-			$scope.testResult.testSessionId = $scope.testSessionId;
-			$scope.testResult.testStepId = $scope.testStep.id;
+                        if (nextStep <= $scope.testSteps.length) {
+                            angular.forEach($scope.testSteps, function (testStep, key) {
+                                if (testStep.stepNumber == nextStep) {
+                                    $scope.testStep = testStep;
+                                }
+                            });
 
-			testResultService.save($scope.testResult)
-				.$promise.then(
-					function (value) {
+                            $scope.testResult.pass = false;
+                            $scope.testResult.actualResult = '';
+                            $scope.testResult.comments = '';
+                        }
+                        else {
+                            $location.path('/completeTest/' + $scope.testSessionId);
+                        }
+                    }
+                )
+                .catch(
+                    function(e){
+                        $scope.$log.error(e);
+                    }
+                );
+        };
 
-						if (nextStep <= $scope.testSteps.length) {
-							angular.forEach($scope.testSteps, function (testStep, key) {
-								if (testStep.stepNumber == nextStep) {
-									$scope.testStep = testStep;
-								}
-							});
+        this.init = function () {
+            testStepService.getByTest({ TestId: $routeParams.testId }).$promise
+                .then(
+                    function (value) {
+                        $scope.testSteps = value;
 
-							$scope.testResult.pass = false;
-							$scope.testResult.actualResult = '';
-							$scope.testResult.comments = '';
-						}
-						else {
-							$location.path('/completeTest/' + $scope.testSessionId);
-						}
-					});
-		};
+                        angular.forEach($scope.testSteps, function (testStep, key) {
+                            if (testStep.stepNumber == 1) {
+                                $scope.testStep = testStep;
+                            }
+                        });
+                    }
+                )
+                .catch(
+                    function(e){
+                        $scope.$log.error(e);
+                    }
+                );
+        };
 
-		$scope.testSessionId = $routeParams.testSessionId;
+        $scope.testSessionId = $routeParams.testSessionId;
 
-		$scope.testSteps;
+        $scope.testSteps;
 
-		$scope.testStep;
+        $scope.testStep;
 
-		$scope.testResult = {};
+        $scope.testResult = {};
 
-		$scope.loadTestSteps();
-	};
+        this.init();
+    };
 })();

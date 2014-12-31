@@ -24,10 +24,17 @@
         $location) {
 
         $scope.loadTest = function () {
-            testService.get({ id: $scope.testId })
-                .$promise.then(function (value) {
-                    $scope.test = value;
-                });
+            testService.get({ id: $scope.testId }).$promise
+                .then(
+                    function (value) {
+                        $scope.test = value;
+                    }
+                )
+                .catch(
+                    function(e){
+                        $scope.$log.error(e);
+                    }
+                );
         }
 
         $scope.startTest = function () {
@@ -38,8 +45,8 @@
             $scope.testSession.startDate = now.toJSON();
             $scope.testSession.finishDate = now.toJSON();
 
-            var result = testSessionService.save($scope.testSession)
-                .$promise.then(
+            var result = testSessionService.save($scope.testSession).$promise
+                .then(
                     function (value) {
                         $scope.testSession = value;
 
@@ -48,6 +55,11 @@
                         }
 
                         $scope.loadFirstTest();
+                    }
+                )
+                .catch(
+                    function(e){
+                        $scope.$log.error(e);
                     }
                 );
         }

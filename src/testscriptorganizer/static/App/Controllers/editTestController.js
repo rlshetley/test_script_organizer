@@ -8,56 +8,91 @@
     editTestController.$inject = ['$scope', 'testService', 'testStepService', '$modal', '$routeParams'];
 
     function editTestController($scope, testService, testStepService, $modal, $routeParams) {
-        $scope.loadTest = function () {
-            if ($routeParams.testId == 0) {
-                testService.save({ id: 0, name: 'Test 0', testSuite: $routeParams.testSuiteId })
-                    .$promise.then(
-                        function (value) {
-                            $scope.test = value;
-                        }
-                    );
-            }
-            else {
-                testService.get({ Id: $routeParams.testId })
-                    .$promise.then(
-                        function (value) {
-                            $scope.test = value;
 
-                            $scope.loadTestSteps();
-                        }
-                    );
-            }
-        };
-
-        $scope.loadTestSteps = function () {
-            testStepService.getByTest({ testId: $scope.test.id })
-                    .$promise.then(
-                        function (value) {
-                            $scope.testSteps = value;
-                        }
-                    );
-        };
-
-        $scope.addTestStep = function () {
-            var modalInstance = $modal.open({
+        this.buildModalInstance = function(testStep, title){
+            $modal.open({
                 templateUrl: 'static/App/Views/TestStepModalDialog.html',
                 controller: modalTestStepController,
-                resolve:{
+                resolve:
+                {
                     testStep: function () {
-                        return {
-                            id: 0,
-                            name: '',
-                            action: '',
-                            expectedResult: '',
-                            description: '',
-                            test: $scope.test.id
-                        };
+                        return testStep;
                     },
-                    title: function (){
-                        return "Add Test Step";
+                    title: function ()
+                    {
+                        return title;
                     }
                 }
             });
+        };
+
+        this.loadTestSteps = function () {
+            testStepService.getByTest({ testId: $scope.test.id }).$promise
+                .then(
+                    function (value) {
+                        $scope.testSteps = value;
+                    }
+                )
+                .catch(
+                    function(e){
+                        $scope.$log.error(e);
+                    }
+                );
+        };
+
+        this.createTest = function(testSuiteId){
+            testService.save({ id: 0, name: 'Test 0', testSuite: testSuiteId }).$promise
+                .then(
+                    function (value) {
+                        $scope.test = value;
+                    }
+                )
+                .catch(
+                    function(e){
+                        $scope.$log.error(e);
+                    }
+                );
+        };
+
+        this.getTest = function(testId){
+            testService.get({ id: testId}).$promise
+                .then(
+                    function (value) {
+                        $scope.test = value;
+
+                        this.loadTestSteps();
+                    }
+                )
+                .catch(
+                    function(e){
+                        $scope.$log.error(e);
+                    }
+                );
+        };
+
+        this.init = function () {
+            if (!$routeParams.testId || $routeParams.testId === 0) {
+                this.createTest($routeParams.testSuiteId);
+            }
+            else if ($routeParams.testId && $routeParams.testId > 0) {
+                this.getTest($routeParams.testId);
+            }
+            else {
+                // TODO developing mechanism for showing errors
+            }
+        };
+
+        $scope.addTestStep = function () {
+            var newTestStep = {
+                id: 0,
+                name: '',
+                action: '',
+                expectedResult: '',
+                description: '',
+                test: $scope.test.id
+            };
+
+            var modalInstance = this.buildModalInstance(newTestStep, "Add Test Step")
 
             modalInstance.result.then(function (testStep){
                 var highestValue = 1;
@@ -77,37 +112,22 @@
                         });
             },
             function () {
-                $scope.loadTestSteps();
+                this.loadTestSteps();
             });
         };
 
         $scope.editTestStep = function (id) {
-            testStepService.get({ id: id })
-                .$promise.then(
+            testStepService.get({ id: id }).$promise
+                .then(
                     function (value) {
-                        var modalInstance = $modal.open({
-                            templateUrl: 'static/App/Views/TestStepModalDialog.html',
-                            controller: modalTestStepController,
-                            resolve:
-                            {
-                                testStep: function () {
-                                    return value;
-                                },
-                                title: function ()
-                                {
-                                    return "Edit Test Step";
-                                }
-                            }
-                        });
+                        var modalInstance = this.buildModalInstance(value, "Edit Test Step");
 
                         modalInstance.result.then(function (testStep)
                         {
                             testStepService.update(testStep);
-                        },
-                        function ()
-                        {
                         });
-                    });
+                    }
+                );
         };
 
         $scope.removeTestStep = function (id) {
@@ -130,7 +150,7 @@
             }
         };
 
-        $scope.loadTest();
+        this.init();
     };
 
     var modalTestStepController = function ($scope, $modalInstance, testStep, title) {
