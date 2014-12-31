@@ -4,5 +4,5 @@
 /src/testscriptorganizer/static/Scripts/*
 /src/TestScriptOrganizer.db
 .DS_Store
-.log
-.pyc
+*.log
+*.pyc
