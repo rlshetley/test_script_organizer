@@ -8,6 +8,26 @@
     executeTestController.$inject = ['$scope', 'testStepService', 'testResultService', '$routeParams', '$location'];
 
     function executeTestController($scope, testStepService, testResultService, $routeParams, $location) {
+        
+        this.init = function () {
+            testStepService.getByTest({ TestId: $routeParams.testId }).$promise
+                .then(
+                    function (value) {
+                        $scope.testSteps = value;
+
+                        angular.forEach($scope.testSteps, function (testStep, key) {
+                            if (testStep.stepNumber == 1) {
+                                $scope.testStep = testStep;
+                            }
+                        });
+                    }
+                )
+                .catch(
+                    function(e){
+                        $scope.$log.error(e);
+                    }
+                );
+        };
 
         $scope.nextStep = function () {
             var nextStep = $scope.testStep.stepNumber + 1;
@@ -33,26 +53,6 @@
                         else {
                             $location.path('/completeTest/' + $scope.testSessionId);
                         }
-                    }
-                )
-                .catch(
-                    function(e){
-                        $scope.$log.error(e);
-                    }
-                );
-        };
-
-        this.init = function () {
-            testStepService.getByTest({ TestId: $routeParams.testId }).$promise
-                .then(
-                    function (value) {
-                        $scope.testSteps = value;
-
-                        angular.forEach($scope.testSteps, function (testStep, key) {
-                            if (testStep.stepNumber == 1) {
-                                $scope.testStep = testStep;
-                            }
-                        });
                     }
                 )
                 .catch(

@@ -50,20 +50,6 @@
                     </td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                  <td colspan="3">
-                    <div class="pagination">
-                        <span>Page {{currentPage + 1}} of {{ pageCount() }}</span>
-
-                        <a href ng-click="prevPage()">« Prev</a>
-
-                          <a href ng-click="nextPage()">Next »</a>
-
-                    </div>
-                  </td>
-                </tr>
-            </tfoot>
         </table>
         <button class="btn btn-primary" ng-click="add()">
             Add a Project

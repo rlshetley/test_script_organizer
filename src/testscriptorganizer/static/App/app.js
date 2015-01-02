@@ -124,11 +124,15 @@ app.constant('$appConfig',
     API: 'http://127.0.0.1:8000/'
 });
 
-app.run(['$rootScope', 'userService', '$location', function ($rootScope, userService, $location, $log){
+app.run(['$rootScope', 'userService', '$location', '$log', function ($rootScope, userService, $location, $log){
 
     // Set the logger on the root scope so every controller
     // can use it without having to inject it every time
     $rootScope.$log = $log;
+
+    $rootScope.onError = function(msg, error){
+        $scope.$log.error(error);
+    };
 
     $rootScope.$on("$routeChangeStart", function (event, next, current)
     {

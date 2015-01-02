@@ -7,34 +7,34 @@
 
     loginController.$inject = ['$scope', 'userService', '$location'];
 
-	function loginController($scope, userService, $location)
-	{
-		$scope.login = function ()
-		{
-			userService.login($scope.userName, $scope.password)
-				.then(function (data) {
-					userService.userName = $scope.userName;
+    function loginController($scope, userService, $location){
+        $scope.login = function (){
+            userService.login($scope.userName, $scope.password)
+                .then(
+                    function (data) {
+                        userService.userName = $scope.userName;
+                        $location.path('/projects');
+                    }
+                )
+                .catch(
+                    function(data){
+                        $scope.failedLogin = true;
+                    }
+                );
+        }
 
-					$location.path('/projects');
-				})
-				.catch(function(data){
-					$scope.failedLogin = true;
-				});
-		}
+        $scope.checkLogin = function (){
+            if (userService.checkLogin()) {
+                $location.path('/projects');
+            }
+        }
 
-		$scope.checkLogin = function ()
-		{
-			if (userService.checkLogin()) {
-				$location.path('/projects');
-			}
-		}
+        $scope.userName;
 
-		$scope.userName;
+        $scope.password;
 
-		$scope.password;
+        $scope.failedLogin = false;
 
-		$scope.failedLogin = false;
-
-		$scope.checkLogin();
-	};
+        $scope.checkLogin();
+    };
 })();

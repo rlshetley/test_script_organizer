@@ -8,25 +8,24 @@
     editTestController.$inject = ['$scope', 'testService', 'testStepService', '$modal', '$routeParams'];
 
     function editTestController($scope, testService, testStepService, $modal, $routeParams) {
+        var thisController = this;
 
-        this.buildModalInstance = function(testStep, title){
+        thisController.buildModalInstance = function(testStep, title){
             $modal.open({
                 templateUrl: 'static/App/Views/TestStepModalDialog.html',
                 controller: modalTestStepController,
-                resolve:
-                {
+                resolve:{
                     testStep: function () {
                         return testStep;
                     },
-                    title: function ()
-                    {
+                    title: function (){
                         return title;
                     }
                 }
             });
         };
 
-        this.loadTestSteps = function () {
+        thisController.loadTestSteps = function () {
             testStepService.getByTest({ testId: $scope.test.id }).$promise
                 .then(
                     function (value) {
@@ -40,7 +39,7 @@
                 );
         };
 
-        this.createTest = function(testSuiteId){
+        thisController.createTest = function(testSuiteId){
             testService.save({ id: 0, name: 'Test 0', testSuite: testSuiteId }).$promise
                 .then(
                     function (value) {
@@ -54,13 +53,13 @@
                 );
         };
 
-        this.getTest = function(testId){
+        thisController.getTest = function(testId){
             testService.get({ id: testId}).$promise
                 .then(
                     function (value) {
                         $scope.test = value;
 
-                        this.loadTestSteps();
+                        thisController.loadTestSteps();
                     }
                 )
                 .catch(
@@ -72,10 +71,10 @@
 
         this.init = function () {
             if (!$routeParams.testId || $routeParams.testId === 0) {
-                this.createTest($routeParams.testSuiteId);
+                thisController.createTest($routeParams.testSuiteId);
             }
             else if ($routeParams.testId && $routeParams.testId > 0) {
-                this.getTest($routeParams.testId);
+                thisController.getTest($routeParams.testId);
             }
             else {
                 // TODO developing mechanism for showing errors
@@ -92,7 +91,7 @@
                 test: $scope.test.id
             };
 
-            var modalInstance = this.buildModalInstance(newTestStep, "Add Test Step")
+            var modalInstance = thisController.buildModalInstance(newTestStep, "Add Test Step")
 
             modalInstance.result.then(function (testStep){
                 var highestValue = 1;
@@ -105,14 +104,15 @@
 
                 testStep.stepNumber = highestValue;
 
-                testStepService.save(testStep)
-                    .$promise.then(
+                testStepService.save(testStep).$promise
+                    .then(
                         function (data){
                             $scope.testSteps.push(data);
-                        });
+                        }
+                    );
             },
             function () {
-                this.loadTestSteps();
+                thisController.loadTestSteps();
             });
         };
 
@@ -122,8 +122,7 @@
                     function (value) {
                         var modalInstance = this.buildModalInstance(value, "Edit Test Step");
 
-                        modalInstance.result.then(function (testStep)
-                        {
+                        modalInstance.result.then(function (testStep){
                             testStepService.update(testStep);
                         });
                     }
