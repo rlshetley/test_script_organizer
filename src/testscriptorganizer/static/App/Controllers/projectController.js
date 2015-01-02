@@ -108,35 +108,9 @@
                 );
         };
 
-        this.init();
-
-        $scope.itemsPerPage = 5;
-        $scope.currentPage = 0;
         $scope.projects = [];
 
-        $scope.prevPage = function () {
-            if ($scope.currentPage > 0) {
-                $scope.currentPage--;
-            }
-        };
-
-        $scope.prevPageDisabled = function () {
-            return $scope.currentPage === 0 ? "disabled" : "";
-        };
-
-        $scope.pageCount = function () {
-            return Math.ceil($scope.projects.length / $scope.itemsPerPage);
-        };
-
-        $scope.nextPage = function () {
-            if ($scope.currentPage < $scope.pageCount()) {
-                $scope.currentPage++;
-            }
-        };
-
-        $scope.nextPageDisabled = function () {
-            return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
-        };
+        this.init();
     };
 
     var modalProjectController = function ($scope, $modalInstance, project, title) {

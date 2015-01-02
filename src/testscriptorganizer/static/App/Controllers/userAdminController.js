@@ -5,9 +5,9 @@
         .module('app')
         .controller('userAdminController', userAdminController);
 
-    userAdminController.$inject = ['$scope', 'userAdminService', 'roleManagementService', '$modal', 'alertService'];
+    userAdminController.$inject = ['$scope', 'userAdminService', 'roleManagementService', '$modal', 'notifyService'];
 
-    function userAdminController($scope, userAdminService, roleManagementService, $modal, alertService){
+    function userAdminController($scope, userAdminService, roleManagementService, $modal, notifyService){
         var thisController = this;
 
         thisController.init = function (){
@@ -15,6 +15,11 @@
                 .then(
                     function (data){
                         $scope.users = data;
+                    }
+                )
+                .catch(
+                    function(e){
+                        notifyService.onError("Unable to load users", e);
                     }
                 );
 
@@ -63,13 +68,12 @@
                         function (data){
                             $scope.users.push(data);
 
-                            alertService.addSuccessAlert("User added");
+                            notifyService.onSuccess("User added");
                         }
                     )
                     .catch(
                         function(e){
-                            $scope.$log.error(e);
-                            alertService.addErrorAlert("Unable to add user");
+                            notifyService.onError("Unable to add user", e);
                         }
                     );
             });
@@ -82,13 +86,12 @@
                 userAdminService.users.update(user).$promise
                     .then(
                         function (data){
-                            alertService.addSuccessAlert("User updated");
+                            notifyService.onSuccess("User updated");
                         }
                     )
                     .catch(
                         function(e){
-                            $scope.$log.error(e);
-                            alertService.addErrorAlert("Unable to edit user");
+                            notifyService.onError("Unable to edit user", e);
                         }
                     );
             });
@@ -99,13 +102,12 @@
             userAdminService.users.remove({ Id: id }).$promise
                 .then(
                     function (data){
-                        alertService.addSuccessAlert("User deleted");
+                        notifyService.onSuccess("User deleted");
                     }
                 )
                 .catch(
                     function(e){
-                        $scope.log.error(e);
-                        alertService.addErrorAlert("Unable to delete user");
+                        notifyService.onError("Unable to delete user", e);
                     }
                 );
         };

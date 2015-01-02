@@ -15,9 +15,11 @@ The application runs a Django-based backend with an AngularJS front-end.  It was
 ## TODO
 This is a work in progress.  I have several tasks I would like to do to get the application fully functional.
 
-* Get user administration and security fully functional
-* Upgrade to AngularJS 1.3
+* Get user administration fully functional
+* Upgrade all JavaScript libraries (ex. AngularJS 1.3)
 * Add unit tests
 * Add ETE tests
 * Create setup instructions/scripts
-
+* Research and use user interface tables (Currently, I am using simple HTML tables)
+* Create more robust role system (Right now there are admin users and all other users)
+* Add better security

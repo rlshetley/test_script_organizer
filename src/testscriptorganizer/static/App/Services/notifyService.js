@@ -16,7 +16,8 @@
             alerts: scope.alerts,
             $log: $log,
             onError: onError,
-            onSuccess: function(msg) { addAlert('success', msg); }
+            onSuccess: function(msg) { addAlert('success', msg); },
+            onWarning: function(msg) { addAlert('warning', msg); }
         };
 
         function onError(msg, error){
