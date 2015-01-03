@@ -18,7 +18,6 @@
                 )
                 .catch(
                     function(e){
-                        $scope.$log.error(e);
                     }
                 );
         };

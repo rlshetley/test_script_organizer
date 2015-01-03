@@ -12,7 +12,8 @@
         'testEventService',
         'testEventResultsService',
         '$routeParams',
-        '$location'];
+        '$location',
+        'notifyService'];
 
     function createTestSessionController(
         $scope,
@@ -21,7 +22,8 @@
         testEventService,
         testEventResultsService,
         $routeParams,
-        $location) {
+        $location.
+        notifyService) {
 
         this.init = function () {
             testService.get({ id: $scope.testId }).$promise
@@ -32,7 +34,7 @@
                 )
                 .catch(
                     function(e){
-                        $scope.$log.error(e);
+                        notifyService.onError('Failed to load test for test sessions', e);
                     }
                 );
         }
@@ -59,7 +61,7 @@
                 )
                 .catch(
                     function(e){
-                        $scope.$log.error(e);
+                        notifyService.onError('Failed to start test session', e);
                     }
                 );
         }

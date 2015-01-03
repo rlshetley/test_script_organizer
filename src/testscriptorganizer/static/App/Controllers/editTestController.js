@@ -5,9 +5,9 @@
         .module('app')
         .controller('editTestController', editTestController);
 
-    editTestController.$inject = ['$scope', 'testService', 'testStepService', '$modal', '$routeParams'];
+    editTestController.$inject = ['$scope', 'testService', 'testStepService', '$modal', '$routeParams', 'notifyService'];
 
-    function editTestController($scope, testService, testStepService, $modal, $routeParams) {
+    function editTestController($scope, testService, testStepService, $modal, $routeParams, notifyService) {
         var thisController = this;
 
         thisController.buildModalInstance = function(testStep, title){
@@ -34,7 +34,7 @@
                 )
                 .catch(
                     function(e){
-                        $scope.$log.error(e);
+                        notifyService.onError('Unable to load test steps', e);
                     }
                 );
         };
@@ -44,6 +44,8 @@
                 .then(
                     function (value) {
                         $scope.test = value;
+                        
+                        notifyService.onSuccess('Test successfully created');
                     }
                 )
                 .catch(
@@ -64,7 +66,7 @@
                 )
                 .catch(
                     function(e){
-                        $scope.$log.error(e);
+                        notifyService.onError('Unable to load test', e);
                     }
                 );
         };
@@ -77,7 +79,7 @@
                 thisController.getTest($routeParams.testId);
             }
             else {
-                // TODO developing mechanism for showing errors
+                notifyService.onError('Missing test information - unable to load test', e);
             }
         };
 
@@ -108,6 +110,13 @@
                     .then(
                         function (data){
                             $scope.testSteps.push(data);
+                            
+                            notifyService.onSuccess('Test step successfully saved');
+                        }
+                    )
+                    .catch(
+                        function(e){
+                            notifyService.onError('Unable to add test', e);
                         }
                     );
             },
@@ -123,18 +132,53 @@
                         var modalInstance = this.buildModalInstance(value, "Edit Test Step");
 
                         modalInstance.result.then(function (testStep){
-                            testStepService.update(testStep);
+                            testStepService.update(testStep)
+                                .then(
+                                    function(){
+                                        notifyService.onSuccess('Test step successfully updated');
+                                    }
+                                )
+                                .catch(
+                                    function(e){
+                                        notifyService.onError('Unable to update test step', e);
+                                    }
+                                );
                         });
+                    }
+                )
+                .catch(
+                    function(e){
+                        notifyService.onError('Unable to load test step', e);
                     }
                 );
         };
 
         $scope.removeTestStep = function (id) {
-            testStepService.remove({ id: id });
+            testStepService.remove({ id: id }).$promise
+                .then(
+                    function(){
+                        notifyService.onSuccess('Test step successfully removed');
+                    }
+                )
+                .catch(
+                    function(e){
+                        notifyService.onError('Unable to delete test step', e);
+                    }
+                );
         };
 
         $scope.save = function () {
-            testService.update($scope.test);
+            testService.update($scope.test).$promise
+                .then(
+                    function(){
+                        notifyService.onSuccess('Test successfully updated');
+                    }
+                )
+                .catch(
+                    function(e){
+                        notifyService.onError('Unable to save test', e);
+                    }
+                );
         };
 
         $scope.sortableOptions = {
