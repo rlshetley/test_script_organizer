@@ -1,13 +1,15 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User, Group, Permission
 from django.db import models
+
 from rest_framework import viewsets
+from rest_framework import generics
+
 from testscriptorganizer import models
 from testscriptorganizer import serializers
 from testscriptorganizer import filters
-from rest_framework import permissions
-from django.contrib.auth.models import User
+from testscriptorganizer import permissions
 from testscriptorganizer import serializers
-from rest_framework import generics
+
 
 class ProjectViewSet(viewsets.ModelViewSet):
     """
@@ -15,6 +17,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     """
     queryset = models.Project.objects.all()
     serializer_class = serializers.ProjectSerializer
+    permission_classes = (permissions.IsInRole,)
 
 class TestSuiteViewSet(viewsets.ModelViewSet):
     """
@@ -82,6 +85,10 @@ class UserAdminViewSet(viewsets.ModelViewSet):
 class RoleAdminViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = serializers.GroupSerializer
+
+class PermissionViewSet(viewsets.ModelViewSet) :
+    queryset = Permission.objects.all()
+    serializer_class = serializers.PermissionSerializer
 
 class TestSuiteByProjectList(generics.ListAPIView):
     serializer_class = serializers.TestSuiteSerializer

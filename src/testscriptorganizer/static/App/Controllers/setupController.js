@@ -7,10 +7,8 @@
 
     setupController.$inject = ['$scope', 'setupService'];
 
-	function setupController($scope, setupService)
-	{
-		$scope.install = function ()
-		{
+	function setupController($scope, setupService){
+		$scope.install = function (){
 			setupService.save();
 		}
 	};

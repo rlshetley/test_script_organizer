@@ -7,7 +7,7 @@
 
     errorController.$inject = ['$scope'];
 
-	function errorController($scope)
-	{
-	};
+    function errorController($scope){
+        
+    };
 })();

@@ -5,142 +5,150 @@
         .module('app')
         .controller('userAdminController', userAdminController);
 
-    userAdminController.$inject = ['$scope', 'userAdminService', 'roleManagementService', '$modal'];
+    userAdminController.$inject = ['$scope', 'userAdminService', 'roleManagementService', '$modal', 'notifyService'];
 
-	function userAdminController($scope, userAdminService, roleManagementService, $modal)
-	{
-		$scope.load = function ()
-		{
-			userAdminService.users.query().$promise
-				.then(function (data)
-				{
-					$scope.users = data;
-				});
+    function userAdminController($scope, userAdminService, roleManagementService, $modal, notifyService){
+        var thisController = this;
 
-			userAdminService.roles.query().$promise
-				.then(function (roles)
-				{
-					$scope.roles = roles;
-				});
-		};
+        thisController.init = function (){
+            userAdminService.users.query().$promise
+                .then(
+                    function (data){
+                        $scope.users = data;
+                    }
+                )
+                .catch(
+                    function(e){
+                        notifyService.onError("Unable to load users", e);
+                    }
+                );
 
-		$scope.add = function ()
-		{
-			var modalInstance = $modal.open({
-				templateUrl: 'static/App/Views/AddUserModalDialog.html',
-				controller: modalUserController,
-				resolve:
-				{
-					user: function ()
-					{
-						return{ 
-							Id: 0, 
-							userName: '',
-							password: '',
-							confirmPassword: '',
-							firstName: '',
-							lastName: '',
-							email: ''
-						};
-					},
-					roles: function ()
-					{
-						return $scope.roles;
-					}
-				}
-			});
+            userAdminService.roles.query().$promise
+                .then(
+                    function (roles){
+                        $scope.roles = roles;
+                    }
+                );
+        };
 
-			modalInstance.result.then(function (user)
-			{
-				userAdminService.users.save(user)
-					.$promise.then(function (data)
-					{
-						$scope.users.push(data);
-					});
-			},
-			function ()
-			{
-			});
-		};
+        thisController.buildModalInstance = function(user, title, template){
+            return $modal.open({
+                templateUrl: template,
+                controller: modalUserController,
+                resolve:{
+                    user: function (){
+                        return user;
+                    },
+                    roles: function (){
+                        return $scope.roles;
+                    }
+                }
+            });
+        };
 
-		$scope.edit = function (user)
-		{
-			var modalInstance = $modal.open({
-				templateUrl: 'static/App/Views/EditUserModalDialog.html',
-				controller: modalUserController,
-				resolve:
-				{
-					user: function ()
-					{
-						return user;
-					},
-					roles: function ()
-					{
-						return $scope.roles;
-					}
-				}
-			});
+        $scope.add = function (){
+            var newUser = {
+                Id: 0,
+                username: '',
+                password: '',
+                confirmPassword: '',
+                firstName: '',
+                lastName: '',
+                email: '',
+                is_staff: false,
+                is_active: true,
+                groups: []
+            };
 
-			modalInstance.result.then(function (user)
-			{
-				userAdminService.users.update(user);
-			},
-			function ()
-			{
-			});
-		};
+            var modalInstance = thisController.buildModalInstance(newUser, "Add a User", 'static/App/Views/AddUserModalDialog.html');
 
-		$scope.delete = function (id)
-		{
-			userAdminService.users.remove({ Id: id });
-		};
+            modalInstance.result.then(function (user){
+                userAdminService.users.save(user).$promise
+                    .then(
+                        function (data){
+                            $scope.users.push(data);
 
-		$scope.users = [];
+                            notifyService.onSuccess("User added");
+                        }
+                    )
+                    .catch(
+                        function(e){
+                            notifyService.onError("Unable to add user", e);
+                        }
+                    );
+            });
+        };
 
-		$scope.roles = [];
+        $scope.edit = function (value){
+            var modalInstance = thisController.buildModalInstance(value, "Edit User", 'static/App/Views/EditUserModalDialog.html');
 
-		$scope.load();
-	};
+            modalInstance.result.then(function (user){
+                userAdminService.users.update(user).$promise
+                    .then(
+                        function (data){
+                            notifyService.onSuccess("User updated");
+                        }
+                    )
+                    .catch(
+                        function(e){
+                            notifyService.onError("Unable to edit user", e);
+                        }
+                    );
+            });
+        };
 
-	var modalUserController = function ($scope, $modalInstance, user, roles)
-	{
-		$scope.user = user;
+        $scope.delete = function (id){
 
-		$scope.roles = [];
+            userAdminService.users.remove({ Id: id }).$promise
+                .then(
+                    function (data){
+                        notifyService.onSuccess("User deleted");
+                    }
+                )
+                .catch(
+                    function(e){
+                        notifyService.onError("Unable to delete user", e);
+                    }
+                );
+        };
 
-		angular.forEach(roles, function (item, key)
-		{
-			var selected = false;
-			angular.forEach(user.roles, function (userRoleName, userKey)
-			{
-				if (userRoleName == item.name)
-				{
-					selected = true;
-				}
-			});
+        $scope.users = [];
 
-			this.push({ name: item.name, selected: selected });
-		}, $scope.roles);
+        $scope.roles = [];
 
-		$scope.ok = function ()
-		{
-			$scope.user.roles = [];
+        thisController.init();
+    };
 
-			angular.forEach($scope.roles, function (item, key)
-			{
-				if (item.selected)
-				{
-					this.push({ 'name': item.name });
-				}
-			}, $scope.user.roles);
+    var modalUserController = function ($scope, $modalInstance, user, roles){
+        $scope.user = user;
 
-			$modalInstance.close($scope.user);
-		};
+        $scope.roles = [];
 
-		$scope.cancel = function ()
-		{
-			$modalInstance.dismiss('cancel');
-		};
-	};
+        angular.forEach(roles, function (item, key){
+            var selected = false;
+            angular.forEach(user.roles, function (userRoleName, userKey){
+                if (userRoleName == item.name){
+                    selected = true;
+                }
+            });
+
+            this.push({ name: item.name, selected: selected });
+        }, $scope.roles);
+
+        $scope.ok = function (){
+            $scope.user.roles = [];
+
+            angular.forEach($scope.roles, function (item, key){
+                if (item.selected){
+                    this.push({ 'name': item.name });
+                }
+            }, $scope.user.roles);
+
+            $modalInstance.close($scope.user);
+        };
+
+        $scope.cancel = function (){
+            $modalInstance.dismiss('cancel');
+        };
+    };
 })();
-

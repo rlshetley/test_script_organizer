@@ -5,140 +5,137 @@
         .module('app')
         .controller('projectController', projectController);
 
-    projectController.$inject = ['$scope', 'projectService', 'testEventService', '$modal', '$location'];
+    projectController.$inject = ['$scope', 'projectService', 'testEventService', '$modal', '$location', 'notifyService'];
 
-	function projectController($scope, projectService, testEventService, $modal, $location)
-	{
-		$scope.loadProjects = function () {
-			projectService.query()
-				.$promise.then(function (data) {
-					$scope.projects = data;
-				});
-		}
+    function projectController($scope, projectService, testEventService, $modal, $location, notifyService){
+        this.init = function () {
+            projectService.query().$promise
+                .then(
+                    function (data) {
+                        $scope.projects = data;
+                    }
+                )
+                .catch(
+                    function(e){
+                        notifyService.onError("Unable to load projects", e);
+                    }
+                );
+        };
 
-		$scope.add = function () {
-			var modalInstance = $modal.open({
-				templateUrl: 'static/App/Views/ProjectModalDialog.html',
-				controller: modalProjectController,
-				resolve:
-				{
-					project: function () {
-						return { id: 0, name: '' };
-					},
-					title: function()
-					{
-						return "Add a Project";
-					}
-				}
-			});
+        $scope.add = function () {
 
-			modalInstance.result.then(function (project)
-			{
-				projectService.save(project)
-					.$promise.then(function (data)
-					{
-						$scope.projects.push(data);
-					});
-			},
-			function ()
-			{
-			});
-		};
+            var modalInstance = $modal.open({
+                templateUrl: 'static/App/Views/ProjectModalDialog.html',
+                controller: modalProjectController,
+                resolve:{
+                    project: function () {
+                        return { id: 0, name: '' };
+                    },
+                    title: function(){
+                        return "Add a Project";
+                    }
+                }
+            });
 
-		$scope.remove = function (id) {
-			projectService.remove({ id: id });
-		};
+            modalInstance.result.then(function (project){
+                projectService.save(project).$promise
+                    .then(
+                        function (data){
+                            $scope.projects.push(data);
 
-		$scope.createTestEvent = function(projectId){
-			var modalInstance = $modal.open({
-				templateUrl: 'static/App/Views/TestEventModalDialog.html',
-				controller: modalTestEventController,
-				resolve:
-				{
-					testEvent: function ()
-					{
-						return { id: 0, name: '', project: projectId, date: moment().toJSON() };
-					}
-				}
-			});
+                            notifyService.onSuccess("Project successfully added");
+                        }
+                    )
+                    .catch(
+                        function(e){
+                            notifyService.onError("Unable to add project", e);
+                        }
+                    );
+            });
+        };
 
-			modalInstance.result.then(function (project)
-			{
-				testEventService.save(project)
-					.$promise.then(function (data)
-					{
-						$location.path('/testEvent/' + data.id);
-					});
-			},
-			function ()
-			{
-			});
-		};
+        $scope.remove = function (id) {
+            projectService.remove({ id: id }).$promise
+                .then(
+                    function (data){
+                        notifyService.onSuccess("Project successfully removed");
+                    }
+                )
+                .catch(
+                    function(e){
+                        notifyService.onError("Unable to remove project", e);
+                    }
+                );
+        };
 
-		$scope.saveProject = function(project)
-		{
-			projectService.update(project);
-		};
+        $scope.createTestEvent = function(projectId){
+            var modalInstance = $modal.open({
+                templateUrl: 'static/App/Views/TestEventModalDialog.html',
+                controller: modalTestEventController,
+                resolve:{
+                    testEvent: function (){
+                        return { id: 0, name: '', project: projectId, date: moment().toJSON() };
+                    }
+                }
+            });
 
-		$scope.loadProjects();
+            modalInstance.result.then(function (project)
+                testEventService.save(project).$promise
+                    .then(
+                        function (data){
+                            $location.path('/testEvent/' + data.id);
+                        }
+                    )
+                    .catch(
+                        function(e){
+                            notifyService.onError("Unable to create test event", e);
+                        }
+                    );
+            });
+        };
 
-		$scope.itemsPerPage = 5;
-		$scope.currentPage = 0;
-		$scope.projects = [];
+        $scope.saveProject = function(project){
+            projectService.update(project).$promise
+                .then(
+                    function (data){
+                        notifyService.onSuccess("Project successfully saved");
+                    }
+                )
+                .catch(
+                    function(e){
+                        notifyService.onError("Unable to update project", e);
+                    }
+                );
+        };
 
-		$scope.prevPage = function () {
-			if ($scope.currentPage > 0) {
-				$scope.currentPage--;
-			}
-		};
+        $scope.projects = [];
 
-		$scope.prevPageDisabled = function () {
-			return $scope.currentPage === 0 ? "disabled" : "";
-		};
+        this.init();
+    };
 
-		$scope.pageCount = function () {
-			return Math.ceil($scope.projects.length / $scope.itemsPerPage);
-		};
+    var modalProjectController = function ($scope, $modalInstance, project, title) {
+        $scope.project = project;
 
-		$scope.nextPage = function () {
-			if ($scope.currentPage < $scope.pageCount()) {
-				$scope.currentPage++;
-			}
-		};
+        $scope.title = title;
 
-		$scope.nextPageDisabled = function () {
-			return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
-		};
-	};
+        $scope.ok = function () {
+            $modalInstance.close($scope.project);
+        };
 
-	var modalProjectController = function ($scope, $modalInstance, project, title) {
-		$scope.project = project;
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    };
 
-		$scope.title = title;
+    var modalTestEventController = function ($scope, $modalInstance, testEvent){
+        $scope.testEvent = testEvent;
 
-		$scope.ok = function () {
-			$modalInstance.close($scope.project);
-		};
+        $scope.ok = function (){
+            $modalInstance.close($scope.testEvent);
+        };
 
-		$scope.cancel = function () {
-			$modalInstance.dismiss('cancel');
-		};
-	};
-
-	var modalTestEventController = function ($scope, $modalInstance, testEvent)
-	{
-		$scope.testEvent = testEvent;
-
-		$scope.ok = function ()
-		{
-			$modalInstance.close($scope.testEvent);
-		};
-
-		$scope.cancel = function ()
-		{
-			$modalInstance.dismiss('cancel');
-		};
-	};
+        $scope.cancel = function (){
+            $modalInstance.dismiss('cancel');
+        };
+    };
 })();
-
-

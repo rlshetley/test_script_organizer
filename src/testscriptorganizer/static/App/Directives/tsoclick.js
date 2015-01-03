@@ -7,28 +7,23 @@
 
     tsoclick.$inject = ['$location'];
     
-    function tsoclick($location)
-    {
+    function tsoclick($location){
         return {
-        restrict: 'AE',
-        link: function (scope, element, attrs)
-        {
-            var path;
+            restrict: 'AE',
+            link: function (scope, element, attrs){
+                var path;
 
-            attrs.$observe('tsoclick', function (val)
-            {
-                path = val;
-            });
-
-            element.bind('click', function ()
-            {
-                scope.$apply(function ()
-                {
-                    $location.path(path);
+                attrs.$observe('tsoclick', function (val){
+                    path = val;
                 });
-            });
-        }
-    };
+
+                element.bind('click', function (){
+                    scope.$apply(function (){
+                        $location.path(path);
+                    });
+                });
+            }
+        };
     };
 
 })();

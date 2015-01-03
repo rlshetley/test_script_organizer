@@ -7,25 +7,30 @@
 
     completeTestController.$inject = ['$scope', 'testResultService', 'testSessionService', '$routeParams'];
 
-	function completeTestController($scope, testResultService, testSessionService, $routeParams) {
-		$scope.loadTestResults = function () {
-			testResultService.getByTestSession({ testSessionId: $scope.testSessionId })
-					.$promise.then(
-						function (value) {
-							$scope.testResults = value;
+    function completeTestController($scope, testResultService, testSessionService, $routeParams) {
+        this.init = function () {
+            testResultService.getByTestSession({ testSessionId: $scope.testSessionId }).$promise
+                    .then(
+                        function (value) {
+                            $scope.testResults = value;
 
-							// Need to set the finish date/time for the test session
-							value.finishDate = moment().toJSON();
+                            // Need to set the finish date/time for the test session
+                            value.finishDate = moment().toJSON();
 
-							testSessionService.update(value);
-						}
-					);
-		}
+                            testSessionService.update(value);
+                        }
+                    )
+                    .catch(
+                        function(e){
+                            $scope.$log.error(e);
+                        }
+                    );
+        }
 
-		$scope.testSessionId = $routeParams.testSessionId;
+        $scope.testSessionId = $routeParams.testSessionId;
 
-		$scope.testResults;
+        $scope.testResults;
 
-		$scope.loadTestResults();
-	};
+        this.init();
+    };
 })();
