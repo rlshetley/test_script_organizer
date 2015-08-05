@@ -3,9 +3,10 @@ from flask import Flask, render_template
 
 # Import SQLAlchemy
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask_restful import Api
 
-# Define the WSGI application object
 app = Flask(__name__)
+api = Api(app)
 
 # Configurations
 app.config.from_object('config')
@@ -14,14 +15,6 @@ app.config.from_object('config')
 # by modules and controllers
 db = SQLAlchemy(app)
 
-# Import a module / component using its blueprint handler variable (mod_auth)
-from app.mod_auth.controllers import mod_auth as auth_module
+from app.controllers import Project
 
-# Register blueprint(s)
-app.register_blueprint(auth_module)
-# app.register_blueprint(xyz_module)
-# ..
-
-# Build the database:
-# This will create the database file using SQLAlchemy
-db.create_all()
+api.add_resource(Project, '/<string:project_id>')
