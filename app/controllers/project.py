@@ -1,5 +1,6 @@
 
 from flask import make_response, request
+from flask.json import jsonify
 from flask_restful import Resource
 from app import db
 from app.models import Project
@@ -7,14 +8,21 @@ from app.models import Project
 class ProjectController(Resource):
     def get(self, project_id):
         project = Project.query.filter(Project.id == project_id).first()
-        return make_response(project, 200)
+
+        resp = jsonify(project.serialize())
+        resp.status_code = 200
+
+        return resp
 
     def put(self, project_id):
         project = Project.query.filter(Project.id == project_id).first()
 
         project.name = request.data['name']
 
-        return make_response(project, 201)
+        resp = jsonify(project.serialize())
+        resp.status_code = 201
+
+        return resp
 
     def delete(self, project_id):
         project = Project.query.filter(Project.id == project_id).first()
@@ -27,7 +35,9 @@ class ProjectController(Resource):
 
 class ProjectListController(Resource):
     def get(self):
-        return make_response(Project.query.all(), 200)
+         resp = jsonify(json_list=[i.serialize() for i in Project.query.all()])
+         resp.status_code = 200
+         return resp
 
     def post(self):
         project = Project()
@@ -37,4 +47,7 @@ class ProjectListController(Resource):
         db.session.add(project)
         db.session.commit()
 
-        return make_response(project, 201)
+        resp = jsonify(project.serialize())
+        resp.status_code = 201
+
+        return resp

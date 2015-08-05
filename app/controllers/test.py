@@ -6,7 +6,11 @@ from app.models import TestSuite, Test
 class TestController(Resource):
     def get(self, test_id):
         test = Test.query.filter(Test.id == test_id).first()
-        return make_response(test, 200)
+
+        resp = jsonify(test.serialize())
+        resp.status_code = 200
+
+        return resp
 
     def put(self, test_id):
         test = Test.query.filter(Test.id == test_id).first()
@@ -17,7 +21,10 @@ class TestController(Resource):
 
         test.test_suite = test_suite
 
-        return make_response(test, 201)
+        resp = jsonify(test.serialize())
+        resp.status_code = 201
+
+        return resp
 
     def delete(self, test_id):
 
@@ -31,7 +38,9 @@ class TestController(Resource):
 
 class TestListController(Resource):
     def get(self):
-        return make_response(Test.query.all(), 200)
+         resp = jsonify(json_list=[i.serialize() for i in Test.query.all()])
+         resp.status_code = 200
+         return resp
 
     def post(self):
         test = Test()
@@ -45,4 +54,7 @@ class TestListController(Resource):
         db.session.add(test)
         db.session.commit()
 
-        return make_response(test, 201)
+        resp = jsonify(test.serialize())
+        resp.status_code = 201
+
+        return resp

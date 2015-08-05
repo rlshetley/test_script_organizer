@@ -10,17 +10,37 @@ class Project(Base):
     __tablename__ = 'projects'
     name = Column(String(225),  nullable=False)
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
 
 class TestSuite(Base):
     __tablename__ = 'test-suites'
     name = Column(String(225),  nullable=False)
     project = Column(Integer, ForeignKey('project.id'))
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'project_id': self.project.id
+        }
+
 
 class Test(Base):
     __tablename__ = 'tests'
     name = Column(String(225),  nullable=False)
     test_suite = Column(Integer, ForeignKey('testSuite.id'))
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'testSuite_id': self.test_suite.id
+        }
 
 
 class TestStep(Base):
@@ -31,6 +51,17 @@ class TestStep(Base):
     description = Column(String(225),  nullable=False)
     step_number = Column(Integer, nullable=False)
     test = Column(Integer, ForeignKey('test.id'))
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'action': self.action,
+            'expectedResult': self.expected_result,
+            'description': self.description,
+            'stepNumber': self.step_number,
+            'test_id': self.test.id
+        }
 
 
 class TestSession(Base):
@@ -59,6 +90,13 @@ class TestEvent(Base):
     name = Column(String(225),  nullable=False)
     date = Column(DateTime)
     test_suite = Column(Integer, ForeignKey('testSuite.id'))
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'testSuite_id': self.test_suite.id
+        }
 
 
 class TestEventResult(Base):

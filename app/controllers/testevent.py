@@ -1,4 +1,5 @@
 from flask import make_response, request
+from flask.json import jsonify
 from flask_restful import Resource
 from app import db
 from app.models import TestSuite, TestEvent
@@ -6,7 +7,11 @@ from app.models import TestSuite, TestEvent
 class TestEventController(Resource):
     def get(self, testevent_id):
         test_event = TestEvent.query.filter(TestEvent.id == testevent_id).first()
-        return make_response(test_event, 200)
+
+        resp = jsonify(test_event.serialize())
+        resp.status_code = 200
+
+        return resp
 
     def put(self, testevent_id):
         test_event = TestEvent.query.filter(TestEvent.id == testevent_id).first()
@@ -17,7 +22,10 @@ class TestEventController(Resource):
 
         test_event.test_suite = test_suite
 
-        return make_response(test_event, 201)
+        resp = jsonify(test_event.serialize())
+        resp.status_code = 201
+
+        return resp
 
     def delete(self, testevent_id):
 
@@ -31,7 +39,9 @@ class TestEventController(Resource):
 
 class TestEventListController(Resource):
     def get(self):
-        return make_response(TestEvent.query.all(), 200)
+         resp = jsonify(json_list=[i.serialize() for i in TestEvent.query.all()])
+         resp.status_code = 200
+         return resp
 
     def post(self):
         test_event = TestEvent()
@@ -45,4 +55,7 @@ class TestEventListController(Resource):
         db.session.add(test_event)
         db.session.commit()
 
-        return make_response(test_event, 201)
+        resp = jsonify(test_event.serialize())
+        resp.status_code = 201
+
+        return resp

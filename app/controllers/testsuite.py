@@ -5,19 +5,26 @@ from app.models import TestSuite, Project
 
 class TestSuiteController(Resource):
     def get(self, testsuite_id):
-        testSuite = TestSuite.query.filter(TestSuite.id == testsuite_id).first()
-        return make_response(testSuite, 200)
+        test_suite = TestSuite.query.filter(TestSuite.id == testsuite_id).first()
+
+        resp = jsonify(test_suite.serialize())
+        resp.status_code = 200
+
+        return resp
 
     def put(self, testsuite_id):
-        testSuite = TestSuite.query.filter(TestSuite.id == testsuite_id).first()
+        test_suite = TestSuite.query.filter(TestSuite.id == testsuite_id).first()
 
-        testSuite.name = request.data['name']
+        test_suite.name = request.data['name']
 
         project = Project.query.filter(Project.id == request.data['project_id']).first()
 
-        testSuite.project = project
+        test_suite.project = project
 
-        return make_response(testSuite, 201)
+        resp = jsonify(test_suite.serialize())
+        resp.status_code = 201
+
+        return resp
 
     def delete(self, testsuite_id):
 
@@ -31,18 +38,23 @@ class TestSuiteController(Resource):
 
 class TestSuiteListController(Resource):
     def get(self):
-        return make_response(TestSuite.query.all(), 200)
+         resp = jsonify(json_list=[i.serialize() for i in TestSuite.query.all()])
+         resp.status_code = 200
+         return resp
 
     def post(self):
-        testSuite = TestSuite()
+        test_suite = TestSuite()
 
-        testSuite.name = request.data['name']
+        test_suite.name = request.data['name']
 
         project = Project.query.filter(Project.id == request.data['project_id']).first()
 
-        testSuite.project = project
+        test_suite.project = project
 
-        db.session.add(testSuite)
+        db.session.add(test_suite)
         db.session.commit()
 
-        return make_response(testSuite, 201)
+        resp = jsonify(test_suite.serialize())
+        resp.status_code = 201
+
+        return resp
