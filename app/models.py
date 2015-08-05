@@ -57,9 +57,9 @@ class TestStep(Base):
             'id': self.id,
             'name': self.name,
             'action': self.action,
-            'expectedResult': self.expected_result,
+            'expected_result': self.expected_result,
             'description': self.description,
-            'stepNumber': self.step_number,
+            'step_number': self.step_number,
             'test_id': self.test.id
         }
 
@@ -74,6 +74,18 @@ class TestSession(Base):
     start_date = Column(DateTime)
     finish_date = Column(DateTime)
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'server': self.server,
+            'browser': self.browser,
+            'tester': self.tester,
+            'test_id': self.test.id,
+            'start_date': self.start_date,
+            'finish_date': self.finish_date
+        }
+
 
 class TestResult(Base):
     __tablename__ = 'test-results'
@@ -83,6 +95,17 @@ class TestResult(Base):
     comments = Column(String(225),  nullable=False)
     test_session = Column(Integer, ForeignKey('testSession.id'))
     is_pass = Column(Boolean)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'actual_result': self.actual_result,
+            'comments': self.comments,
+            'is_pass': self.is_pass,
+            'testStep_id': self.test_step.id,
+            'testSession_id': self.test_session.id
+        }
 
 
 class TestEvent(Base):
@@ -103,3 +126,10 @@ class TestEventResult(Base):
     __tablename__ = 'test-event-results'
     test_event = Column(Integer, ForeignKey('testEvent.id'))
     test_session = Column(Integer, ForeignKey('testSession.id'))
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'test_event': self.test_event.serialize(),
+            'test_session': self.test_session.serialize()
+        }

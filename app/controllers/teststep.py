@@ -8,8 +8,8 @@ def map_test_step(test_step, request):
     test_step.name = request.data['name']
     test_step.action = request.data['action']
     test_step.description = request.data['description']
-    test_step.expected_result = request.data['expectedResult']
-    test_step.step_number = request.data['stepNumber']
+    test_step.expected_result = request.data['expected_result']
+    test_step.step_number = request.data['step_number']
 
     return test_step
 
@@ -46,7 +46,7 @@ class TestStepController(Resource):
         return make_response('', 204)
 
 
-class TestEventListController(Resource):
+class TestStepListController(Resource):
     def get(self):
          resp = jsonify(json_list=[i.serialize() for i in TestStep.query.all()])
          resp.status_code = 200
