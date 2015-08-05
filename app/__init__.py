@@ -15,6 +15,7 @@ app.config.from_object('config')
 # by modules and controllers
 db = SQLAlchemy(app)
 
-from app.controllers import Project
+from app.controllers import ProjectController, ProjectListController
 
-api.add_resource(Project, '/<string:project_id>')
+api.add_resource(ProjectController, '/projects/<int:project_id>')
+api.add_resource(ProjectListController, '/projects')

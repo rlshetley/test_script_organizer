@@ -6,3 +6,6 @@
 
 /ui/Scripts
 /dev-env
+*.pyc
+*.pyo
+app.db
