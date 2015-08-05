@@ -15,7 +15,13 @@ app.config.from_object('config')
 # by modules and controllers
 db = SQLAlchemy(app)
 
-from app.controllers import ProjectController, ProjectListController
+from app.controllers.project import ProjectController, ProjectListController
+from app.controllers.testsuite import TestSuiteController, TestSuiteListController
+from app.controllers.test import TestController, TestListController
 
-api.add_resource(ProjectController, '/projects/<int:project_id>')
-api.add_resource(ProjectListController, '/projects')
+api.add_resource(ProjectController, '/projects/<int:testsuite_id>')
+api.add_resource(ProjectListController, '/projects/')
+api.add_resource(TestSuiteController, '/testsuites/<int:testsuite_id>')
+api.add_resource(TestSuiteListController, '/testsuites/')
+api.add_resource(TestController, '/tests/<int:test_id>')
+api.add_resource(TestListController, '/tests/')
