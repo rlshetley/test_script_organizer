@@ -20,7 +20,7 @@ class Project(Base):
 class TestSuite(Base):
     __tablename__ = 'test-suites'
     name = Column(String(225),  nullable=False)
-    project = Column(Integer, ForeignKey('project.id'))
+    project = Column(Integer, ForeignKey('projects.id'))
 
     def serialize(self):
         return {
@@ -33,7 +33,7 @@ class TestSuite(Base):
 class Test(Base):
     __tablename__ = 'tests'
     name = Column(String(225),  nullable=False)
-    test_suite = Column(Integer, ForeignKey('testSuite.id'))
+    test_suite = Column(Integer, ForeignKey('test-suites.id'))
 
     def serialize(self):
         return {
@@ -50,7 +50,7 @@ class TestStep(Base):
     expected_result = Column(String(225),  nullable=False)
     description = Column(String(225),  nullable=False)
     step_number = Column(Integer, nullable=False)
-    test = Column(Integer, ForeignKey('test.id'))
+    test = Column(Integer, ForeignKey('tests.id'))
 
     def serialize(self):
         return {
@@ -70,7 +70,7 @@ class TestSession(Base):
     server = Column(String(225),  nullable=False)
     browser = Column(String(225),  nullable=False)
     tester = Column(String(225),  nullable=False)
-    test = Column(Integer, ForeignKey('test.id'))
+    test = Column(Integer, ForeignKey('tests.id'))
     start_date = Column(DateTime)
     finish_date = Column(DateTime)
 
@@ -90,10 +90,10 @@ class TestSession(Base):
 class TestResult(Base):
     __tablename__ = 'test-results'
     name = Column(String(225),  nullable=False)
-    test_step = Column(Integer, ForeignKey('testStep.id'))
+    test_step = Column(Integer, ForeignKey('test-steps.id'))
     actual_result = Column(String(225),  nullable=False)
     comments = Column(String(225),  nullable=False)
-    test_session = Column(Integer, ForeignKey('testSession.id'))
+    test_session = Column(Integer, ForeignKey('test-sessions.id'))
     is_pass = Column(Boolean)
 
     def serialize(self):
@@ -112,7 +112,7 @@ class TestEvent(Base):
     __tablename__ = 'test-events'
     name = Column(String(225),  nullable=False)
     date = Column(DateTime)
-    test_suite = Column(Integer, ForeignKey('testSuite.id'))
+    test_suite = Column(Integer, ForeignKey('test-suites.id'))
 
     def serialize(self):
         return {
@@ -124,8 +124,8 @@ class TestEvent(Base):
 
 class TestEventResult(Base):
     __tablename__ = 'test-event-results'
-    test_event = Column(Integer, ForeignKey('testEvent.id'))
-    test_session = Column(Integer, ForeignKey('testSession.id'))
+    test_event = Column(Integer, ForeignKey('test-events.id'))
+    test_session = Column(Integer, ForeignKey('test-sessions.id'))
 
     def serialize(self):
         return {

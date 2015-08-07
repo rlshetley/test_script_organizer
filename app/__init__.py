@@ -22,7 +22,12 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 def register_controller(controller, endpoint, url, methods=['GET', 'PUT', 'DELETE']):
-    view_func = auth.login_required(controller.as_view(endpoint))
+    print ("registering " + endpoint)
+    view_func = controller.as_view(endpoint)
     app.add_url_rule(url, view_func=view_func, methods=methods)
 
 db.create_all()
+
+from app.core.controllers import project
+from app.roles import *
+from app.user_admin import *

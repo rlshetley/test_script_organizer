@@ -3,7 +3,8 @@ from flask import make_response, request
 from flask.views import MethodView
 from flask.json import jsonify
 from app import db, register_controller
-from app.models import Project
+from app.core.models import Project
+import json
 
 class ProjectController(MethodView):
     def get(self, project_id):
@@ -17,7 +18,9 @@ class ProjectController(MethodView):
     def put(self, project_id):
         project = Project.query.filter(Project.id == project_id).first()
 
-        project.name = request.data['name']
+        data = request.get_data(as_text=True)
+        request_data = json.loads(data)
+        project.name = request_data['name']
 
         resp = jsonify(project.serialize())
         resp.status_code = 201
@@ -42,7 +45,9 @@ class ProjectListController(MethodView):
     def post(self):
         project = Project()
 
-        project.name = request.data['name']
+        data = request.get_data(as_text=True)
+        request_data = json.loads(data)
+        project.name = request_data['name']
 
         db.session.add(project)
         db.session.commit()
