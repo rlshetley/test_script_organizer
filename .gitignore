@@ -10,3 +10,4 @@
 *.pyo
 app.db
 /node_modules
+/ui/node_modules

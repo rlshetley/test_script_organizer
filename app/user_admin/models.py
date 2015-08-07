@@ -19,7 +19,7 @@ class User(db.Model):
     roles = db.relationship(
         'Role',
         secondary=users_roles,
-        backref=db.backref('roles', lazy='dynamic')
+        backref=db.backref('users', lazy='dynamic')
     )
 
     def set_password(self, password):
@@ -29,7 +29,8 @@ class User(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'name': self.name
+            'name': self.name,
+            'roles': i.serialize() for i in self.roles
         }
 
 @auth.verify_password

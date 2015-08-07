@@ -35,9 +35,9 @@ class ProjectController(MethodView):
 
 class ProjectListController(MethodView):
     def get(self):
-         resp = jsonify(json_list=[i.serialize() for i in Project.query.all()])
-         resp.status_code = 200
-         return resp
+        resp = jsonify(json_list=[i.serialize() for i in Project.query.all()])
+        resp.status_code = 200
+        return resp
 
     def post(self):
         project = Project()
