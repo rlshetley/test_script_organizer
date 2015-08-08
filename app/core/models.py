@@ -26,7 +26,7 @@ class TestSuite(Base):
         return {
             'id': self.id,
             'name': self.name,
-            'project_id': self.project.id
+            'project_id': self.project
         }
 
 
@@ -39,7 +39,7 @@ class Test(Base):
         return {
             'id': self.id,
             'name': self.name,
-            'testSuite_id': self.test_suite.id
+            'testsuite_id': self.test_suite
         }
 
 

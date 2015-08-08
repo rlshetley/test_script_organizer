@@ -2,7 +2,7 @@ from flask import make_response, request
 from flask.json import jsonify
 from flask.views import MethodView
 from app import db, register_controller
-from app.models import TestEventResult,TestResult, TestEvent
+from app.core.models import TestEventResult, TestSession, TestEvent
 
 def map_test_event_result(test__event_result, request):
 
@@ -52,7 +52,7 @@ class TestEventResultListController(MethodView):
          return resp
 
     def post(self):
-        test_event_result = TestResult()
+        test_event_result = TestEventResult()
 
         test_event_result = map_test_event_result(test_event_result, request)
 

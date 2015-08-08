@@ -1,0 +1,35 @@
+﻿<div class="modal-header">
+    <h3>Add User</h3>
+</div>
+<div class="modal-body">
+    <label class="control-label">User Name</label>
+    <input id="userName" type="text" ng-model="user.username" />
+    <br />
+    <label class="control-label">Password</label>
+    <input id="password" type="password" ng-model="user.password" />
+    <br />
+    <label class="control-label">Confirm Password</label>
+    <input id="confirmPassword" type="password" ng-model="user.confirmPassword" />
+    <br />
+    <label class="control-label">First Name</label>
+    <input id="firstName" type="text" ng-model="user.firstname" />
+    <br />
+    <label class="control-label">Last Name</label>
+    <input id="lastName" type="text" ng-model="user.lastname" />
+    <br />
+    <label class="control-label">Email</label>
+    <input id="email" name="email" type="email" ng-model="user.email"/>
+    <br />
+    <label class="control-label">Is Active</label>
+    <input id="isActive" name="isActive" type="checkbox" ng-model="user.is_active"/>
+    <br />
+    <label class="control-label">Is Admin User</label>
+    <input id="isAdmin" name="isAdmin" type="checkbox" ng-model="user.is_staff"/>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">
+        Save</button>
+    <button class="btn btn-warning" ng-click="cancel()">
+        Cancel</button>
+</div>

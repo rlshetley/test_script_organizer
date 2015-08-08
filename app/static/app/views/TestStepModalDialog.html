@@ -1,0 +1,21 @@
+﻿<div class="modal-header">
+    <h3 ng-model="title"></h3>
+</div>
+<div class="modal-body">
+    <label class="control-label">Name</label>
+    <input id="testStepName" type="text" ng-model="testStep.name" />
+    <br />
+    <label class="control-label">Description</label>
+    <textarea id="testStepDescription" class="form-control" rows="3" ng-model="testStep.description"></textarea>
+    <br />
+    <label class="control-label">Action</label>
+    <textarea id="testStepAction" class="form-control" rows="3" ng-model="testStep.action"></textarea>
+    <br />
+    <label class="control-label">Expected Result</label>
+    <textarea id="testStepExpectedResult" class="form-control" rows="3" ng-model="testStep.expectedResult"></textarea>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">Save</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

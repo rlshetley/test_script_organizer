@@ -2,23 +2,25 @@ from flask import make_response, request
 from flask.json import jsonify
 from flask.views import MethodView
 from app import db, register_controller
-from app.models import TestResult, TestStep, TestSession
+from app.core.models import TestResult, TestStep, TestSession
+
 
 def map_test_result(test_result, request):
-    test_result.name = request.data['name']
-    test_result.action = request.data['actual_results']
-    test_result.description = request.data['comments']
-    test_result.expected_result = request.data['is_pass']
+    test_result.name = request.json_data['name']
+    test_result.action = request.json_data['actual_results']
+    test_result.description = request.json_data['comments']
+    test_result.expected_result = request.json_data['is_pass']
 
-    test_step = TestStep.query.filter(TestStep.id == request.data['teststep_id']).first()
+    test_step = TestStep.query.filter(TestStep.id == request.json_data['teststep_id']).first()
 
     test_result.test_step = test_step
 
-    test_session = TestSession.query.filter(TestSession.id == request.data['testsession_id']).first()
+    test_session = TestSession.query.filter(TestSession.id == request.json_data['testsession_id']).first()
 
     test_result.test_session = test_session
 
     return test_result
+
 
 class TestResultController(MethodView):
     def get(self, testresult_id):
@@ -40,7 +42,6 @@ class TestResultController(MethodView):
         return resp
 
     def delete(self, testresult_id):
-
         test_result = TestResult.query.filter(TestResult.id == testresult_id).first()
 
         db.session.delete(test_result)
@@ -59,9 +60,9 @@ class TestResultListController(MethodView):
         else:
             results = TestResult.query.all()
 
-         resp = jsonify(json_list=[i.serialize() for i in results])
-         resp.status_code = 200
-         return resp
+        resp = jsonify(json_list=[i.serialize() for i in results])
+        resp.status_code = 200
+        return resp
 
     def post(self):
         test_result = TestResult()
@@ -75,6 +76,7 @@ class TestResultListController(MethodView):
         resp.status_code = 201
 
         return resp
+
 
 register_controller(TestResultController, 'test_result_api', '/testresults/<int:testresult_id>')
 register_controller(TestResultListController, 'test_result_list_api', '/testresults/', ['GET', 'POST'])

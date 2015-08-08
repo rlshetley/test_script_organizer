@@ -2,7 +2,7 @@ from flask import make_response, request
 from flask.json import jsonify
 from flask.views import MethodView
 from app import db, register_controller
-from app.models import Test, TestSession
+from app.core.models import Test, TestSession
 
 def map_test_session(test_session, request):
     test_session.name = request.data['name']
