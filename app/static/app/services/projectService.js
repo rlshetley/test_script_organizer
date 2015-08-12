@@ -10,7 +10,7 @@
     function projectService($resource)
     {
         return $resource(
-            'api/projects/:Id',
+            '/api/projects/:Id',
             {},
             {
                 update: { method: 'PUT', isArray: false }

@@ -11,13 +11,13 @@
     {
         return {
             users: $resource(
-                    'api/users/:id',
+                    '/api/users/:id',
                     {},
                     {
                         update: { method: 'PUT', isArray: false }
                     }),
             roles: $resource(
-                    'api/roles',
+                    '/api/roles',
                     {},
                     {})
         };

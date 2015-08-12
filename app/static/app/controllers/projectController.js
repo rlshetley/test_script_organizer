@@ -79,7 +79,7 @@
                 }
             });
 
-            modalInstance.result.then(function (project)
+            modalInstance.result.then(function (project){
                 testEventService.save(project).$promise
                     .then(
                         function (data){

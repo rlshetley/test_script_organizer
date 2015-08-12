@@ -11,7 +11,7 @@
     {
         var scope = this;
 
-        scope.isLogged = false;
+        scope.isLogged = true;
         scope.userName = '';
         scope.userRoles = [];
         scope.userId = 0;
@@ -35,7 +35,20 @@
                 "password": password,
             };
 
-            $http.post("api-token-auth/", user_data)
+            setTimeout(function() {
+                //$cookieStore.put('djangotoken', data.token);
+                //$http.defaults.headers.common['Authorization'] = 'Token ' + data.token;
+
+                scope.isLogged = true;
+
+                // Notify anyone who is listening that the log in event has happened
+                $rootScope.$broadcast('loggedIn', true);
+
+                deferred.resolve();
+              }, 1000);
+
+
+            /*$http.post("api-token-auth/", user_data)
                 .success(function (data) {
                     $cookieStore.put('djangotoken', data.token);
                     $http.defaults.headers.common['Authorization'] = 'Token ' + data.token;
@@ -49,7 +62,7 @@
                 })
                 .catch(function (data) {
                     deferred.reject(error.data.error);
-                });
+                });*/
 
             return deferred.promise;
         };
@@ -68,7 +81,7 @@
         };
 
         function checkLogin() {
-            if ($cookieStore.get('djangotoken')) {
+            /*if ($cookieStore.get('djangotoken')) {
                 this.isLogged = true;
 
                 $http.defaults.headers.common['Authorization'] = 'Token ' + $cookieStore.get('djangotoken');
@@ -76,7 +89,8 @@
                 return true;
             }
 
-            return false;
+            return false;*/
+            return true;
         };
     };
 })();

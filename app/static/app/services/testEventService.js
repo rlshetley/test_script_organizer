@@ -10,7 +10,7 @@
     function testEventService($resource)
     {
         return $resource(
-            'api/testEvents/:Id',
+            '/api/testevents/:Id',
             {},
             {
                 getByProject: { method: 'GET', url: 'api/testEventsbyproject', isArray: true },

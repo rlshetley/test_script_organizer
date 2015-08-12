@@ -1,6 +1,7 @@
 # Import flask and template operators
 from flask import Flask, request
 import json
+import os
 
 # Import SQLAlchemy
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -8,7 +9,9 @@ from flask.ext.sqlalchemy import SQLAlchemy
 # Import Basic Authentication modules
 from flask.ext.httpauth import HTTPBasicAuth
 
-app = Flask(__name__, static_folder='static')
+ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+
+app = Flask(__name__, template_folder=ASSETS_DIR, static_folder=ASSETS_DIR)
 
 auth = HTTPBasicAuth()
 
@@ -24,10 +27,6 @@ def before_request():
     if request.method in ['POST', 'PUT', 'PATCH']:
         data = request.get_data(as_text=True)
         request.json_data = json.loads(data)
-
-@app.route('/<string:page_name>/')
-def static_page(page_name):
-    return app.send_static_file('%s.html' % page_name)
 
 
 def register_controller(controller, endpoint, url, methods=['GET', 'PUT', 'DELETE']):

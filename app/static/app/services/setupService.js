@@ -11,7 +11,7 @@
     function setupService($resource)
     {
         return $resource(
-            'api/install',
+            '/api/install',
             {},
             {});
     }

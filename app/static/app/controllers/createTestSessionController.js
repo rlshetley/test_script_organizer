@@ -22,7 +22,7 @@
         testEventService,
         testEventResultsService,
         $routeParams,
-        $location.
+        $location,
         notifyService) {
 
         this.init = function () {

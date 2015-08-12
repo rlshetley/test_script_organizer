@@ -10,7 +10,7 @@
     function testSessionService($resource)
     {
         return $resource(
-            'api/testSessions/:Id',
+            'api/testsessions/:Id',
             {},
             {
                 update: { method: 'PUT', isArray: false }

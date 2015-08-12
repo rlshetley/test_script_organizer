@@ -10,7 +10,7 @@
     function testEventResultsService($resource)
     {
         return $resource(
-            'api/testEventResults/:Id',
+            '/api/testeventresults/:Id',
             {},
             {
                 update: { method: 'PUT', isArray: false }

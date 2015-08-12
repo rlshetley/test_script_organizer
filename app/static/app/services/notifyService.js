@@ -21,7 +21,7 @@
         };
 
         function onError(msg, error){
-            $scope.$log.error(error);
+            $log.error(error);
             addAlert('danger', msg);
         };
 

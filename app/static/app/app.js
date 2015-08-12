@@ -4,103 +4,103 @@
           .when(
             '/projects',
             {
-                templateUrl: 'static/App/Views/ProjectList.html',
+                templateUrl: 'app/views/ProjectList.html',
                 controller: 'projectController'
             })
           .when(
             '/tests/:testSuiteId',
             {
-                templateUrl: 'static/App/Views/TestList.html',
+                templateUrl: 'app/views/TestList.html',
                 controller: 'testController'
             })
           .when(
             '/edittest/:testId',
             {
-                templateUrl: 'static/App/Views/EditTest.html',
+                templateUrl: 'app/views/EditTest.html',
                 controller: 'editTestController'
             })
           .when(
             '/addtest/:testId/:testSuiteId',
             {
-                templateUrl: 'static/App/Views/EditTest.html',
+                templateUrl: 'app/views/EditTest.html',
                 controller: 'editTestController'
             })
           .when(
             '/createTestSession/:testId/:testEventId',
             {
-                templateUrl: 'static/App/Views/CreateTestSession.html',
+                templateUrl: 'app/views/CreateTestSession.html',
                 controller: 'createTestSessionController'
             })
           .when(
             '/executeTest/:testSessionId/:testId',
             {
-                templateUrl: 'static/App/Views/ExecuteTest.html',
+                templateUrl: 'app/views/ExecuteTest.html',
                 controller: 'executeTestController'
             })
           .when(
             '/completeTest/:testSessionId',
             {
-                templateUrl: 'static/App/Views/CompleteTest.html',
+                templateUrl: 'app/views/CompleteTest.html',
                 controller: 'completeTestController'
             })
           .when(
             '/testEvent/:testEventId',
             {
-                templateUrl: 'static/App/Views/TestEvent.html',
+                templateUrl: 'app/views/TestEvent.html',
                 controller: 'testEventController'
             })
           .when(
             '/projectTestEvents/:projectId',
             {
-                templateUrl: 'static/App/Views/TestEventList.html',
+                templateUrl: 'app/views/TestEventList.html',
                 controller: 'projectTestEventListController'
             })
           .when(
             '/testEvents/:testSuiteid',
             {
-                templateUrl: 'static/App/Views/TestEventList.html',
+                templateUrl: 'app/views/TestEventList.html',
                 controller: 'testEventListController'
             })
           .when(
             '/testSuites/:projectId',
             {
-                templateUrl: 'static/App/Views/TestSuiteList.html',
+                templateUrl: 'app/views/TestSuiteList.html',
                 controller: 'testSuiteController'
             })
           .when(
             '/login',
             {
-                templateUrl: 'static/App/Views/Login.html',
+                templateUrl: 'app/views/Login.html',
                 controller: 'loginController'
             })
           .when(
             '/admin/user',
             {
-                templateUrl: 'static/App/Views/UserAdmin.html',
+                templateUrl: 'app/views/UserAdmin.html',
                 controller: 'userAdminController',
                 role: 'Admin'
             })
           .when(
             '/profile/user',
             {
-                templateUrl: 'static/App/Views/Profile.html',
+                templateUrl: 'app/views/Profile.html',
                 controller: 'editProfileController'
             })
           .when(
             '/admin/setup',
             {
-                templateUrl: 'static/App/Views/Setup.html',
+                templateUrl: 'app/views/Setup.html',
                 controller: 'setupController'
             })
           .when(
             '/error/unauthorized',
             {
-                templateUrl: 'static/App/Views/Unauthorized.html',
+                templateUrl: 'app/views/Unauthorized.html',
                 controller: 'errorController'
             })
           .when('/logout',
             {
-                templateUrl: 'static/App/Views/Logout.html',
+                templateUrl: 'app/views/Logout.html',
                 controller: 'logoutController'
             })
           .otherwise({ redirectTo: '/login' });

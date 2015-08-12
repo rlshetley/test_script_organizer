@@ -11,7 +11,7 @@
     function profileService($resource)
     {
         return $resource(
-            'api/profile/:Id',
+            '/api/profile/:Id',
             {},
             {
                 update: { method: 'PUT', isArray: false }
