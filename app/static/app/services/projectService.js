@@ -7,8 +7,7 @@
 
     projectService.$inject = ['$resource'];
 
-    function projectService($resource)
-    {
+    function projectService($resource){
         return $resource(
             '/api/projects/:Id',
             {},

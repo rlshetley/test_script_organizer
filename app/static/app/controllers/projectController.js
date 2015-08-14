@@ -25,7 +25,7 @@
         $scope.add = function () {
 
             var modalInstance = $modal.open({
-                templateUrl: 'static/App/Views/ProjectModalDialog.html',
+                templateUrl: 'static/app/views/ProjectModalDialog.html',
                 controller: modalProjectController,
                 resolve:{
                     project: function () {
@@ -70,7 +70,7 @@
 
         $scope.createTestEvent = function(projectId){
             var modalInstance = $modal.open({
-                templateUrl: 'static/App/Views/TestEventModalDialog.html',
+                templateUrl: 'static/app/views/TestEventModalDialog.html',
                 controller: modalTestEventController,
                 resolve:{
                     testEvent: function (){

@@ -7,8 +7,7 @@
 
     testEventResultsService.$inject = ['$resource'];
 
-    function testEventResultsService($resource)
-    {
+    function testEventResultsService($resource){
         return $resource(
             '/api/testeventresults/:Id',
             {},

@@ -1,4 +1,4 @@
-﻿	
+﻿
 (function () {
     'use strict';
 
@@ -8,8 +8,7 @@
 
     profileService.$inject = ['$resource'];
 
-    function profileService($resource)
-    {
+    function profileService($resource){
         return $resource(
             '/api/profile/:Id',
             {},
