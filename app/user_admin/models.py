@@ -12,6 +12,7 @@ users_roles = db.Table(
 )
 
 class User(db.Model):
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     user_name = Column(String(225),  nullable=False)
     password = Column(String(225),  nullable=False)
@@ -30,7 +31,7 @@ class User(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'roles': i.serialize() for i in self.roles
+            'roles': [i.serialize() for i in self.roles]
         }
 
 @auth.verify_password

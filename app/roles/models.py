@@ -1,9 +1,11 @@
 from app import db
-from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, Boolean
+from sqlalchemy import Column, Integer, ForeignKey, String
 
-class Role(Object):
-    id = Column(Integer, primary_key=True)
-    name = Column(String(225),  nullable=False)
+
+class Role(db.Model):
+    __tablename__ = 'role'
+    id = db.Column(Integer, primary_key=True)
+    name = db.Column(String(225),  nullable=False)
 
     def serialize(self):
         return {

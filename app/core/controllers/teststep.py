@@ -2,7 +2,8 @@ from flask import make_response, request
 from flask.json import jsonify
 from flask.views import MethodView
 from app import db, register_controller
-from app.models import Test, TestStep
+from app.core.models import Test, TestStep
+
 
 def map_test_step(test_step, request):
     test_step.name = request.data['name']
@@ -16,6 +17,7 @@ def map_test_step(test_step, request):
     test_step.test = test
 
     return test_step
+
 
 class TestStepController(MethodView):
     def get(self, teststep_id):
@@ -37,7 +39,6 @@ class TestStepController(MethodView):
         return resp
 
     def delete(self, teststep_id):
-
         test_step = TestStep.query.filter(TestStep.id == teststep_id).first()
 
         db.session.delete(test_step)
@@ -57,9 +58,9 @@ class TestStepListController(MethodView):
         else:
             results = TestStep.query.all()
 
-         resp = jsonify(json_list=[i.serialize() for i in results])
-         resp.status_code = 200
-         return resp
+        resp = jsonify(json_list=[i.serialize() for i in results])
+        resp.status_code = 200
+        return resp
 
     def post(self):
         test_step = TestStep()
@@ -73,6 +74,7 @@ class TestStepListController(MethodView):
         resp.status_code = 201
 
         return resp
+
 
 register_controller(TestStepController, 'test_step_api', '/teststeps/<int:teststep_id>')
 register_controller(TestStepListController, 'test_step_list_api', '/teststeps/', ['GET', 'POST'])

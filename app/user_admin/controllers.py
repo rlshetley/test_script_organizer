@@ -1,9 +1,9 @@
-
 from flask import make_response, request
 from flask.json import jsonify
 from flask.views import MethodView
 from app import db, register_controller
 from app.user_admin.models import User
+
 
 class UserController(MethodView):
     def get(self, user_id):
@@ -38,7 +38,7 @@ class UserListController(MethodView):
         results = []
 
         if 'username' in request.args:
-            uername = request.args.get('username')
+            username = request.args.get('username')
 
             # There should only be on user so do a first query
             user = User.query.filter(User.username == username).first()
@@ -50,9 +50,9 @@ class UserListController(MethodView):
         else:
             results = User.query.all()
 
-         resp = jsonify(json_list=[i.serialize() for i in results])
-         resp.status_code = 200
-         return resp
+        resp = jsonify(json_list=[i.serialize() for i in results])
+        resp.status_code = 200
+        return resp
 
     def post(self):
         user = User()
@@ -68,6 +68,7 @@ class UserListController(MethodView):
         resp.status_code = 201
 
         return resp
+
 
 register_controller(UserController, 'user_api', '/users/<int:user_id>')
 register_controller(UserListController, 'user_list_api', '/users/', ['GET', 'POST'])

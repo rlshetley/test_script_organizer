@@ -1,13 +1,6 @@
-/src/testscriptorganizer/__pycache__/*
-/src/testscriptorganizer/migrations/*
-/src/testscriptorganizer/node_modules/*
-/src/testscriptorganizer/static/Scripts/*
-/src/TestScriptOrganizer.db
-
-/ui/Scripts
+/.idea
 /dev-env
 *.pyc
-*.pyo
 app.db
-/node_modules
-/ui/node_modules
+/app/static/scripts
+/app/static/node_modules
