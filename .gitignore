@@ -1,8 +1,6 @@
-/src/testscriptorganizer/__pycache__/*
-/src/testscriptorganizer/migrations/*
-/src/testscriptorganizer/node_modules/*
-/src/testscriptorganizer/static/Scripts/*
-/src/TestScriptOrganizer.db
-.DS_Store
-*.log
+/.idea
+/dev-env
 *.pyc
+app.db
+/app/static/scripts
+/app/static/node_modules
