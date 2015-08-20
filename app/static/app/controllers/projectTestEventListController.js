@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -8,11 +8,11 @@
     projectTestEventListController.$inject = ['$scope', 'testEventService', '$routeParams'];
 
     function projectTestEventListController($scope, testEventService, $routeParams){
-        this.init = function (){
-            testEventService.getByProject({ projectId: $scope.projectId }).$promise
+        function init(){
+            testEventService.query({ projectId: $scope.projectId }).$promise
                 .then(
                     function (data){
-                        $scope.testEvents = data;
+                        $scope.testEvents = data.test_events;
                     }
                 );
         }
@@ -25,6 +25,6 @@
 
         $scope.projectId = $routeParams.projectId;
 
-        this.init();
+        init();
     };
 })();

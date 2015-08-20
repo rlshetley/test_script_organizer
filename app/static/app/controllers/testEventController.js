@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -8,7 +8,7 @@
     testEventController.$inject = ['$scope', 'testEventService', '$routeParams', '$location'];
 
     function testEventController($scope, testEventService, $routeParams, $location){
-        this.init = function (){
+        function init(){
             testEventService.get({ Id: $scope.testEventId }).$promise
                 .then(
                     function (data){
@@ -25,6 +25,6 @@
 
         $scope.testEventId = $routeParams.testEventId;
 
-        this.init();
+        init();
     };
 })();

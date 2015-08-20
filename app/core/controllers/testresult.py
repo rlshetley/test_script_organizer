@@ -60,7 +60,7 @@ class TestResultListController(MethodView):
         else:
             results = TestResult.query.all()
 
-        resp = jsonify(json_list=[i.serialize() for i in results])
+        resp = jsonify(test_results=[i.serialize() for i in results])
         resp.status_code = 200
         return resp
 

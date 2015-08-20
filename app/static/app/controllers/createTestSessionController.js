@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -25,7 +25,7 @@
         $location,
         notifyService) {
 
-        this.init = function () {
+        function init() {
             testService.get({ id: $scope.testId }).$promise
                 .then(
                     function (value) {
@@ -80,7 +80,7 @@
 
         $scope.testSession = {};
 
-        this.init();
+        init();
     };
 
 })();

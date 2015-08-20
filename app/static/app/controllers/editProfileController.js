@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -9,7 +9,7 @@
 
     function editProfileController($scope, profileService, userService){
 
-        this.init = function (){
+        function init(){
             profileService.profile.query({ Id: userService.userId }).$promise
                 .then(
                     function (data){
@@ -24,6 +24,6 @@
 
         $scope.user;
 
-        this.init();
+        init();
     }
 })();

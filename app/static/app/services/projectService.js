@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -9,9 +9,10 @@
 
     function projectService($resource){
         return $resource(
-            '/api/projects/:Id',
+            '/api/projects/:Id/',
             {},
             {
+                query: {method: 'GET', isArray: false },
                 update: { method: 'PUT', isArray: false }
             });
     };

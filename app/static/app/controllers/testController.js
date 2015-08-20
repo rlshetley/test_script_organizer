@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -8,8 +8,8 @@
     testController.$inject = ['$scope', 'testService', '$modal', '$routeParams'];
 
     function testController($scope, testService, $modal, $routeParams) {
-        this.init = function () {
-            testService.getByTestSuite({ testSuiteId: $scope.testSuiteId }).$promise
+        function init() {
+            testService.query({ testSuiteId: $scope.testSuiteId }).$promise
                 .then(
                     function (data) {
                         $scope.tests = data
@@ -29,6 +29,6 @@
 
         $scope.testSuiteId = $routeParams.testSuiteId;
 
-        this.init();
+        init();
     };
 })();

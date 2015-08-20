@@ -23,7 +23,7 @@ class TestSessionController(MethodView):
 
         return resp
 
-    def put(self, teststep_id):
+    def put(self, testsession_id):
         test_session = TestSession.query.filter(TestSession.id == testsession_id).first()
 
         test_session = map_test_session(test_session, request)
@@ -49,7 +49,7 @@ class TestSessionController(MethodView):
 
 class TestSessionListController(MethodView):
     def get(self):
-         resp = jsonify(json_list=[i.serialize() for i in TestSession.query.all()])
+         resp = jsonify(test_sessions=[i.serialize() for i in TestSession.query.all()])
          resp.status_code = 200
          return resp
 

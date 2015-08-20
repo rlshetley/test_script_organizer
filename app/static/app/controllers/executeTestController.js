@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -9,7 +9,7 @@
 
     function executeTestController($scope, testStepService, testResultService, $routeParams, $location) {
         
-        this.init = function () {
+        function init() {
             testStepService.getByTest({ TestId: $routeParams.testId }).$promise
                 .then(
                     function (value) {
@@ -70,6 +70,6 @@
 
         $scope.testResult = {};
 
-        this.init();
+        init();
     };
 })();

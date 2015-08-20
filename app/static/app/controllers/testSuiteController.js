@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -8,17 +8,17 @@
     testSuiteController.$inject = ['$scope', 'testSuiteService', 'testEventService', '$modal', '$location', '$routeParams'];
 
     function testSuiteController($scope, testSuiteService, testEventService, $modal, $location, $routeParams) {
-        this.init = function () {
-            testSuiteService.getByProject({ project: $scope.projectId }).$promise
+        function init() {
+            testSuiteService.query({ project: $scope.projectId }).$promise
                 .then(function (data) {
-                        $scope.testSuites = data;
+                        $scope.testSuites = data.test_suites;
                     }
                 );
         }
 
         $scope.add = function () {
             var modalInstance = $modal.open({
-                templateUrl: 'static/App/Views/TestSuiteModalDialog.html',
+                templateUrl: 'app/views/TestSuiteModalDialog.html',
                 controller: modalTestSuiteController,
                 resolve:{
                     testSuite: function (){
@@ -71,7 +71,7 @@
 
         $scope.projectId = $routeParams.projectId;
 
-        this.init();
+        init();
     };
 
     var modalTestSuiteController = function ($scope, $modalInstance, testSuite, title) {

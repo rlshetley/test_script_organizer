@@ -110,6 +110,10 @@ app.run(function (editableOptions) {
     editableOptions.theme = 'bs3';
 });
 
+app.config(function($resourceProvider) {
+  $resourceProvider.defaults.stripTrailingSlashes = false;
+});
+
 app.filter('offset', function () {
     return function (input, start) {
         start = parseInt(start, 10);

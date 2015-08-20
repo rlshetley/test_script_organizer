@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -8,11 +8,11 @@
     projectController.$inject = ['$scope', 'projectService', 'testEventService', '$modal', '$location', 'notifyService'];
 
     function projectController($scope, projectService, testEventService, $modal, $location, notifyService){
-        this.init = function () {
+        function init() {
             projectService.query().$promise
                 .then(
                     function (data) {
-                        $scope.projects = data;
+                        $scope.projects = data.projects;
                     }
                 )
                 .catch(
@@ -25,7 +25,7 @@
         $scope.add = function () {
 
             var modalInstance = $modal.open({
-                templateUrl: 'static/app/views/ProjectModalDialog.html',
+                templateUrl: 'app/views/ProjectModalDialog.html',
                 controller: modalProjectController,
                 resolve:{
                     project: function () {
@@ -70,7 +70,7 @@
 
         $scope.createTestEvent = function(projectId){
             var modalInstance = $modal.open({
-                templateUrl: 'static/app/views/TestEventModalDialog.html',
+                templateUrl: 'app/views/TestEventModalDialog.html',
                 controller: modalTestEventController,
                 resolve:{
                     testEvent: function (){
@@ -110,7 +110,7 @@
 
         $scope.projects = [];
 
-        this.init();
+        init();
     };
 
     var modalProjectController = function ($scope, $modalInstance, project, title) {

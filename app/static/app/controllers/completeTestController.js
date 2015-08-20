@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -8,7 +8,7 @@
     completeTestController.$inject = ['$scope', 'testResultService', 'testSessionService', '$routeParams'];
 
     function completeTestController($scope, testResultService, testSessionService, $routeParams) {
-        this.init = function () {
+        function init() {
             testResultService.getByTestSession({ testSessionId: $scope.testSessionId }).$promise
                     .then(
                         function (value) {
@@ -31,6 +31,6 @@
 
         $scope.testResults;
 
-        this.init();
+        init();
     };
 })();

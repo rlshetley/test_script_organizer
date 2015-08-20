@@ -47,7 +47,7 @@ class TestEventResultController(MethodView):
 
 class TestEventResultListController(MethodView):
     def get(self):
-         resp = jsonify(json_list=[i.serialize() for i in TestEventResult.query.all()])
+         resp = jsonify(test_event_results=[i.serialize() for i in TestEventResult.query.all()])
          resp.status_code = 200
          return resp
 
