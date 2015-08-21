@@ -9,9 +9,10 @@
 
     function testEventResultsService($resource){
         return $resource(
-            '/api/testeventresults/:Id',
+            '/api/testeventresults/:id',
             {},
             {
+                query: {method: 'GET', isArray: false },
                 update: { method: 'PUT', isArray: false }
             });
     }

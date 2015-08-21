@@ -1,3 +1,7 @@
+# Set up the configuration for testing
+import os
+os.environ['TSO_CFG'] = 'config.TestConfig'
+
 from app import app, db
 from app.core.models import *
 

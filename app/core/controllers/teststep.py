@@ -6,13 +6,13 @@ from app.core.models import Test, TestStep
 
 
 def map_test_step(test_step, request):
-    test_step.name = request.data['name']
-    test_step.action = request.data['action']
-    test_step.description = request.data['description']
-    test_step.expected_result = request.data['expected_result']
-    test_step.step_number = request.data['step_number']
+    test_step.name = request.json_data['name']
+    test_step.action = request.json_data['action']
+    test_step.description = request.json_data['description']
+    test_step.expected_result = request.json_data['expectedResult']
+    test_step.step_number = request.json_data['stepNumber']
 
-    test = Test.query.filter(Test.id == request.data['test_id']).first()
+    test = Test.query.filter(Test == request.json_data['test']).first()
 
     test_step.test = test
 
@@ -54,7 +54,7 @@ class TestStepListController(MethodView):
         if 'test' in request.args:
             test_id = request.args.get('test')
 
-            results = TestStep.query.filter(TestStep.test.id == test_id).all()
+            results = TestStep.query.filter(TestStep.test == test_id).all()
         else:
             results = TestStep.query.all()
 

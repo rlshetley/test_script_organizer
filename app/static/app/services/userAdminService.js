@@ -14,6 +14,7 @@
                     '/api/users/:id',
                     {},
                     {
+                        query: {method: 'GET', isArray: false },
                         update: { method: 'PUT', isArray: false }
                     }),
             roles: $resource(

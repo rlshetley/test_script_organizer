@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -10,9 +10,10 @@
     function testSessionService($resource)
     {
         return $resource(
-            'api/testsessions/:Id',
+            '/api/testsessions/:id',
             {},
             {
+                query: {method: 'GET', isArray: false },
                 update: { method: 'PUT', isArray: false }
             });
     };

@@ -9,7 +9,7 @@
 
     function projectTestEventListController($scope, testEventService, $routeParams){
         function init(){
-            testEventService.query({ projectId: $scope.projectId }).$promise
+            testEventService.query({ project: $scope.projectId }).$promise
                 .then(
                     function (data){
                         $scope.testEvents = data.test_events;

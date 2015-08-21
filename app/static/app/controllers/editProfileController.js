@@ -10,7 +10,7 @@
     function editProfileController($scope, profileService, userService){
 
         function init(){
-            profileService.profile.query({ Id: userService.userId }).$promise
+            profileService.profile.query({ user_id: userService.userId }).$promise
                 .then(
                     function (data){
                         $scope.user = data;

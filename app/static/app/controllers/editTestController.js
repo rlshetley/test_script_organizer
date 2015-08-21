@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -11,8 +11,8 @@
         var thisController = this;
 
         thisController.buildModalInstance = function(testStep, title){
-            $modal.open({
-                templateUrl: 'static/App/Views/TestStepModalDialog.html',
+            return $modal.open({
+                templateUrl: 'app/views/TestStepModalDialog.html',
                 controller: modalTestStepController,
                 resolve:{
                     testStep: function () {
@@ -26,10 +26,10 @@
         };
 
         thisController.loadTestSteps = function () {
-            testStepService.getByTest({ testId: $scope.test.id }).$promise
+            testStepService.query({ test: $scope.test.id }).$promise
                 .then(
                     function (value) {
-                        $scope.testSteps = value;
+                        $scope.testSteps = value.test_steps;
                     }
                 )
                 .catch(
@@ -40,7 +40,7 @@
         };
 
         thisController.createTest = function(testSuiteId){
-            testService.save({ id: 0, name: 'Test 0', testSuite: testSuiteId }).$promise
+            testService.save({ id: 0, name: 'Test 0', testsuite: testSuiteId }).$promise
                 .then(
                     function (value) {
                         $scope.test = value;
@@ -72,14 +72,16 @@
         };
 
         this.init = function () {
-            if (!$routeParams.testId || $routeParams.testId === 0) {
+            console.log($routeParams.testId);
+            console.log($routeParams.testSuiteId);
+            if (!$routeParams.testId || $routeParams.testId < 1) {
                 thisController.createTest($routeParams.testSuiteId);
             }
             else if ($routeParams.testId && $routeParams.testId > 0) {
                 thisController.getTest($routeParams.testId);
             }
             else {
-                notifyService.onError('Missing test information - unable to load test', e);
+                console.log('Missing test information - unable to load test');
             }
         };
 
@@ -168,7 +170,7 @@
         };
 
         $scope.save = function () {
-            testService.update($scope.test).$promise
+            testService.update({id: $scope.test.id}).$promise
                 .then(
                     function(){
                         notifyService.onSuccess('Test successfully updated');

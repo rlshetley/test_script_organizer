@@ -10,7 +10,7 @@
     function testEventService($resource)
     {
         return $resource(
-            '/api/testevents/:Id',
+            '/api/testevents/:id',
             {},
             {
                 query: {method: 'GET', isArray: false }

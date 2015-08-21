@@ -47,11 +47,11 @@ class TestListController(MethodView):
         if 'project' in request.args:
             project_id = request.args.get('project')
 
-            results = Test.query.filter(Test.project.id == project_id).all()
+            results = Test.query.filter(Test.project == project_id).all()
         elif 'testsuite' in request.args:
             test_suite_id = request.args.get('testsuite')
 
-            results = Test.query.filter(Test.test_suite.id == test_suite_id).all()
+            results = Test.query.filter(Test.test_suite == test_suite_id).all()
         else:
             results = Test.query.all()
 
@@ -64,7 +64,7 @@ class TestListController(MethodView):
 
         test.name = request.json_data['name']
 
-        test_suite = TestSuite.query.filter(TestSuite.id == request.json_data['testsuite_id']).first()
+        test_suite = TestSuite.query.filter(TestSuite.id == request.json_data['testsuite']).first()
 
         test.test_suite = test_suite.id
 

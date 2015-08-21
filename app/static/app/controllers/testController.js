@@ -9,10 +9,10 @@
 
     function testController($scope, testService, $modal, $routeParams) {
         function init() {
-            testService.query({ testSuiteId: $scope.testSuiteId }).$promise
+            testService.query({ testsuite: $scope.testSuiteId }).$promise
                 .then(
                     function (data) {
-                        $scope.tests = data
+                        $scope.tests = data.tests
                     }
                 );
         }

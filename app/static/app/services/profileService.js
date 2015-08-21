@@ -10,9 +10,10 @@
 
     function profileService($resource){
         return $resource(
-            '/api/profile/:Id',
+            '/api/profile/:id',
             {},
             {
+                query: {method: 'GET', isArray: false },
                 update: { method: 'PUT', isArray: false }
             });
     }

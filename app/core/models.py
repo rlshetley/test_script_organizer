@@ -57,10 +57,10 @@ class TestStep(Base):
             'id': self.id,
             'name': self.name,
             'action': self.action,
-            'expected_result': self.expected_result,
+            'expectedResult': self.expected_result,
             'description': self.description,
-            'step_number': self.step_number,
-            'test_id': self.test.id
+            'stepNumber': self.step_number,
+            'test_id': self.test
         }
 
 

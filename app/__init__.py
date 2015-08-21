@@ -17,7 +17,9 @@ app = Flask(__name__, template_folder=ASSETS_DIR, static_folder=ASSETS_DIR)
 auth = HTTPBasicAuth()
 
 # Configurations
-app.config.from_object('config')
+tso_cfg = os.environ.get("TSO_CFG", "config.Config")
+
+app.config.from_object(tso_cfg)
 
 # Define the database object which is imported
 # by modules and controllers
@@ -25,6 +27,13 @@ db = SQLAlchemy(app)
 
 @app.before_request
 def before_request():
+    """
+    Converts request data to JSON
+    
+    If a request is a POST, PUT, or PATCH, then this method
+    will convert the data from binary to JSON and set the
+    json_data property on the request
+    """
     if request.method in ['POST', 'PUT', 'PATCH']:
         data = request.get_data(as_text=True)
         request.json_data = json.loads(data)
@@ -36,15 +45,16 @@ def register_controller(controller, endpoint, url, methods=['GET', 'PUT', 'DELET
 
     Args:
         controller (MethodView): The controller class to create
-        endpoint (str): The name of teh endpoint
+        endpoint (str): The name of the endpoint
         url (str): The url to map
         methods (list):  The HTTP method to map - Defaults to GET, PUT, and DELETE
 
     """
-    print("Registering url %s" % url)
+    app.logger.debug("Registering url %s" % url)
     view_func = controller.as_view(endpoint)
     app.add_url_rule("/api%s" % url, view_func=view_func, methods=methods)
 
+# Import all the controllers so that they can register
 from app.core.controllers import project, test, testevent, testeventresult, testresult, testsession, teststep, testsuite
 from app.roles.controllers import RoleController, RoleUsersController
 from app.user_admin.controllers import UserController, UserListController
