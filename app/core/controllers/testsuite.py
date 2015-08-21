@@ -61,7 +61,7 @@ class TestSuiteListController(MethodView):
 
         test_suite.name = request.json_data['name']
 
-        project = Project.query.filter(Project.id == request.json_data['project_id']).first()
+        project = Project.query.filter(Project.id == request.json_data['project']).first()
 
         test_suite.project = project.id
 

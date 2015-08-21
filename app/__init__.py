@@ -2,6 +2,7 @@
 from flask import Flask, request
 import json
 import os
+import logging
 
 # Import SQLAlchemy
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -40,6 +41,7 @@ def register_controller(controller, endpoint, url, methods=['GET', 'PUT', 'DELET
         methods (list):  The HTTP method to map - Defaults to GET, PUT, and DELETE
 
     """
+    print("Registering url %s" % url)
     view_func = controller.as_view(endpoint)
     app.add_url_rule("/api%s" % url, view_func=view_func, methods=methods)
 

@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -13,8 +13,7 @@
             '/api/testevents/:Id',
             {},
             {
-                getByProject: { method: 'GET', url: 'api/testEventsbyproject', isArray: true },
-                getByTestSuite: { method: 'GET', url: 'api/testEventsbytestsuite', isArray: true }
+                query: {method: 'GET', isArray: false }
             });
     }
 })();

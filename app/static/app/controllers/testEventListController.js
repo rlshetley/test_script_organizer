@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -9,10 +9,10 @@
 
     function testEventListController($scope, testEventService, $routeParams){
         this.init = function (){
-            testEventService.getByTestSuite({ testSuiteId: $scope.testSuiteId }).$promise
+            testEventService.query({ testSuiteId: $scope.testSuiteId }).$promise
                 .then(
                     function (data){
-                        $scope.testEvents = data;
+                        $scope.testEvents = data.test_events;
                     }
                 );
         }
