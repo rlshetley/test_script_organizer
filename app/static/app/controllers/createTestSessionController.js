@@ -6,7 +6,6 @@
         .controller('createTestSessionController', createTestSessionController);
 
     createTestSessionController.$inject = [
-        '$scope',
         'testService',
         'testSessionService',
         'testEventService',
@@ -16,7 +15,6 @@
         'notifyService'];
 
     function createTestSessionController(
-        $scope,
         testService,
         testSessionService,
         testEventService,
@@ -24,12 +22,30 @@
         $routeParams,
         $location,
         notifyService) {
+            
+        var vm = this;
 
-        function init() {
-            testService.get({ id: $scope.testId }).$promise
+        vm.startTest = _startTest;
+
+        vm.loadFirstTest = _loadFirstTest;
+
+        vm.testId = $routeParams.testId;
+
+        if ($routeParams.testEventId){
+            vm.testEventId = $routeParams.testEventId;
+        }
+
+        vm.test;
+
+        vm.testSession = {};
+
+        _init();
+
+        function _init() {
+            testService.get({ id: vm.testId }).$promise
                 .then(
                     function (value) {
-                        $scope.test = value;
+                        vm = value;
                     }
                 )
                 .catch(
@@ -38,25 +54,29 @@
                     }
                 );
         }
-
-        $scope.startTest = function () {
+        
+        function _loadFirstTest(){
+            $location.path('/executeTest/' + vm.testSession.id + '/' + vm.testId);
+        }
+        
+        function _startTest() {
             var now = moment();
 
-            $scope.testSession.id = 0;
-            $scope.testSession.test = $scope.testId;
-            $scope.testSession.startDate = now.toJSON();
-            $scope.testSession.finishDate = now.toJSON();
+            vm.testSession.id = 0;
+            vm.testSession.test = vm.testId;
+            vm.testSession.startDate = now.toJSON();
+            vm.testSession.finishDate = now.toJSON();
 
-            var result = testSessionService.save($scope.testSession).$promise
+            testSessionService.save(vm.testSession).$promise
                 .then(
                     function (value) {
-                        $scope.testSession = value;
+                        vm.testSession = value;
 
-                        if ($scope.testEvent){
-                            testEventResultsService.save({ testEvent: $scope.testEventId, testSession: value.id });
+                        if (vm.testEvent){
+                            testEventResultsService.save({ testEvent: vm.testEventId, testSession: value.id });
                         }
 
-                        $scope.loadFirstTest();
+                        vm.loadFirstTest();
                     }
                 )
                 .catch(
@@ -65,22 +85,6 @@
                     }
                 );
         }
-
-        $scope.loadFirstTest = function () {
-            $location.path('/executeTest/' + $scope.testSession.id + '/' + $scope.testId);
-        }
-
-        $scope.testId = $routeParams.testId;
-
-        if ($routeParams.testEventId){
-            $scope.testEventId = $routeParams.testEventId;
-        }
-
-        $scope.test;
-
-        $scope.testSession = {};
-
-        init();
     };
 
 })();

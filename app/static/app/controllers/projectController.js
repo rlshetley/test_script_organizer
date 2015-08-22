@@ -5,14 +5,29 @@
         .module('app')
         .controller('projectController', projectController);
 
-    projectController.$inject = ['$scope', 'projectService', 'testEventService', '$modal', '$location', 'notifyService'];
+    projectController.$inject = ['projectService', 'testEventService', '$modal', '$location', 'notifyService'];
 
-    function projectController($scope, projectService, testEventService, $modal, $location, notifyService){
-        function init() {
+    function projectController(projectService, testEventService, $modal, $location, notifyService){
+        
+        var vm = this;
+
+        vm.add = _add;
+
+        vm.remove = _remove;
+
+        vm.createTestEvent = _createTestEvent;
+
+        vm.saveProject = _saveProject;
+
+        vm.projects = [];
+
+        _init();
+        
+        function _init() {
             projectService.query().$promise
                 .then(
                     function (data) {
-                        $scope.projects = data.projects;
+                        vm.projects = data.projects;
                     }
                 )
                 .catch(
@@ -21,8 +36,22 @@
                     }
                 );
         };
-
-        $scope.add = function () {
+        
+        function _saveProject(project){
+            projectService.update(project).$promise
+                .then(
+                    function (data){
+                        notifyService.onSuccess("Project successfully saved");
+                    }
+                )
+                .catch(
+                    function(e){
+                        notifyService.onError("Unable to update project", e);
+                    }
+                );
+        };
+        
+        function _add(){
 
             var modalInstance = $modal.open({
                 templateUrl: 'app/views/ProjectModalDialog.html',
@@ -41,7 +70,7 @@
                 projectService.save(project).$promise
                     .then(
                         function (data){
-                            $scope.projects.push(data);
+                            vm.projects.push(data);
 
                             notifyService.onSuccess("Project successfully added");
                         }
@@ -53,8 +82,8 @@
                     );
             });
         };
-
-        $scope.remove = function (id) {
+        
+        function _remove(id) {
             projectService.remove({ id: id }).$promise
                 .then(
                     function (data){
@@ -67,8 +96,8 @@
                     }
                 );
         };
-
-        $scope.createTestEvent = function(projectId){
+        
+        function _createTestEvent(projectId){
             var modalInstance = $modal.open({
                 templateUrl: 'app/views/TestEventModalDialog.html',
                 controller: modalTestEventController,
@@ -93,24 +122,6 @@
                     );
             });
         };
-
-        $scope.saveProject = function(project){
-            projectService.update(project).$promise
-                .then(
-                    function (data){
-                        notifyService.onSuccess("Project successfully saved");
-                    }
-                )
-                .catch(
-                    function(e){
-                        notifyService.onError("Unable to update project", e);
-                    }
-                );
-        };
-
-        $scope.projects = [];
-
-        init();
     };
 
     var modalProjectController = function ($scope, $modalInstance, project, title) {

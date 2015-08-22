@@ -5,10 +5,13 @@
         .module('app')
         .controller('setupController', setupController);
 
-    setupController.$inject = ['$scope', 'setupService'];
+    setupController.$inject = ['setupService'];
 
-	function setupController($scope, setupService){
-		$scope.install = function (){
+	function setupController(setupService){
+	    var vm = this;
+		vm.install = _install;
+		
+		function _install(){
 			setupService.save();
 		}
 	};

@@ -5,12 +5,46 @@
         .module('app')
         .controller('editTestController', editTestController);
 
-    editTestController.$inject = ['$scope', 'testService', 'testStepService', '$modal', '$routeParams', 'notifyService'];
+    editTestController.$inject = ['testService', 'testStepService', '$modal', '$routeParams', 'notifyService'];
 
-    function editTestController($scope, testService, testStepService, $modal, $routeParams, notifyService) {
-        var thisController = this;
+    function editTestController(testService, testStepService, $modal, $routeParams, notifyService) {
+        var vm = this;
 
-        thisController.buildModalInstance = function(testStep, title){
+        vm.addTestStep = _addTestStep;
+
+        vm.editTestStep = _editTestStep;
+
+        vm.removeTestStep = _removeTestStep;
+
+        vm.save = _save;
+
+        vm.sortableOptions = {
+            stop: function (e, ui) {
+
+                angular.forEach(vm.testSteps, function (testStep, key) {
+                    if (testStep.stepNumber != key + 1) {
+                        testStep.stepNumber = key + 1;
+                        testStepService.update(testStep);
+                    }
+                });
+            }
+        };
+
+        _init();
+
+        function _init() {
+            if (!$routeParams.testId || $routeParams.testId < 1) {
+                _createTest($routeParams.testSuiteId);
+            }
+            else if ($routeParams.testId && $routeParams.testId > 0) {
+                _getTest($routeParams.testId);
+            }
+            else {
+                console.log('Missing test information - unable to load test');
+            }
+        };
+
+        function _buildModalInstance(testStep, title){
             return $modal.open({
                 templateUrl: 'app/views/TestStepModalDialog.html',
                 controller: modalTestStepController,
@@ -25,11 +59,11 @@
             });
         };
 
-        thisController.loadTestSteps = function () {
-            testStepService.query({ test: $scope.test.id }).$promise
+        function _loadTestSteps() {
+            testStepService.query({ test: vm.test.id }).$promise
                 .then(
                     function (value) {
-                        $scope.testSteps = value.test_steps;
+                        vm.testSteps = value.test_steps;
                     }
                 )
                 .catch(
@@ -39,29 +73,29 @@
                 );
         };
 
-        thisController.createTest = function(testSuiteId){
+        function _createTest(testSuiteId){
             testService.save({ id: 0, name: 'Test 0', testsuite: testSuiteId }).$promise
                 .then(
                     function (value) {
-                        $scope.test = value;
+                        vm.test = value;
                         
                         notifyService.onSuccess('Test successfully created');
                     }
                 )
                 .catch(
                     function(e){
-                        $scope.$log.error(e);
+                        console.error(e);
                     }
                 );
         };
 
-        thisController.getTest = function(testId){
+        function _getTest(testId){
             testService.get({ id: testId}).$promise
                 .then(
                     function (value) {
-                        $scope.test = value;
+                        vm.test = value;
 
-                        thisController.loadTestSteps();
+                        _loadTestSteps();
                     }
                 )
                 .catch(
@@ -70,37 +104,23 @@
                     }
                 );
         };
-
-        this.init = function () {
-            console.log($routeParams.testId);
-            console.log($routeParams.testSuiteId);
-            if (!$routeParams.testId || $routeParams.testId < 1) {
-                thisController.createTest($routeParams.testSuiteId);
-            }
-            else if ($routeParams.testId && $routeParams.testId > 0) {
-                thisController.getTest($routeParams.testId);
-            }
-            else {
-                console.log('Missing test information - unable to load test');
-            }
-        };
-
-        $scope.addTestStep = function () {
+        
+        function _addTestStep() {
             var newTestStep = {
                 id: 0,
                 name: '',
                 action: '',
                 expectedResult: '',
                 description: '',
-                test: $scope.test.id
+                test: vm.test.id
             };
 
-            var modalInstance = thisController.buildModalInstance(newTestStep, "Add Test Step")
+            var modalInstance = _buildModalInstance(newTestStep, "Add Test Step")
 
             modalInstance.result.then(function (testStep){
                 var highestValue = 1;
 
-                angular.forEach($scope.testSteps, function (item, key){
+                angular.forEach(vm.testSteps, function (item, key){
                     if (item.stepNumber >= highestValue){
                         highestValue = item.stepNumber + 1;
                     }
@@ -111,7 +131,7 @@
                 testStepService.save(testStep).$promise
                     .then(
                         function (data){
-                            $scope.testSteps.push(data);
+                            vm.testSteps.push(data);
                             
                             notifyService.onSuccess('Test step successfully saved');
                         }
@@ -123,15 +143,15 @@
                     );
             },
             function () {
-                thisController.loadTestSteps();
+                vm.loadTestSteps();
             });
         };
-
-        $scope.editTestStep = function (id) {
+        
+        function _editTestStep(id) {
             testStepService.get({ id: id }).$promise
                 .then(
                     function (value) {
-                        var modalInstance = this.buildModalInstance(value, "Edit Test Step");
+                        var modalInstance = _buildModalInstance(value, "Edit Test Step");
 
                         modalInstance.result.then(function (testStep){
                             testStepService.update(testStep)
@@ -154,8 +174,8 @@
                     }
                 );
         };
-
-        $scope.removeTestStep = function (id) {
+        
+        function _removeTestStep(id) {
             testStepService.remove({ id: id }).$promise
                 .then(
                     function(){
@@ -168,9 +188,9 @@
                     }
                 );
         };
-
-        $scope.save = function () {
-            testService.update({id: $scope.test.id}).$promise
+        
+        function _save() {
+            testService.update({id: vm.test.id}).$promise
                 .then(
                     function(){
                         notifyService.onSuccess('Test successfully updated');
@@ -182,20 +202,6 @@
                     }
                 );
         };
-
-        $scope.sortableOptions = {
-            stop: function (e, ui) {
-
-                angular.forEach($scope.testSteps, function (testStep, key) {
-                    if (testStep.stepNumber != key + 1) {
-                        testStep.stepNumber = key + 1;
-                        testStepService.update(testStep);
-                    }
-                });
-            }
-        };
-
-        this.init();
     };
 
     var modalTestStepController = function ($scope, $modalInstance, testStep, title) {

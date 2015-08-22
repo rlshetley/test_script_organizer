@@ -5,30 +5,42 @@
         .module('app')
         .controller('testController', testController);
 
-    testController.$inject = ['$scope', 'testService', '$modal', '$routeParams'];
+    testController.$inject = ['testService', '$modal', '$routeParams'];
 
-    function testController($scope, testService, $modal, $routeParams) {
-        function init() {
-            testService.query({ testsuite: $scope.testSuiteId }).$promise
+    function testController(testService, $modal, $routeParams) {
+        var vm = this;
+
+        vm.add = _add;
+
+        vm.edit = _edit;
+
+        vm.remove = _remove;
+        
+        vm.tests = [];
+
+        vm.testSuiteId = $routeParams.testSuiteId;
+
+        _init();
+        
+        function _init() {
+            testService.query({ testsuite: vm.testSuiteId }).$promise
                 .then(
                     function (data) {
-                        $scope.tests = data.tests
+                        vm.tests = data.tests
                     }
                 );
         }
-
-        $scope.add = function () {
+        
+        function _add(){
+            
         };
-
-        $scope.edit = function (id) {
+        
+        function _edit(id){
+            
         };
-
-        $scope.remove = function (id) {
+        
+        function _remove(id) {
             testService.remove({ id: id });
         };
-
-        $scope.testSuiteId = $routeParams.testSuiteId;
-
-        init();
     };
 })();

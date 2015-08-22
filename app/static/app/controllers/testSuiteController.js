@@ -5,24 +5,38 @@
         .module('app')
         .controller('testSuiteController', testSuiteController);
 
-    testSuiteController.$inject = ['$scope', 'testSuiteService', 'testEventService', '$modal', '$location', '$routeParams'];
+    testSuiteController.$inject = ['testSuiteService', 'testEventService', '$modal', '$location', '$routeParams'];
 
-    function testSuiteController($scope, testSuiteService, testEventService, $modal, $location, $routeParams) {
-        function init() {
-            testSuiteService.query({ project: $scope.projectId }).$promise
+    function testSuiteController(testSuiteService, testEventService, $modal, $location, $routeParams) {
+        var vm = this;
+
+        vm.add = _add;
+
+        vm.saveTestSuite = _saveTestSuite;
+
+        vm.remove = _remove;
+
+        vm.createTestEvent = _createTestEvent;
+
+        vm.projectId = $routeParams.projectId;
+
+        _init();
+        
+        function _init() {
+            testSuiteService.query({ project: vm.projectId }).$promise
                 .then(function (data) {
-                        $scope.testSuites = data.test_suites;
+                        vm.testSuites = data.test_suites;
                     }
                 );
         }
 
-        $scope.add = function () {
+        function _add() {
             var modalInstance = $modal.open({
                 templateUrl: 'app/views/TestSuiteModalDialog.html',
                 controller: modalTestSuiteController,
                 resolve:{
                     testSuite: function (){
-                        return { id: 0, name: '', project: $scope.projectId };
+                        return { id: 0, name: '', project: vm.projectId };
                     },
                     title: function () {
                         return "Add a Test Suite";
@@ -34,21 +48,21 @@
                 testSuiteService.save(testSuite).$promise
                     .then(
                         function (data) {
-                            $scope.testSuites.push(data);
+                            vm.testSuites.push(data);
                         }
                     );
             });
         };
 
-        $scope.saveTestSuite = function (testSuite) {
+        function _saveTestSuite(testSuite) {
             testSuiteService.update(testSuite);
         };
 
-        $scope.remove = function (id) {
+        function _remove(id) {
             testSuiteService.remove({ id: id });
         };
 
-        $scope.createTestEvent = function (testSuiteId) {
+        function _createTestEvent(testSuiteId) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/views/TestEventModalDialog.html',
                 controller: modalTestEventController,
@@ -68,10 +82,6 @@
                     );
             });
         };
-
-        $scope.projectId = $routeParams.projectId;
-
-        init();
     };
 
     var modalTestSuiteController = function ($scope, $modalInstance, testSuite, title) {

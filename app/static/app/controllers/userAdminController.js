@@ -5,16 +5,28 @@
         .module('app')
         .controller('userAdminController', userAdminController);
 
-    userAdminController.$inject = ['$scope', 'userAdminService', 'roleManagementService', '$modal', 'notifyService'];
+    userAdminController.$inject = ['userAdminService', 'roleManagementService', '$modal', 'notifyService'];
 
-    function userAdminController($scope, userAdminService, roleManagementService, $modal, notifyService){
-        var thisController = this;
+    function userAdminController(userAdminService, roleManagementService, $modal, notifyService){
+        var vm = this;
 
-        thisController.init = function (){
+        vm.add = _add;
+
+        vm.edit = _edit;
+
+        vm.delete = _delete;
+
+        vm.users = [];
+
+        vm.roles = [];
+
+        _init();
+
+        function _init(){
             userAdminService.users.query().$promise
                 .then(
                     function (data){
-                        $scope.users = data;
+                        vm.users = data;
                     }
                 )
                 .catch(
@@ -26,12 +38,12 @@
             userAdminService.roles.query().$promise
                 .then(
                     function (roles){
-                        $scope.roles = roles;
+                        vm.roles = roles;
                     }
                 );
         };
 
-        thisController.buildModalInstance = function(user, title, template){
+        function _buildModalInstance(user, title, template){
             return $modal.open({
                 templateUrl: template,
                 controller: modalUserController,
@@ -40,13 +52,13 @@
                         return user;
                     },
                     roles: function (){
-                        return $scope.roles;
+                        return vm.roles;
                     }
                 }
             });
         };
-
-        $scope.add = function (){
+        
+        function _add(){
             var newUser = {
                 Id: 0,
                 username: '',
@@ -60,13 +72,13 @@
                 groups: []
             };
 
-            var modalInstance = thisController.buildModalInstance(newUser, "Add a User", 'app/views/AddUserModalDialog.html');
+            var modalInstance = _buildModalInstance(newUser, "Add a User", 'app/views/AddUserModalDialog.html');
 
             modalInstance.result.then(function (user){
                 userAdminService.users.save(user).$promise
                     .then(
                         function (data){
-                            $scope.users.push(data);
+                            vm.users.push(data);
 
                             notifyService.onSuccess("User added");
                         }
@@ -78,9 +90,9 @@
                     );
             });
         };
-
-        $scope.edit = function (value){
-            var modalInstance = thisController.buildModalInstance(value, "Edit User", 'app/views/EditUserModalDialog.html');
+        
+        function _edit(value){
+            var modalInstance = _buildModalInstance(value, "Edit User", 'app/views/EditUserModalDialog.html');
 
             modalInstance.result.then(function (user){
                 userAdminService.users.update(user).$promise
@@ -96,8 +108,8 @@
                     );
             });
         };
-
-        $scope.delete = function (id){
+        
+        function _delete(id){
 
             userAdminService.users.remove({ Id: id }).$promise
                 .then(
@@ -111,12 +123,6 @@
                     }
                 );
         };
-
-        $scope.users = [];
-
-        $scope.roles = [];
-
-        thisController.init();
     };
 
     var modalUserController = function ($scope, $modalInstance, user, roles){

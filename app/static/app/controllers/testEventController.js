@@ -5,39 +5,43 @@
         .module('app')
         .controller('testEventController', testEventController);
 
-    testEventController.$inject = ['$scope', 'testEventService', 'testService', '$routeParams', '$location'];
+    testEventController.$inject = ['testEventService', 'testService', '$routeParams', '$location'];
 
-    function testEventController($scope, testEventService, testService, $routeParams, $location){
-        function init(){
-            testEventService.get({ id: $scope.testEventId }).$promise
+    function testEventController(testEventService, testService, $routeParams, $location){
+        var vm = this;
+
+        vm.startTest = _startTest;
+
+        vm.testEvent = {};
+        
+        vm.tests = [];
+
+        vm.testEventId = $routeParams.testEventId;
+
+        _init();
+        
+        function _init(){
+            testEventService.get({ id: vm.testEventId }).$promise
                 .then(
                     function (data){
-                        $scope.testEvent = data;
+                        vm.testEvent = data;
                         
-                        loadTests();
+                        _loadTests();
                     }
                 );
-        }
+        };
         
-        function loadTests(){
-            testService.query({ testsuite: $scope.testEvent.testSuite }).$promise
+        function _startTest(testId){
+            $location.path('/createTestSession/' + testId + '/' + vm.testEventId);
+        };
+        
+        function _loadTests(){
+            testService.query({ testsuite: vm.testEvent.testSuite }).$promise
                 .then(
                     function (data) {
-                        $scope.tests = data.tests
+                        vm.tests = data.tests
                     }
                 );
-        }
-
-        $scope.startTest = function (testId){
-            $location.path('/createTestSession/' + testId + '/' + $scope.testEventId);
         };
-
-        $scope.testEvent = {};
-        
-        $scope.tests = [];
-
-        $scope.testEventId = $routeParams.testEventId;
-
-        init();
     };
 })();

@@ -15,9 +15,6 @@ The application runs a Flask-based backend with an AngularJS front-end.  It was 
 This is a work in progress.  I have several tasks I would like to do to get the application fully functional.
 
 * Get user administration fully functional
-* Upgrade all JavaScript libraries (ex. AngularJS 1.3)
-* Convert to ControllerAs syntax with a view model for AngularJS
-* Refactor JavaScript to be more readable
 * Add unit tests
 * Add ETE tests
 * Create setup instructions/scripts

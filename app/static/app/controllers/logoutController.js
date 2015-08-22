@@ -5,9 +5,9 @@
         .module('app')
         .controller('logoutController', logoutController);
 
-    logoutController.$inject = ['$scope', 'userService', '$location'];
+    logoutController.$inject = ['userService', '$location'];
 
-    function logoutController($scope, userService, $location) {
+    function logoutController(userService, $location) {
 
         try {
             userService.logout();
@@ -15,7 +15,7 @@
             $location.path('/login');
         }
         catch(e){
-            $scope.$log.error(e);
+            console.error(e);
         }
     }
 })();

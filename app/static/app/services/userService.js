@@ -21,13 +21,13 @@
             username: scope.userName,
             name: '',
             userId: scope.userId,
-            login: login,
-            isInRole: isInRole,
-            checkLogin: checkLogin,
-            logout: logout
+            login: _login,
+            isInRole: _isInRole,
+            checkLogin: _checkLogin,
+            logout: _logout
         };
 
-        function login(userName, password) {
+        function _login(userName, password) {
             var deferred = $q.defer();
 
             var user_data = {
@@ -67,7 +67,7 @@
             return deferred.promise;
         };
 
-        function logout () {
+        function _logout () {
             $cookieStore.remove('djangotoken');
             $http.defaults.headers.common['Authorization'] = undefined;
 
@@ -75,12 +75,12 @@
             $rootScope.$broadcast('loggedIn', false);
         };
 
-        function isInRole(role) {
+        function _isInRole(role) {
             role = role.trim();
             return true;
         };
 
-        function checkLogin() {
+        function _checkLogin() {
             /*if ($cookieStore.get('djangotoken')) {
                 this.isLogged = true;
 

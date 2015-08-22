@@ -5,71 +5,75 @@
         .module('app')
         .controller('executeTestController', executeTestController);
 
-    executeTestController.$inject = ['$scope', 'testStepService', 'testResultService', '$routeParams', '$location'];
+    executeTestController.$inject = ['testStepService', 'testResultService', '$routeParams', '$location'];
 
-    function executeTestController($scope, testStepService, testResultService, $routeParams, $location) {
+    function executeTestController(testStepService, testResultService, $routeParams, $location) {
         
-        function init() {
+        var vm = this;
+
+        vm.nextStep = _nextStep;
+
+        vm.testSessionId = $routeParams.testSessionId;
+
+        vm.testSteps;
+
+        vm.testStep;
+
+        vm.testResult = {};
+
+        _init();
+        
+        function _init() {
             testStepService.query({ test: $routeParams.testId }).$promise
                 .then(
                     function (value) {
-                        $scope.testSteps = value.test_steps;
+                        vm.testSteps = value.test_steps;
 
-                        angular.forEach($scope.testSteps, function (testStep, key) {
+                        angular.forEach(vm.testSteps, function (testStep, key) {
                             if (testStep.stepNumber == 1) {
-                                $scope.testStep = testStep;
+                                vm.testStep = testStep;
                             }
                         });
                     }
                 )
                 .catch(
                     function(e){
-                        $scope.$log.error(e);
+                        console.error(e);
                     }
                 );
         };
+        
+        function _nextStep() {
+            var nextStep = vm.testStep.stepNumber + 1;
 
-        $scope.nextStep = function () {
-            var nextStep = $scope.testStep.stepNumber + 1;
+            vm.testResult.testSessionId = vm.testSessionId;
+            vm.testResult.testStepId = vm.testStep.id;
 
-            $scope.testResult.testSessionId = $scope.testSessionId;
-            $scope.testResult.testStepId = $scope.testStep.id;
-
-            testResultService.save($scope.testResult).$promise
+            testResultService.save(vm.testResult).$promise
                 .then(
                     function (value) {
 
-                        if (nextStep <= $scope.testSteps.length) {
-                            angular.forEach($scope.testSteps, function (testStep, key) {
+                        if (nextStep <= vm.testSteps.length) {
+                            angular.forEach(vm.testSteps, function (testStep, key) {
                                 if (testStep.stepNumber == nextStep) {
-                                    $scope.testStep = testStep;
+                                    vm.testStep = testStep;
                                 }
                             });
 
-                            $scope.testResult.pass = false;
-                            $scope.testResult.actualResult = '';
-                            $scope.testResult.comments = '';
+                            vm.testResult.pass = false;
+                            vm.testResult.actualResult = '';
+                            vm.testResult.comments = '';
                         }
                         else {
-                            $location.path('/completeTest/' + $scope.testSessionId);
+                            $location.path('/completeTest/' + vm.testSessionId);
                         }
                     }
                 )
                 .catch(
                     function(e){
-                        $scope.$log.error(e);
+                        console.error(e);
                     }
                 );
         };
-
-        $scope.testSessionId = $routeParams.testSessionId;
-
-        $scope.testSteps;
-
-        $scope.testStep;
-
-        $scope.testResult = {};
-
-        init();
     };
 })();

@@ -5,15 +5,20 @@
         .module('app')
         .controller('editProfileController', editProfileController);
 
-    editProfileController.$inject = ['$scope', 'profileService', 'userService'];
+    editProfileController.$inject = ['profileService', 'userService'];
 
-    function editProfileController($scope, profileService, userService){
+    function editProfileController(profileService, userService){
+        var vm = this;
 
-        function init(){
+        vm.user;
+
+        _init();
+        
+        function _init(){
             profileService.profile.query({ user_id: userService.userId }).$promise
                 .then(
                     function (data){
-                        $scope.user = data;
+                        vm.user = data;
                     }
                 )
                 .catch(
@@ -21,9 +26,5 @@
                     }
                 );
         };
-
-        $scope.user;
-
-        init();
     }
 })();

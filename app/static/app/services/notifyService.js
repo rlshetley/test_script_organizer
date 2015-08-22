@@ -15,26 +15,26 @@
         return {
             alerts: scope.alerts,
             $log: $log,
-            onError: onError,
-            onSuccess: function(msg) { addAlert('success', msg); },
-            onWarning: function(msg) { addAlert('warning', msg); }
+            onError: _onError,
+            onSuccess: function(msg) { _addAlert('success', msg); },
+            onWarning: function(msg) { _addAlert('warning', msg); }
         };
 
-        function onError(msg, error){
+        function _onError(msg, error){
             $log.error(error);
-            addAlert('danger', msg);
-        };
+            _addAlert('danger', msg);
+        }
 
-        function addAlert(type, msg) {
+        function _addAlert(type, msg) {
             scope.alerts.push({
               type: type,
               msg: msg,
-              close: function() { closeAlert(this);  } });
-        };
+              close: function() { _closeAlert(this);  } });
+        }
 
-        function closeAlert(alert) {
+        function _closeAlert(alert) {
             var index = scope.alerts.indexOf(alert);
             scope.alerts.splice(index, 1);
-        };
+        }
     }
 })();

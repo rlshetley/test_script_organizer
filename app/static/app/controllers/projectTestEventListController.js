@@ -5,26 +5,30 @@
         .module('app')
         .controller('projectTestEventListController', projectTestEventListController);
 
-    projectTestEventListController.$inject = ['$scope', 'testEventService', '$routeParams'];
+    projectTestEventListController.$inject = ['testEventService', '$routeParams'];
 
-    function projectTestEventListController($scope, testEventService, $routeParams){
-        function init(){
-            testEventService.query({ project: $scope.projectId }).$promise
+    function projectTestEventListController(testEventService, $routeParams){
+        var vm = this;
+
+        vm.remove = _remove;
+
+        vm.testEvents;
+
+        vm.projectId = $routeParams.projectId;
+
+        _init();
+        
+        function _init(){
+            testEventService.query({ project: vm.projectId }).$promise
                 .then(
                     function (data){
-                        $scope.testEvents = data.test_events;
+                        vm.testEvents = data.test_events;
                     }
                 );
         }
-
-        $scope.remove = function (id){
+        
+        function _remove(id){
             testEventService.remove({ id: id });
         };
-
-        $scope.testEvents;
-
-        $scope.projectId = $routeParams.projectId;
-
-        init();
-    };
+    }
 })();

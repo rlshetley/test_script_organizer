@@ -5,14 +5,22 @@
         .module('app')
         .controller('completeTestController', completeTestController);
 
-    completeTestController.$inject = ['$scope', 'testResultService', 'testSessionService', '$routeParams'];
+    completeTestController.$inject = ['testResultService', 'testSessionService', '$routeParams'];
 
-    function completeTestController($scope, testResultService, testSessionService, $routeParams) {
-        function init() {
-            testResultService.getByTestSession({ testSessionId: $scope.testSessionId }).$promise
+    function completeTestController(testResultService, testSessionService, $routeParams) {
+        var vm = this;
+        
+        vm.testSessionId = $routeParams.testSessionId;
+
+        vm.testResults;
+
+        _init();
+        
+        function _init() {
+            testResultService.getByTestSession({ testSessionId: vm.testSessionId }).$promise
                     .then(
                         function (value) {
-                            $scope.testResults = value;
+                            vm.testResults = value;
 
                             // Need to set the finish date/time for the test session
                             value.finishDate = moment().toJSON();
@@ -22,15 +30,9 @@
                     )
                     .catch(
                         function(e){
-                            $scope.$log.error(e);
+                            vm.$log.error(e);
                         }
                     );
         }
-
-        $scope.testSessionId = $routeParams.testSessionId;
-
-        $scope.testResults;
-
-        init();
     };
 })();
