@@ -44,11 +44,11 @@ class TestEventListController(MethodView):
         if 'project' in request.args:
             project_id = request.args.get('project')
 
-            results = TestEvent.query.filter(TestEvent.project.id == project_id).all()
+            results = TestEvent.query.filter(TestEvent.project == project_id).all()
         elif 'testsuite' in request.args:
             test_suite_id = request.args.get('testsuite')
 
-            results = TestEvent.query.filter(TestEvent.test_suite.id == test_suite_id).all()
+            results = TestEvent.query.filter(TestEvent.test_suite == test_suite_id).all()
         else:
             results = TestEvent.query.all()
 
@@ -59,11 +59,11 @@ class TestEventListController(MethodView):
     def post(self):
         test_event = TestEvent()
 
-        test_event.name = request.data['name']
+        test_event.name = request.json_data['name']
 
-        test_suite = TestSuite.query.filter(TestSuite.id == request.data['testsuite_id']).first()
+        test_suite = TestSuite.query.filter(TestSuite.id == request.json_data['testSuite']).first()
 
-        test_event.test_suite = test_suite
+        test_event.test_suite = test_suite.id
 
         db.session.add(test_event)
         db.session.commit()

@@ -10,10 +10,10 @@
     function executeTestController($scope, testStepService, testResultService, $routeParams, $location) {
         
         function init() {
-            testStepService.getByTest({ TestId: $routeParams.testId }).$promise
+            testStepService.query({ test: $routeParams.testId }).$promise
                 .then(
                     function (value) {
-                        $scope.testSteps = value;
+                        $scope.testSteps = value.test_steps;
 
                         angular.forEach($scope.testSteps, function (testStep, key) {
                             if (testStep.stepNumber == 1) {

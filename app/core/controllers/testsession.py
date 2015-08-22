@@ -5,12 +5,12 @@ from app import db, register_controller
 from app.core.models import Test, TestSession
 
 def map_test_session(test_session, request):
-    test_session.name = request.data['name']
-    test_session.server = request.data['server']
-    test_session.browser = request.data['browser']
-    test_session.tester = request.data['tester']
-    test_session.start_date = request.data['start_date']
-    test_session.finish_date = request.data['finish_date']
+    test_session.name = "Test"
+    test_session.server = request.json_data['server']
+    test_session.browser = request.json_data['browser']
+    test_session.tester = request.json_data['tester']
+    test_session.start_date = request.json_data['startDate']
+    test_session.finish_date = request.json_data['finishDate']
 
     return test_session
 
@@ -58,9 +58,9 @@ class TestSessionListController(MethodView):
 
         test_session = map_test_session(test_session, request)
 
-        test = TestSession.query.filter(TestSession.id == request.data['test_id']).first()
+        test = TestSession.query.filter(TestSession.id == request.json_data['test']).first()
 
-        test_session.test = test
+        test_session.test = test.id
 
         db.session.add(test_session)
         db.session.commit()

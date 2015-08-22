@@ -81,7 +81,7 @@ class TestSession(Base):
             'server': self.server,
             'browser': self.browser,
             'tester': self.tester,
-            'test_id': self.test.id,
+            'test_id': self.test,
             'start_date': self.start_date,
             'finish_date': self.finish_date
         }
@@ -103,8 +103,8 @@ class TestResult(Base):
             'actual_result': self.actual_result,
             'comments': self.comments,
             'is_pass': self.is_pass,
-            'testStep_id': self.test_step.id,
-            'testSession_id': self.test_session.id
+            'testStep_id': self.test_step,
+            'testSession_id': self.test_session
         }
 
 
@@ -118,7 +118,7 @@ class TestEvent(Base):
         return {
             'id': self.id,
             'name': self.name,
-            'testSuite_id': self.test_suite.id
+            'testSuite_id': self.test_suite
         }
 
 

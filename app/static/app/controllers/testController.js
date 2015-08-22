@@ -24,7 +24,7 @@
         };
 
         $scope.remove = function (id) {
-            testService.remove({ Id: id });
+            testService.remove({ id: id });
         };
 
         $scope.testSuiteId = $routeParams.testSuiteId;

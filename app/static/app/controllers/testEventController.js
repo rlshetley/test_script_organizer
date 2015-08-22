@@ -5,14 +5,25 @@
         .module('app')
         .controller('testEventController', testEventController);
 
-    testEventController.$inject = ['$scope', 'testEventService', '$routeParams', '$location'];
+    testEventController.$inject = ['$scope', 'testEventService', 'testService', '$routeParams', '$location'];
 
-    function testEventController($scope, testEventService, $routeParams, $location){
+    function testEventController($scope, testEventService, testService, $routeParams, $location){
         function init(){
-            testEventService.get({ Id: $scope.testEventId }).$promise
+            testEventService.get({ id: $scope.testEventId }).$promise
                 .then(
                     function (data){
                         $scope.testEvent = data;
+                        
+                        loadTests();
+                    }
+                );
+        }
+        
+        function loadTests(){
+            testService.query({ testsuite: $scope.testEvent.testSuite }).$promise
+                .then(
+                    function (data) {
+                        $scope.tests = data.tests
                     }
                 );
         }
@@ -21,7 +32,9 @@
             $location.path('/createTestSession/' + testId + '/' + $scope.testEventId);
         };
 
-        $scope.testEvent;
+        $scope.testEvent = {};
+        
+        $scope.tests = [];
 
         $scope.testEventId = $routeParams.testEventId;
 

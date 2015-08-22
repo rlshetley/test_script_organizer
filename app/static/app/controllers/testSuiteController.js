@@ -50,7 +50,7 @@
 
         $scope.createTestEvent = function (testSuiteId) {
             var modalInstance = $modal.open({
-                templateUrl: 'static/App/Views/TestEventModalDialog.html',
+                templateUrl: 'app/views/TestEventModalDialog.html',
                 controller: modalTestEventController,
                 resolve:{
                     testEvent: function () {
@@ -81,6 +81,20 @@
 
         $scope.ok = function () {
             $modalInstance.close($scope.testSuite);
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    };
+
+    var modalTestEventController = function ($scope, $modalInstance, testEvent) {
+        $scope.testEvent = testEvent;
+
+        $scope.title = '';
+
+        $scope.ok = function () {
+            $modalInstance.close($scope.testEvent);
         };
 
         $scope.cancel = function () {

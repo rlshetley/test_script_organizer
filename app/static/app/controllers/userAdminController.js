@@ -60,7 +60,7 @@
                 groups: []
             };
 
-            var modalInstance = thisController.buildModalInstance(newUser, "Add a User", 'static/App/Views/AddUserModalDialog.html');
+            var modalInstance = thisController.buildModalInstance(newUser, "Add a User", 'app/views/AddUserModalDialog.html');
 
             modalInstance.result.then(function (user){
                 userAdminService.users.save(user).$promise
@@ -80,7 +80,7 @@
         };
 
         $scope.edit = function (value){
-            var modalInstance = thisController.buildModalInstance(value, "Edit User", 'static/App/Views/EditUserModalDialog.html');
+            var modalInstance = thisController.buildModalInstance(value, "Edit User", 'app/views/EditUserModalDialog.html');
 
             modalInstance.result.then(function (user){
                 userAdminService.users.update(user).$promise
