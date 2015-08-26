@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="project in projects | filter:query | orderBy:orderProp | offset: currentPage*itemsPerPage | limitTo: itemsPerPage">
+                <tr ng-repeat="project in vm.projects | filter:query | orderBy:orderProp | offset: currentPage*itemsPerPage | limitTo: itemsPerPage">
                     <td>
                         <span editable-text="project.name" e-name="name" e-form="rowform">
                             <a href="#/testSuites/{{project.id}}">{{project.name}}</a>
@@ -35,7 +35,7 @@
                     </td>
                     <td style="white-space: nowrap">
                         <!-- form -->
-                        <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline" onaftersave="saveProject(project)">
+                        <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline" onaftersave="vm.saveProject(project)">
                             <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                                 Save
                             </button>
@@ -45,13 +45,13 @@
                         </form>
                         <div class="buttons" ng-show="!rowform.$visible">
                             <button class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
-                            <button class="btn btn-danger" ng-click="remove(project.id)">Del</button>
+                            <button class="btn btn-danger" ng-click="vm.remove(project.id)">Del</button>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-primary" ng-click="add()">
+        <button class="btn btn-primary" ng-click="vm.add()">
             Add a Project
         </button>
     </div>

@@ -10,17 +10,17 @@
                         <p>Invalid Login.</p>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" placeholder="User Name" name="userName" type="text" ng-model="userName">
+                        <input class="form-control" placeholder="User Name" name="userName" type="text" ng-model="vm.userName">
                     </div>
                     <div class="form-group">
-                        <input class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="password">
+                        <input class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="vm.password">
                     </div>
                     <!--<div class="checkbox">
 			    	    	<label>
 			    	    		<input name="remember" type="checkbox" value="Remember Me"> Remember Me
 			    	    	</label>
 			    	    </div>-->
-                    <input class="btn btn-lg btn-success btn-block" type="button" value="Login" ng-click="login()">
+                    <input class="btn btn-lg btn-success btn-block" type="button" value="Login" ng-click="vm.login()">
                 </div>
             </div>
         </div>

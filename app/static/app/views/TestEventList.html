@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="testEvent in testEvents | filter:query | orderBy:orderProp">
+                <tr ng-repeat="testEvent in vm.testEvents | filter:query | orderBy:orderProp">
                     <td>
                         <a href="#/testEvent/{{testEvent.id}}">{{testEvent.name}}</a>
                     </td>
@@ -30,7 +30,7 @@
                         {{testEvent.date | date:'MM-dd-yyyy'}}
                     </td>
                     <td>
-                        <button ng-click="delete(testEvent.id)">Delete</button>
+                        <button ng-click="vm.delete(testEvent.id)">Delete</button>
                     </td>
                 </tr>
             </tbody>

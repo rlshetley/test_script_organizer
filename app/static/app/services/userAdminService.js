@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -20,7 +20,10 @@
             roles: $resource(
                     '/api/roles',
                     {},
-                    {})
+                    {
+                        query: {method: 'GET', isArray: false },
+                        update: { method: 'PUT', isArray: false }
+                    })
         };
     }
 })();

@@ -45,7 +45,7 @@
             testService.get({ id: vm.testId }).$promise
                 .then(
                     function (value) {
-                        vm = value;
+                        vm.test = value;
                     }
                 )
                 .catch(
@@ -61,7 +61,7 @@
         
         function _startTest() {
             var now = moment();
-
+            
             vm.testSession.id = 0;
             vm.testSession.test = vm.testId;
             vm.testSession.startDate = now.toJSON();

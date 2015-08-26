@@ -25,11 +25,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="test in tests | filter:query | orderBy:orderProp">
+                <tr ng-repeat="test in vm.tests | filter:query | orderBy:orderProp">
                   <td><a href="#/edittest/{{test.id}}">{{test.name}}</a></td>
                    <td><button tsoclick="createTestSession/{{test.id}}" class="btn btn-warning">Start Test</button></td>
-                  <td><button class="btn btn-primary" ng-click="edit(test.id)">Edit</button></td>
-                  <td><button class="btn btn-danger" ng-click="delete(test.id)">Delete</button></td>
+                  <td><button class="btn btn-primary" ng-click="vm.edit(test.id)">Edit</button></td>
+                  <td><button class="btn btn-danger" ng-click="vm.delete(test.id)">Delete</button></td>
                 </tr>
             </tbody>
         </table>

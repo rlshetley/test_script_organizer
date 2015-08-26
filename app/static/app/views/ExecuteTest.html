@@ -1,17 +1,17 @@
-﻿<div class="panel panel-info">
+<div class="panel panel-info">
     <div class="panel-heading">Test Step</div>
     <div class="panel-body">
         <label class="control-label">Name</label>
-        <input id="testStepName" type="text" ng-model="testStep.name" />
+        <input id="testStepName" type="text" ng-model="vm.testStep.name" />
         <br />
         <label class="control-label">Description</label>
-        <textarea id="testStepDescription" class="form-control" rows="3" ng-model="testStep.description"></textarea>
+        <textarea id="testStepDescription" class="form-control" rows="3" ng-model="vm.testStep.description"></textarea>
         <br />
         <label class="control-label">Action</label>
-        <textarea id="testStepAction" class="form-control" rows="3" ng-model="testStep.action"></textarea>
+        <textarea id="testStepAction" class="form-control" rows="3" ng-model="vm.testStep.action"></textarea>
         <br />
         <label class="control-label">Expected Result</label>
-        <textarea id="testStepExpectedResult" class="form-control" rows="3" ng-model="testStep.expectedResult"></textarea>
+        <textarea id="testStepExpectedResult" class="form-control" rows="3" ng-model="vm.testStep.expectedResult"></textarea>
     </div>
 </div>
 <div class="panel panel-primary">
@@ -19,15 +19,15 @@
     <div class="panel-body">
         <div class="checkbox">
             <label>
-                <input type="checkbox" ng-model="testResult.pass">
+                <input type="checkbox" ng-model="vm.testResult.pass">
                 Passed
             </label>
         </div>
         <label class="control-label">Actual Result</label>
-        <textarea id="Textarea1" class="form-control" rows="3" ng-model="testResult.actualResult"></textarea>
+        <textarea id="Textarea1" class="form-control" rows="3" ng-model="vm.testResult.actualResult"></textarea>
         <br />
         <label class="control-label">Comments</label>
-        <textarea id="Textarea2" class="form-control" rows="3" ng-model="testResult.comments"></textarea>
+        <textarea id="Textarea2" class="form-control" rows="3" ng-model="vm.testResult.comments"></textarea>
         <br />
     </div>
 </div>
@@ -36,6 +36,6 @@
 <div class="control-group">
   <label class="control-label" for="nextButton"></label>
   <div class="controls">
-    <button name="buttonStart" class="btn btn-primary" id="nextButton" ng-click="nextStep()">Next</button>
+    <button name="buttonStart" class="btn btn-primary" id="nextButton" ng-click="vm.nextStep()">Next</button>
   </div>
 </div>

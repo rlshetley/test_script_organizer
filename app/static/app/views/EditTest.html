@@ -5,9 +5,9 @@
   </div>
   <div class="panel-body">
 <label class="control-label">Test Name:</label>
-<input type="text" ng-model="test.name" /> 
+<input type="text" ng-model="vm.test.name" /> 
 
-<button class="btn" ng-click="save()">Save Test</button>
+<button class="btn" ng-click="vm.save()">Save Test</button>
   </div>
 </div>
 <div class="panel panel-default">
@@ -35,15 +35,15 @@ Order By:
         </tr>
     </thead>
     <tbody ui-sortable="sortableOptions" ng-model="testSteps">
-    <tr ng-repeat="testStep in testSteps| orderBy:'stepNumber' | filter:query | orderBy:orderProp">
+    <tr ng-repeat="testStep in vm.testSteps| orderBy:'stepNumber' | filter:query | orderBy:orderProp">
         <td>{{testStep.stepNumber}}</td>
-        <td><a ng-click="editTestStep(testStep.id)">{{testStep.name}}</a></td>
-        <td><button ng-click="removeTestStep(testStep.id)">Delete</button></td>
+        <td><a ng-click="vm.editTestStep(testStep.id)">{{testStep.name}}</a></td>
+        <td><button ng-click="vm.removeTestStep(testStep.id)">Delete</button></td>
     </tr>
         </tbody>
 </table>
 
-<button class="btn" ng-click="addTestStep()">Add a Test Step</button>
+<button class="btn" ng-click="vm.addTestStep()">Add a Test Step</button>
 </div>
 
     </div>

@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="testSuite in testSuites | filter:query | orderBy:orderProp">
+                <tr ng-repeat="testSuite in vm.testSuites | filter:query | orderBy:orderProp">
                     <td>
                         <span editable-text="testSuite.name" e-name="name" e-form="rowform">
                             <a href="#/tests/{{testSuite.id}}">{{testSuite.name}}</a>
@@ -33,7 +33,7 @@
                         <a href="#/testEvents/{{testSuite.id}}">Test Events</a>
                     </td>
                     <td>
-                        <button ng-click="createTestEvent(testSuite.id)" class="btn btn-warning">Create Test Event</button>
+                        <button ng-click="vm.createTestEvent(testSuite.id)" class="btn btn-warning">Create Test Event</button>
                     </td>
                     <td style="white-space: nowrap">
                         <!-- form -->
@@ -47,12 +47,12 @@
                         </form>
                         <div class="buttons" ng-show="!rowform.$visible">
                             <button class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
-                            <button class="btn btn-danger" ng-click="delete(testSuite.id)">Del</button>
+                            <button class="btn btn-danger" ng-click="vm.delete(testSuite.id)">Del</button>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-primary" ng-click="add()">Add a Test Suite</button>
+        <button class="btn btn-primary" ng-click="vm.add()">Add a Test Suite</button>
     </div>
 </div>

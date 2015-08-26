@@ -17,7 +17,7 @@ class UserController(MethodView):
     def put(self, user_id):
         user = User.query.filter(User.id == user_id).first()
 
-        user.username = request.data['username']
+        user.user_name = request.data['username']
 
         resp = jsonify(user.serialize())
         resp.status_code = 201
@@ -38,10 +38,10 @@ class UserListController(MethodView):
         results = []
 
         if 'username' in request.args:
-            username = request.args.get('username')
+            user_name = request.args.get('username')
 
             # There should only be on user so do a first query
-            user = User.query.filter(User.username == username).first()
+            user = User.query.filter(User.user_name == user_name).first()
 
             resp = jsonify(user.serialize())
             resp.status_code = 201
@@ -50,16 +50,17 @@ class UserListController(MethodView):
         else:
             results = User.query.all()
 
-        resp = jsonify(json_list=[i.serialize() for i in results])
+        users = [i.serialize() for i in results]
+        resp = jsonify(users=users)
         resp.status_code = 200
         return resp
 
     def post(self):
         user = User()
 
-        user.username = request.data['username']
+        user.user_name = request.json_data['username']
 
-        user.set_password(request.data['password'])
+        user.set_password(request.json_data['password'])
 
         db.session.add(user)
         db.session.commit()

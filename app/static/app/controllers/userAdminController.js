@@ -26,7 +26,7 @@
             userAdminService.users.query().$promise
                 .then(
                     function (data){
-                        vm.users = data;
+                        vm.users = data.users;
                     }
                 )
                 .catch(
@@ -37,8 +37,8 @@
 
             userAdminService.roles.query().$promise
                 .then(
-                    function (roles){
-                        vm.roles = roles;
+                    function (data){
+                        vm.roles = data.roles;
                     }
                 );
         };

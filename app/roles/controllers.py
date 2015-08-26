@@ -7,9 +7,10 @@ from app.roles.models import Role
 
 class RoleController(MethodView):
     def get(self):
-         resp = jsonify(json_list=[i.serialize() for i in Role.query.all()])
-         resp.status_code = 200
-         return resp
+        results = [i.serialize() for i in Role.query.all()]
+        resp = jsonify(roles=results)
+        resp.status_code = 200
+        return resp
 
 class RoleUsersController(MethodView):
     def get(self, role_id):
