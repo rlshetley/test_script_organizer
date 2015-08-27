@@ -3,10 +3,14 @@ from flask.json import jsonify
 from flask.views import MethodView
 from app import db, register_controller
 from app.core.models import TestSuite, TestEvent
+from datetime import datetime
 
 class TestEventController(MethodView):
     def get(self, testevent_id):
         test_event = TestEvent.query.filter(TestEvent.id == testevent_id).first()
+
+        if test_event is None:
+            return make_response('', 404)
 
         resp = jsonify(test_event.serialize())
         resp.status_code = 200
@@ -16,11 +20,11 @@ class TestEventController(MethodView):
     def put(self, testevent_id):
         test_event = TestEvent.query.filter(TestEvent.id == testevent_id).first()
 
-        test_event.name = request.data['name']
+        test_event.name = request.json_data['name']
 
-        test_suite = TestSuite.query.filter(TestSuite.id == request.data['testsuite_id']).first()
+        test_suite = TestSuite.query.filter(TestSuite.id == request.json_data['testSuite']).first()
 
-        test_event.test_suite = test_suite
+        test_event.test_suite = test_suite.id
 
         resp = jsonify(test_event.serialize())
         resp.status_code = 201
@@ -32,7 +36,7 @@ class TestEventController(MethodView):
         test_event = TestEvent.query.filter(TestEvent.id == testevent_id).first()
 
         db.session.delete(test_event)
-        db.session.comiit()
+        db.session.commit()
 
         return make_response('', 204)
 
@@ -41,11 +45,7 @@ class TestEventListController(MethodView):
     def get(self):
         results = []
 
-        if 'project' in request.args:
-            project_id = request.args.get('project')
-
-            results = TestEvent.query.filter(TestEvent.project == project_id).all()
-        elif 'testsuite' in request.args:
+        if 'testsuite' in request.args:
             test_suite_id = request.args.get('testsuite')
 
             results = TestEvent.query.filter(TestEvent.test_suite == test_suite_id).all()
@@ -60,6 +60,7 @@ class TestEventListController(MethodView):
         test_event = TestEvent()
 
         test_event.name = request.json_data['name']
+        test_event.date = datetime.now()
 
         test_suite = TestSuite.query.filter(TestSuite.id == request.json_data['testSuite']).first()
 
@@ -73,5 +74,5 @@ class TestEventListController(MethodView):
 
         return resp
 
-register_controller(TestEventController, 'test_event_api', '/testevents/<int:testevent_id>')
+register_controller(TestEventController, 'test_event_api', '/testevents/<int:testevent_id>/')
 register_controller(TestEventListController, 'test_event_list_api', '/testevents/', ['GET', 'POST'])

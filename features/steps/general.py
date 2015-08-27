@@ -54,7 +54,7 @@ def step_impl(context, model_type):
     assert_that(result['id'], greater_than(0))
 
     for row in context.scenario.properties:
-        assert_that(result[row['property']], equal_to(row['value']))
+        assert_that(str(result[row['property']]), equal_to(row['value']))
 
 @when(u'the {model_type} {property} is updated with {value}')
 def step_impl(context, model_type, property, value):

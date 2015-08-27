@@ -12,9 +12,9 @@ def map_test_step(test_step, request):
     test_step.expected_result = request.json_data['expectedResult']
     test_step.step_number = request.json_data['stepNumber']
 
-    test = Test.query.filter(Test == request.json_data['test']).first()
+    test = Test.query.filter(Test.id == request.json_data['test']).first()
 
-    test_step.test = test
+    test_step.test = test.id
 
     return test_step
 
@@ -22,6 +22,9 @@ def map_test_step(test_step, request):
 class TestStepController(MethodView):
     def get(self, teststep_id):
         test_step = TestStep.query.filter(TestStep.id == teststep_id).first()
+
+        if test_step is None:
+            return make_response('', 404)
 
         resp = jsonify(test_step.serialize())
         resp.status_code = 200
@@ -42,7 +45,7 @@ class TestStepController(MethodView):
         test_step = TestStep.query.filter(TestStep.id == teststep_id).first()
 
         db.session.delete(test_step)
-        db.session.comiit()
+        db.session.commit()
 
         return make_response('', 204)
 
@@ -76,5 +79,5 @@ class TestStepListController(MethodView):
         return resp
 
 
-register_controller(TestStepController, 'test_step_api', '/teststeps/<int:teststep_id>')
+register_controller(TestStepController, 'test_step_api', '/teststeps/<int:teststep_id>/')
 register_controller(TestStepListController, 'test_step_list_api', '/teststeps/', ['GET', 'POST'])

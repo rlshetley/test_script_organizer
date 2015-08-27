@@ -6,19 +6,22 @@ from app.core.models import TestEventResult, TestSession, TestEvent
 
 def map_test_event_result(test__event_result, request):
 
-    test_event = TestEvent.query.filter(TestEvent.id == request.data['testevent_id']).first()
+    test_event = TestEvent.query.filter(TestEvent.id == request.json_data['testEvent']).first()
 
-    test__event_result.test_event = test_event
+    test__event_result.test_event = test_event.id
 
-    test_session = TestSession.query.filter(TestSession.id == request.data['testsession_id']).first()
+    test_session = TestSession.query.filter(TestSession.id == request.json_data['testSession']).first()
 
-    test__event_result.test_session = test_session
+    test__event_result.test_session = test_session.id
 
     return test__event_result
 
 class TestEventResultController(MethodView):
     def get(self, testeventresult_id):
         test_event_result = TestEventResult.query.filter(TestEventResult.id == testeventresult_id).first()
+
+        if test_event_result is None:
+            return make_response('', 404)
 
         resp = jsonify(test_event_result.serialize())
         resp.status_code = 200
@@ -40,7 +43,7 @@ class TestEventResultController(MethodView):
         test_event_result = TestEventResult.query.filter(TestEventResult.id == testeventresult_id).first()
 
         db.session.delete(test_event_result)
-        db.session.comiit()
+        db.session.commit()
 
         return make_response('', 204)
 
@@ -64,5 +67,5 @@ class TestEventResultListController(MethodView):
 
         return resp
 
-register_controller(TestEventResultController, 'test_event_result_api', '/testeventresults/<int:testeventresult_id_id>')
+register_controller(TestEventResultController, 'test_event_result_api', '/testeventresults/<int:testeventresult_id>/')
 register_controller(TestEventResultListController, 'test_event_result_list_api', '/testeventresults/', ['GET', 'POST'])

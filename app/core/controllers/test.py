@@ -21,7 +21,7 @@ class TestController(MethodView):
 
         test.name = request.json_data['name']
 
-        test_suite = TestSuite.query.filter(TestSuite.id == request.json_data['testsuite_id']).first()
+        test_suite = TestSuite.query.filter(TestSuite.id == request.json_data['testsuite']).first()
 
         test.test_suite = test_suite.id
 

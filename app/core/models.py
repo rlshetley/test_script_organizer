@@ -26,7 +26,7 @@ class TestSuite(Base):
         return {
             'id': self.id,
             'name': self.name,
-            'project_id': self.project
+            'project': self.project
         }
 
 
@@ -39,7 +39,7 @@ class Test(Base):
         return {
             'id': self.id,
             'name': self.name,
-            'testsuite_id': self.test_suite
+            'testsuite': self.test_suite
         }
 
 
@@ -60,7 +60,7 @@ class TestStep(Base):
             'expectedResult': self.expected_result,
             'description': self.description,
             'stepNumber': self.step_number,
-            'test_id': self.test
+            'test': self.test
         }
 
 
@@ -81,9 +81,9 @@ class TestSession(Base):
             'server': self.server,
             'browser': self.browser,
             'tester': self.tester,
-            'test_id': self.test,
-            'start_date': self.start_date,
-            'finish_date': self.finish_date
+            'test': self.test,
+            'startDate': self.start_date,
+            'finishDate': self.finish_date
         }
 
 
@@ -100,11 +100,11 @@ class TestResult(Base):
         return {
             'id': self.id,
             'name': self.name,
-            'actual_result': self.actual_result,
+            'actualResult': self.actual_result,
             'comments': self.comments,
-            'is_pass': self.is_pass,
-            'testStep_id': self.test_step,
-            'testSession_id': self.test_session
+            'isPass': self.is_pass,
+            'testStep': self.test_step,
+            'testSession': self.test_session
         }
 
 
@@ -118,7 +118,8 @@ class TestEvent(Base):
         return {
             'id': self.id,
             'name': self.name,
-            'testSuite_id': self.test_suite
+            'date': self.date,
+            'testSuite': self.test_suite
         }
 
 
@@ -130,6 +131,6 @@ class TestEventResult(Base):
     def serialize(self):
         return {
             'id': self.id,
-            'test_event': self.test_event.serialize(),
-            'test_session': self.test_session.serialize()
+            'test_event': self.test_event,
+            'test_session': self.test_session
         }

@@ -7,17 +7,17 @@ from app.core.models import TestResult, TestStep, TestSession
 
 def map_test_result(test_result, request):
     test_result.name = request.json_data['name']
-    test_result.action = request.json_data['actual_results']
-    test_result.description = request.json_data['comments']
-    test_result.expected_result = request.json_data['is_pass']
+    test_result.actual_result = request.json_data['actualResult']
+    test_result.comments = request.json_data['comments']
+    test_result.is_pass = (request.json_data['isPass'] == 'True')
 
-    test_step = TestStep.query.filter(TestStep.id == request.json_data['teststep_id']).first()
+    test_step = TestStep.query.filter(TestStep.id == request.json_data['testStep']).first()
 
-    test_result.test_step = test_step
+    test_result.test_step = test_step.id
 
-    test_session = TestSession.query.filter(TestSession.id == request.json_data['testsession_id']).first()
+    test_session = TestSession.query.filter(TestSession.id == request.json_data['testSession']).first()
 
-    test_result.test_session = test_session
+    test_result.test_session = test_session.id
 
     return test_result
 
@@ -25,6 +25,9 @@ def map_test_result(test_result, request):
 class TestResultController(MethodView):
     def get(self, testresult_id):
         test_result = TestResult.query.filter(TestResult.id == testresult_id).first()
+
+        if test_result is None:
+            return make_response('', 404)
 
         resp = jsonify(test_result.serialize())
         resp.status_code = 200
@@ -45,7 +48,7 @@ class TestResultController(MethodView):
         test_result = TestResult.query.filter(TestResult.id == testresult_id).first()
 
         db.session.delete(test_result)
-        db.session.comiit()
+        db.session.commit()
 
         return make_response('', 204)
 
@@ -78,5 +81,5 @@ class TestResultListController(MethodView):
         return resp
 
 
-register_controller(TestResultController, 'test_result_api', '/testresults/<int:testresult_id>')
+register_controller(TestResultController, 'test_result_api', '/testresults/<int:testresult_id>/')
 register_controller(TestResultListController, 'test_result_list_api', '/testresults/', ['GET', 'POST'])

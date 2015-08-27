@@ -3,13 +3,27 @@ module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        uglify: {
+        jshint: {
+            files: ['Gruntfile.js', 'js/ng-app/**/*.js', 'js/ng-app/**/**/*.js'],
             options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-            },
-            build: {
-                src: 'src/<%= pkg.name %>.js',
-                dest: 'build/<%= pkg.name %>.min.js'
+                globals: {
+                    jQuery: true
+                }
+            }
+        },
+        wiredep: {
+            task: {
+
+                // Point to the files that should be updated when
+                // you run `grunt wiredep`
+                src: [
+                  'app/views/**/*.html',   // .html support...
+                  'app/views/**/*.jade',   // .jade support...
+                  'app/styles/main.scss',  // .scss & .sass support...
+                  'app/config.yml'         // and .yml & .yaml support out of the box!
+                ],
+                options: {
+                }
             }
         },
         bowerInstall: {
@@ -35,12 +49,15 @@ module.exports = function (grunt) {
         }
     });
 
-    // Load the plugin that provides the "uglify" task.
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-
     grunt.loadNpmTasks('grunt-bower-install');
 
+    // Load the bower js plugin
+    grunt.loadNpmTasks('grunt-wiredep');
+
+    // Load the jshint plugin
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+
     // Default task(s).
-    grunt.registerTask('default', ['uglify']);
+    grunt.registerTask('default', ['jshint', 'wiredep']);
 
 };
