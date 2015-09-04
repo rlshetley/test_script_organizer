@@ -9,6 +9,7 @@
 
     function userService($http, $resource, $rootScope, $cookieStore, $q)
     {
+        /* jshint validthis: true */
         var scope = this;
 
         scope.isLogged = true;
@@ -30,11 +31,6 @@
         function _login(userName, password) {
             var deferred = $q.defer();
 
-            var user_data = {
-                "username": userName,
-                "password": password,
-            };
-
             setTimeout(function() {
                 //$cookieStore.put('djangotoken', data.token);
                 //$http.defaults.headers.common['Authorization'] = 'Token ' + data.token;
@@ -48,7 +44,7 @@
               }, 1000);
 
 
-            /*$http.post("api-token-auth/", user_data)
+            /*$http.get("api/users/?username=" + userName)
                 .success(function (data) {
                     $cookieStore.put('djangotoken', data.token);
                     $http.defaults.headers.common['Authorization'] = 'Token ' + data.token;
@@ -61,24 +57,24 @@
                     deferred.resolve();
                 })
                 .catch(function (data) {
-                    deferred.reject(error.data.error);
+                    deferred.reject(data.error);
                 });*/
 
             return deferred.promise;
-        };
+        }
 
         function _logout () {
             $cookieStore.remove('djangotoken');
-            $http.defaults.headers.common['Authorization'] = undefined;
+            $http.defaults.headers.common.Authorization = undefined;
 
             // Notify anyone who is listening that the log in event has happened
             $rootScope.$broadcast('loggedIn', false);
-        };
+        }
 
         function _isInRole(role) {
             role = role.trim();
             return true;
-        };
+        }
 
         function _checkLogin() {
             /*if ($cookieStore.get('djangotoken')) {
@@ -91,6 +87,6 @@
 
             return false;*/
             return true;
-        };
-    };
+        }
+    }
 })();

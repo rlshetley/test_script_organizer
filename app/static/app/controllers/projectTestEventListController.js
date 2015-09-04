@@ -8,11 +8,12 @@
     projectTestEventListController.$inject = ['testEventService', '$routeParams'];
 
     function projectTestEventListController(testEventService, $routeParams){
+        /* jshint validthis: true */
         var vm = this;
 
         vm.remove = _remove;
 
-        vm.testEvents;
+        vm.testEvents = {};
 
         vm.projectId = $routeParams.projectId;
 
@@ -29,6 +30,6 @@
         
         function _remove(id){
             testEventService.remove({ id: id });
-        };
+        }
     }
 })();

@@ -8,6 +8,7 @@
     editTestController.$inject = ['testService', 'testStepService', '$modal', '$routeParams', 'notifyService'];
 
     function editTestController(testService, testStepService, $modal, $routeParams, notifyService) {
+        /* jshint validthis: true */
         var vm = this;
 
         vm.addTestStep = _addTestStep;
@@ -42,7 +43,7 @@
             else {
                 console.log('Missing test information - unable to load test');
             }
-        };
+        }
 
         function _buildModalInstance(testStep, title){
             return $modal.open({
@@ -57,7 +58,7 @@
                     }
                 }
             });
-        };
+        }
 
         function _loadTestSteps() {
             testStepService.query({ test: vm.test.id }).$promise
@@ -71,7 +72,7 @@
                         notifyService.onError('Unable to load test steps', e);
                     }
                 );
-        };
+        }
 
         function _createTest(testSuiteId){
             testService.save({ id: 0, name: 'Test 0', testsuite: testSuiteId }).$promise
@@ -87,7 +88,7 @@
                         console.error(e);
                     }
                 );
-        };
+        }
 
         function _getTest(testId){
             testService.get({ id: testId}).$promise
@@ -103,7 +104,7 @@
                         notifyService.onError('Unable to load test', e);
                     }
                 );
-        };
+        }
         
         function _addTestStep() {
             var newTestStep = {
@@ -115,7 +116,7 @@
                 test: vm.test.id
             };
 
-            var modalInstance = _buildModalInstance(newTestStep, "Add Test Step")
+            var modalInstance = _buildModalInstance(newTestStep, "Add Test Step");
 
             modalInstance.result.then(function (testStep){
                 var highestValue = 1;
@@ -145,7 +146,7 @@
             function () {
                 vm.loadTestSteps();
             });
-        };
+        }
         
         function _editTestStep(id) {
             testStepService.get({ id: id }).$promise
@@ -173,7 +174,7 @@
                         notifyService.onError('Unable to load test step', e);
                     }
                 );
-        };
+        }
         
         function _removeTestStep(id) {
             testStepService.remove({ id: id }).$promise
@@ -187,7 +188,7 @@
                         notifyService.onError('Unable to delete test step', e);
                     }
                 );
-        };
+        }
         
         function _save() {
             testService.update({id: vm.test.id}).$promise
@@ -201,8 +202,8 @@
                         notifyService.onError('Unable to save test', e);
                     }
                 );
-        };
-    };
+        }
+    }
 
     var modalTestStepController = function ($scope, $modalInstance, testStep, title) {
         $scope.testStep = testStep;

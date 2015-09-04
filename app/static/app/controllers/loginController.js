@@ -8,13 +8,14 @@
     loginController.$inject = ['userService', '$location'];
 
     function loginController(userService, $location){
+        /* jshint validthis: true */
         var vm = this;
         
         vm.login = _login;
 
-        vm.userName;
+        vm.userName = '';
 
-        vm.password;
+        vm.password = '';
 
         vm.failedLogin = false;
 
@@ -40,5 +41,5 @@
                     }
                 );
         }
-    };
+    }
 })();

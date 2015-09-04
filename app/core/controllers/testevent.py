@@ -2,7 +2,7 @@ from flask import make_response, request
 from flask.json import jsonify
 from flask.views import MethodView
 from app import db, register_controller
-from app.core.models import TestSuite, TestEvent
+from app.core.models import TestSuite, TestEvent, Project
 from datetime import datetime
 
 class TestEventController(MethodView):
@@ -49,6 +49,9 @@ class TestEventListController(MethodView):
             test_suite_id = request.args.get('testsuite')
 
             results = TestEvent.query.filter(TestEvent.test_suite == test_suite_id).all()
+        elif 'project' in request.args:
+            project_id = request.args.get('project')
+            results = db.session.query(TestEvent).join(TestSuite).join(Project).filter(Project.id == project_id).all()
         else:
             results = TestEvent.query.all()
 

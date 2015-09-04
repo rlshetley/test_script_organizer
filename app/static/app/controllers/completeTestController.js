@@ -8,11 +8,12 @@
     completeTestController.$inject = ['testResultService', 'testSessionService', '$routeParams'];
 
     function completeTestController(testResultService, testSessionService, $routeParams) {
+        /* jshint validthis: true */
         var vm = this;
         
         vm.testSessionId = $routeParams.testSessionId;
 
-        vm.testResults;
+        vm.testResults = [];
 
         _init();
         
@@ -34,5 +35,5 @@
                         }
                     );
         }
-    };
+    }
 })();

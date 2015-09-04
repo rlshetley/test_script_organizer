@@ -8,6 +8,7 @@
     userAdminController.$inject = ['userAdminService', 'roleManagementService', '$modal', 'notifyService'];
 
     function userAdminController(userAdminService, roleManagementService, $modal, notifyService){
+        /* jshint validthis: true */
         var vm = this;
 
         vm.add = _add;
@@ -41,7 +42,7 @@
                         vm.roles = data.roles;
                     }
                 );
-        };
+        }
 
         function _buildModalInstance(user, title, template){
             return $modal.open({
@@ -56,7 +57,7 @@
                     }
                 }
             });
-        };
+        }
         
         function _add(){
             var newUser = {
@@ -89,7 +90,7 @@
                         }
                     );
             });
-        };
+        }
         
         function _edit(value){
             var modalInstance = _buildModalInstance(value, "Edit User", 'app/views/EditUserModalDialog.html');
@@ -107,7 +108,7 @@
                         }
                     );
             });
-        };
+        }
         
         function _delete(id){
 
@@ -122,8 +123,8 @@
                         notifyService.onError("Unable to delete user", e);
                     }
                 );
-        };
-    };
+        }
+    }
 
     var modalUserController = function ($scope, $modalInstance, user, roles){
         $scope.user = user;

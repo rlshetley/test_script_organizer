@@ -8,6 +8,7 @@
     notifyService.$inject = ['$log'];
 
     function notifyService($log){
+        /* jshint validthis: true */
         var scope = this;
 
         scope.alerts = [];
@@ -16,13 +17,13 @@
             alerts: scope.alerts,
             $log: $log,
             onError: _onError,
-            onSuccess: function(msg) { _addAlert('success', msg); },
-            onWarning: function(msg) { _addAlert('warning', msg); }
+            onSuccess: function(msg) { _addAlert('alert-success', msg); },
+            onWarning: function(msg) { _addAlert('alert-warning', msg); }
         };
 
         function _onError(msg, error){
             $log.error(error);
-            _addAlert('danger', msg);
+            _addAlert('alert-danger', msg);
         }
 
         function _addAlert(type, msg) {

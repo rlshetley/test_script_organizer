@@ -9,6 +9,7 @@
 
     function projectController(projectService, testEventService, $modal, $location, notifyService){
         
+        /* jshint validthis: true */
         var vm = this;
 
         vm.add = _add;
@@ -35,7 +36,7 @@
                         notifyService.onError("Unable to load projects", e);
                     }
                 );
-        };
+        }
         
         function _saveProject(project){
             projectService.update(project).$promise
@@ -49,7 +50,7 @@
                         notifyService.onError("Unable to update project", e);
                     }
                 );
-        };
+        }
         
         function _add(){
 
@@ -81,7 +82,7 @@
                         }
                     );
             });
-        };
+        }
         
         function _remove(id) {
             projectService.remove({ id: id }).$promise
@@ -95,7 +96,7 @@
                         notifyService.onError("Unable to remove project", e);
                     }
                 );
-        };
+        }
         
         function _createTestEvent(projectId){
             var modalInstance = $modal.open({
@@ -121,8 +122,8 @@
                         }
                     );
             });
-        };
-    };
+        }
+    }
 
     var modalProjectController = function ($scope, $modalInstance, project, title) {
         $scope.project = project;

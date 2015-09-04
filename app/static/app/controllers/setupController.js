@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -8,11 +8,12 @@
     setupController.$inject = ['setupService'];
 
 	function setupController(setupService){
-	    var vm = this;
+	    /* jshint validthis: true */
+        var vm = this;
 		vm.install = _install;
 		
 		function _install(){
 			setupService.save();
 		}
-	};
+	}
 })();

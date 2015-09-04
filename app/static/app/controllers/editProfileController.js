@@ -8,9 +8,10 @@
     editProfileController.$inject = ['profileService', 'userService'];
 
     function editProfileController(profileService, userService){
+        /* jshint validthis: true */
         var vm = this;
 
-        vm.user;
+        vm.user = {};
 
         _init();
         
@@ -25,6 +26,6 @@
                     function(e){
                     }
                 );
-        };
+        }
     }
 })();

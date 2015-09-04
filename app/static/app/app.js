@@ -151,18 +151,8 @@ app.run(['$rootScope', 'userService', '$location', '$log', function ($rootScope,
     // can use it without having to inject it every time
     $rootScope.$log = $log;
 
-    $rootScope.onError = function(msg, error){
-        $scope.$log.error(error);
-    };
-
     $rootScope.$on("$routeChangeStart", function (event, next, current)
     {
-        // Need to check if install is already complete
-        //if ($location.path() != "/admin/setup" && !userService.isLogged)
-        //{
-        //    $location.path('/projects');
-        //}
-
         if (!userService.checkLogin()){
             $location.path('/login');
         }

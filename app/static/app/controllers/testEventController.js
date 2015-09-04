@@ -8,6 +8,7 @@
     testEventController.$inject = ['testEventService', 'testService', '$routeParams', '$location'];
 
     function testEventController(testEventService, testService, $routeParams, $location){
+        /* jshint validthis: true */
         var vm = this;
 
         vm.startTest = _startTest;
@@ -29,19 +30,19 @@
                         _loadTests();
                     }
                 );
-        };
+        }
         
         function _startTest(testId){
             $location.path('/createTestSession/' + testId + '/' + vm.testEventId);
-        };
+        }
         
         function _loadTests(){
             testService.query({ testsuite: vm.testEvent.testSuite }).$promise
                 .then(
                     function (data) {
-                        vm.tests = data.tests
+                        vm.tests = data.tests;
                     }
                 );
-        };
-    };
+        }
+    }
 })();

@@ -8,6 +8,7 @@
     testController.$inject = ['testService', '$modal', '$routeParams'];
 
     function testController(testService, $modal, $routeParams) {
+        /* jshint validthis: true */
         var vm = this;
 
         vm.add = _add;
@@ -26,21 +27,21 @@
             testService.query({ testsuite: vm.testSuiteId }).$promise
                 .then(
                     function (data) {
-                        vm.tests = data.tests
+                        vm.tests = data.tests;
                     }
                 );
         }
         
         function _add(){
             
-        };
+        }
         
         function _edit(id){
             
-        };
+        }
         
         function _remove(id) {
             testService.remove({ id: id });
-        };
-    };
+        }
+    }
 })();

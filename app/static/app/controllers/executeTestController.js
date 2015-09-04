@@ -9,15 +9,16 @@
 
     function executeTestController(testStepService, testResultService, $routeParams, $location) {
         
+        /* jshint validthis: true */
         var vm = this;
 
         vm.nextStep = _nextStep;
 
         vm.testSessionId = $routeParams.testSessionId;
 
-        vm.testSteps;
+        vm.testSteps = [];
 
-        vm.testStep;
+        vm.testStep = {};
 
         vm.testResult = {};
 
@@ -41,7 +42,7 @@
                         console.error(e);
                     }
                 );
-        };
+        }
         
         function _nextStep() {
             var nextStep = vm.testStep.stepNumber + 1;
@@ -74,6 +75,6 @@
                         console.error(e);
                     }
                 );
-        };
-    };
+        }
+    }
 })();

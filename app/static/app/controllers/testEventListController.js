@@ -8,11 +8,12 @@
     testEventListController.$inject = ['testEventService', '$routeParams'];
 
     function testEventListController(testEventService, $routeParams){
+        /* jshint validthis: true */
         var vm = this;
 
         vm.remove = _remove;
 
-        vm.testEvents;
+        vm.testEvents = [];
 
         vm.testSuiteId = $routeParams.testSuiteId;
 
@@ -25,10 +26,10 @@
                         vm.testEvents = data.test_events;
                     }
                 );
-        };
+        }
         
         function _remove(id){
             testEventService.remove({ id: id });
-        };
-    };
+        }
+    }
 })();

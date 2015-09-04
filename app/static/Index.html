@@ -74,6 +74,14 @@
                 </li>
             </ul>
         </div>
+        <div ng-repeat="alert in alerts">
+            <div class="alert {{alert.type}}" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{alert.msg}}
+            </div>
+        </div>
     </nav>
 
     <div class="container" ng-view></div>

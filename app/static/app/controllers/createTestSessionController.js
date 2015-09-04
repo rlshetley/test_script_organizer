@@ -23,6 +23,7 @@
         $location,
         notifyService) {
             
+        /* jshint validthis: true */
         var vm = this;
 
         vm.startTest = _startTest;
@@ -35,7 +36,7 @@
             vm.testEventId = $routeParams.testEventId;
         }
 
-        vm.test;
+        vm.test = {};
 
         vm.testSession = {};
 
@@ -85,6 +86,6 @@
                     }
                 );
         }
-    };
+    }
 
 })();

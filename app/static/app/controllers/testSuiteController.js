@@ -8,6 +8,7 @@
     testSuiteController.$inject = ['testSuiteService', 'testEventService', '$modal', '$location', '$routeParams'];
 
     function testSuiteController(testSuiteService, testEventService, $modal, $location, $routeParams) {
+        /* jshint validthis: true */
         var vm = this;
 
         vm.add = _add;
@@ -52,15 +53,15 @@
                         }
                     );
             });
-        };
+        }
 
         function _saveTestSuite(testSuite) {
             testSuiteService.update(testSuite);
-        };
+        }
 
         function _remove(id) {
             testSuiteService.remove({ id: id });
-        };
+        }
 
         function _createTestEvent(testSuiteId) {
             var modalInstance = $modal.open({
@@ -81,8 +82,8 @@
                         }
                     );
             });
-        };
-    };
+        }
+    }
 
     var modalTestSuiteController = function ($scope, $modalInstance, testSuite, title) {
         $scope.testSuite = testSuite;
