@@ -10,7 +10,7 @@
     function loginController(userService, $location){
         /* jshint validthis: true */
         var vm = this;
-        
+
         vm.login = _login;
 
         vm.userName = '';
@@ -26,12 +26,11 @@
                 $location.path('/projects');
             }
         }
-        
+
         function _login(){
             userService.login(vm.userName, vm.password)
                 .then(
                     function (data) {
-                        userService.userName = vm.userName;
                         $location.path('/projects');
                     }
                 )

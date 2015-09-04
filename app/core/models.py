@@ -134,3 +134,27 @@ class TestEventResult(Base):
             'test_event': self.test_event,
             'test_session': self.test_session
         }
+
+class Browser(db.Model):
+    __tablename__ = 'browsers'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(128),  nullable=False)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+class Server(db.Model):
+    __tablename__ = 'servers'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(128),  nullable=False)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }

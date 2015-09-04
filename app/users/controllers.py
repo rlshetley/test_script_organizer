@@ -2,7 +2,7 @@ from flask import make_response, request
 from flask.json import jsonify
 from flask.views import MethodView
 from app import db, register_controller
-from app.user_admin.models import User
+from app.users.models import User
 
 
 class UserController(MethodView):

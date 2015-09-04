@@ -3,6 +3,9 @@ from functools import wraps
 from app.roles.models import Role
 
 class Authorized_Roles(object):
+    """
+    A decorator to check if a user is authorized to use a method
+    """
     auth_role = ''
     def __init__(self, role):
         self.auth_role = role

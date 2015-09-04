@@ -1,5 +1,5 @@
 from app import db
-from sqlalchemy import Column, Integer, ForeignKey, String
+from sqlalchemy import Column, Integer, String
 
 
 class Role(db.Model):

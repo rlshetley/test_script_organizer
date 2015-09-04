@@ -29,7 +29,7 @@ db = SQLAlchemy(app)
 def before_request():
     """
     Converts request data to JSON
-    
+
     If a request is a POST, PUT, or PATCH, then this method
     will convert the data from binary to JSON and set the
     json_data property on the request
@@ -57,4 +57,10 @@ def register_controller(controller, endpoint, url, methods=['GET', 'PUT', 'DELET
 # Import all the controllers so that they can register
 from app.core.controllers import project, test, testevent, testeventresult, testresult, testsession, teststep, testsuite
 from app.roles.controllers import RoleController, RoleUsersController
-from app.user_admin.controllers import UserController, UserListController
+from app.users.controllers import UserController, UserListController
+
+@app.route('/api/token')
+@auth.login_required
+def get_auth_token():
+    token = g.user.generate_auth_token(600)
+    return jsonify({'token': token.decode('ascii'), 'duration': 600, 'user': g.user.serialize()})
