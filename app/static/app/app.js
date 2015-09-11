@@ -116,7 +116,7 @@ var app = angular.module('app', ['ui.bootstrap', 'ngResource', 'ngRoute', 'ui.so
             })
           .when('/logout',
             {
-                templateUrl: 'app/views/Logout.html',
+                templateUrl: 'app/views/logout.html',
                 controller: 'logoutController',
                 controllerAs: 'vm'
             })

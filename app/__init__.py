@@ -1,5 +1,5 @@
 # Import flask and template operators
-from flask import Flask, request
+from flask import Flask, request, g, jsonify
 import json
 import os
 import logging
@@ -37,6 +37,11 @@ def before_request():
     if request.method in ['POST', 'PUT', 'PATCH']:
         data = request.get_data(as_text=True)
         request.json_data = json.loads(data)
+        
+@app.after_request
+def add_header(response):
+    response.headers['WWW-Authenticate'] = 'xBasic: api'
+    return response
 
 
 def register_controller(controller, endpoint, url, methods=['GET', 'PUT', 'DELETE']):
@@ -59,7 +64,7 @@ from app.core.controllers import project, test, testevent, testeventresult, test
 from app.roles.controllers import RoleController, RoleUsersController
 from app.users.controllers import UserController, UserListController
 
-@app.route('/api/token')
+@app.route('/api/token/')
 @auth.login_required
 def get_auth_token():
     token = g.user.generate_auth_token(600)

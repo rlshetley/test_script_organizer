@@ -1,6 +1,6 @@
 from flask.ext.httpauth import HTTPBasicAuth
-
-from app import db, auth
+from flask import g
+from app import db, auth, app
 from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, Boolean
 
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
@@ -30,7 +30,7 @@ class User(db.Model):
         return
 
     def verify_password(self, password):
-        return sha256_crypt.verify(password, user.password)
+        return sha256_crypt.verify(password, self.password)
 
     def serialize(self):
         return {
@@ -93,7 +93,7 @@ def verify_password(username_or_token, password):
     if not user:
         user = User.query.filter(User.user_name == username_or_token).first()
 
-        if not user or not user.verify_password(password=):
+        if not user or not user.verify_password(password=password):
             return False
 
         verified = sha256_crypt.verify(password, user.password)

@@ -11,7 +11,7 @@
         /* jshint validthis: true */
         var scope = this;
 
-        scope.isLogged = true;
+        scope.isLogged = false;
         scope.userName = '';
         scope.userRoles = [];
         scope.user = {};
@@ -36,7 +36,7 @@
 
             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
 
-            $http.get("api/token/")
+            $http.get("/api/token/")
                 .success(function (data) {
                     $cookieStore.put('localtoken', data.token);
                     $http.defaults.headers.common['Authorization'] = 'Token ' + data.token; // jshint ignore:line
@@ -50,7 +50,7 @@
 
                     deferred.resolve();
                 })
-                .catch(function (data) {
+                .error(function(data) {
                     deferred.reject(data.error);
                 });
 
