@@ -120,6 +120,12 @@ var app = angular.module('app', ['ui.bootstrap', 'ngResource', 'ngRoute', 'ui.so
                 controller: 'logoutController',
                 controllerAs: 'vm'
             })
+          .when('/dashboard',
+            {
+                templateUrl: 'app/views/Dashboard.html',
+                controller: 'dashboardController',
+                controllerAs: 'vm'
+            })
           .otherwise({ redirectTo: '/login' });
   }]);
 

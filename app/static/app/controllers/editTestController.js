@@ -18,6 +18,8 @@
         vm.removeTestStep = _removeTestStep;
 
         vm.save = _save;
+        
+        vm.testSteps = [];
 
         vm.sortableOptions = {
             stop: function (e, ui) {
