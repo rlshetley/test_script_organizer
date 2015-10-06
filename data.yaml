@@ -50,7 +50,7 @@ projects:
       - name: testSuite3
     test_events:
       - name: event1
-        date: 3/14/2014
+        date: 3-14-2014
         test_suite: testSuite1
         test_sessions:
           - name: session1
