@@ -1,0 +1,102 @@
+users:
+  - username: admin
+    password: admin
+  - username: testerA
+    password: tester
+  - username: testerB
+    password: tester
+  - username: testerC
+    password: tester
+projects:
+  - name: project1
+    test_suites:
+      - name: testSuite1
+        tests:
+          - name: test1
+            test_steps:
+              - name: stepa
+                action: do something
+                expected_result: it loads
+                description: just testing
+                step_number: 1
+              - name: stepb
+                action: do something
+                expected_result: it loads
+                description: just testing
+                step_number: 2
+              - name: stepc
+                action: do something
+                expected_result: it loads
+                description: just testing
+                step_number: 3
+          - name: test2
+            test_steps:
+              - name: stepa
+                action: do something
+                expected_result: it loads
+                description: just testing
+                step_number: 1
+              - name: stepb
+                action: do something
+                expected_result: it loads
+                description: just testing
+                step_number: 2
+              - name: stepc
+                action: do something
+                expected_result: it loads
+                description: just testing
+                step_number: 3
+      - name: testSuite2
+      - name: testSuite3
+    test_events:
+      - name: event1
+        date: 3/14/2014
+        test_suite: testSuite1
+        test_sessions:
+          - name: session1
+            server: att.180
+            browser: chrome
+            tester: john
+            test: test1
+            start_date: 3/14/2014
+            finish_date: 3/14/2014
+            test_results:
+              - name: result
+                test_step: 1
+                actual_result: it happened
+                comments: it works
+                is_pass: True
+              - name: result
+                test_step: 2
+                actual_result: it happened
+                comments: it works
+                is_pass: True
+              - name: result
+                test_step: 3
+                actual_result: it happened
+                comments: it works
+                is_pass: True
+          - name: session2
+            server: att.180
+            browser: chrome
+            tester: john
+            test: test2
+            start_date: 3/14/2014
+            finish_date: 3/14/2014
+            test_results:
+              - name: result
+                test_step: 1
+                actual_result: it happened
+                comments: it works
+                is_pass: True
+              - name: result
+                test_step: 2
+                actual_result: it happened
+                comments: it works
+                is_pass: True
+              - name: result
+                test_step: 3
+                actual_result: it happened
+                comments: it works
+                is_pass: True
+  - name: project2
