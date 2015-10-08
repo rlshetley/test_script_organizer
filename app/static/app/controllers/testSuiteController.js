@@ -21,8 +21,10 @@
 
         vm.projectId = $routeParams.projectId;
 
+        vm.testSuites = [];
+
         _init();
-        
+
         function _init() {
             testSuiteService.query({ project: vm.projectId }).$promise
                 .then(function (data) {

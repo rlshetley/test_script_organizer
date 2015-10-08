@@ -4,7 +4,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         jshint: {
-            files: ['Gruntfile.js', 'app/**/*.js'],
+            files: ['app/**/*.js'],
             options: {
                 globals: {
                     jQuery: true
@@ -17,39 +17,32 @@ module.exports = function (grunt) {
                 // Point to the files that should be updated when
                 // you run `grunt wiredep`
                 src: [
-                  'app/views/**/*.html',   // .html support...
-                  'app/views/**/*.jade',   // .jade support...
-                  'app/styles/main.scss',  // .scss & .sass support...
-                  'app/config.yml'         // and .yml & .yaml support out of the box!
+                  'index.html'
                 ],
                 options: {
                 }
             }
         },
-        bowerInstall: {
-
-            target: {
-
-                // Point to the files that should be updated when
-                // you run `grunt bower-install`
-                src: [
-                  'index.html',   // .html support...
-                ],
-
-                // Optional:
-                // ---------
-                cwd: '',
-                dependencies: true,
-                devDependencies: false,
-                exclude: [],
-                fileTypes: {},
-                ignorePath: '',
-                overrides: {}
+        jasmine: {
+          tso: {
+            src: ['app/**/*.js', 'app/app.js'],
+            options: {
+              specs: 'spec/**/*spec.js',
+              helpers: 'spec/helpers/*.js',
+              vendor: [
+                'scripts/angular/angular.js',
+                'scripts/angular-route/angular-route.js',
+                'scripts/angular-resource/angular-resource.js',
+                'scripts/angular-cookies/angular-cookies.js',
+                'scripts/angular-xeditable/dist/js/xeditable.js',
+                'scripts/angular-mocks/angular-mocks.js',
+                'scripts/angular-bootstrap/ui-bootstrap.js',
+                'scripts/moment/moment.js'
+              ]
             }
+          }
         }
     });
-
-    grunt.loadNpmTasks('grunt-bower-install');
 
     // Load the bower js plugin
     grunt.loadNpmTasks('grunt-wiredep');
@@ -57,7 +50,9 @@ module.exports = function (grunt) {
     // Load the jshint plugin
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
+
     // Default task(s).
-    grunt.registerTask('default', ['jshint', 'wiredep']);
+    grunt.registerTask('default', ['jshint', 'wiredep', 'jasmine']);
 
 };

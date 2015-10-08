@@ -22,7 +22,7 @@
         $routeParams,
         $location,
         notifyService) {
-            
+
         /* jshint validthis: true */
         var vm = this;
 
@@ -55,14 +55,14 @@
                     }
                 );
         }
-        
+
         function _loadFirstTest(){
             $location.path('/executeTest/' + vm.testSession.id + '/' + vm.testId);
         }
-        
+
         function _startTest() {
             var now = moment();
-            
+
             vm.testSession.id = 0;
             vm.testSession.test = vm.testId;
             vm.testSession.startDate = now.toJSON();
@@ -73,9 +73,7 @@
                     function (value) {
                         vm.testSession = value;
 
-                        if (vm.testEvent){
-                            testEventResultsService.save({ testEvent: vm.testEventId, testSession: value.id });
-                        }
+                        testEventResultsService.save({ testEvent: vm.testEventId, testSession: value.id });
 
                         vm.loadFirstTest();
                     }

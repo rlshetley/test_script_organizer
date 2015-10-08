@@ -41,6 +41,11 @@
                     function (data){
                         vm.roles = data.roles;
                     }
+                )
+                .catch(
+                    function(e){
+                        notifyService.onError("Unable to load roles", e);
+                    }
                 );
         }
 
@@ -58,7 +63,7 @@
                 }
             });
         }
-        
+
         function _add(){
             var newUser = {
                 Id: 0,
@@ -91,7 +96,7 @@
                     );
             });
         }
-        
+
         function _edit(value){
             var modalInstance = _buildModalInstance(value, "Edit User", 'app/views/EditUserModalDialog.html');
 
@@ -109,7 +114,7 @@
                     );
             });
         }
-        
+
         function _delete(id){
 
             userAdminService.users.remove({ Id: id }).$promise
