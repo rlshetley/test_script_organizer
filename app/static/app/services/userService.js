@@ -5,24 +5,19 @@
         .module('app')
         .factory('userService', userService);
 
-    userService.$inject = ['$http', '$resource', '$rootScope', '$cookieStore', '$q', 'base64Service'];
+    userService.$inject = ['$http', '$rootScope', '$cookieStore', '$q', 'base64Service'];
 
-    function userService($http, $resource, $rootScope, $cookieStore, $q, base64Service){
+    function userService($http, $rootScope, $cookieStore, $q, base64Service){
         /* jshint validthis: true */
         var scope = this;
 
         scope.isLogged = false;
-        scope.userName = '';
-        scope.userRoles = [];
         scope.user = {};
-        scope.userId = 0;
 
         return{
-            isLogged: scope.isLogged,
-            username: scope.userName,
+            isLoggedIn: _isLoggedIn,
             name: '',
-            userId: scope.userId,
-            user: scope.user,
+            getUser: _getUser,
             login: _login,
             isInRole: _isInRole,
             checkLogin: _checkLogin,
@@ -77,9 +72,17 @@
             return false;
         }
 
+        function _getUser(){
+          return scope.user;
+        }
+
+        function _isLoggedIn(){
+          return scope.isLogged;
+        }
+
         function _checkLogin() {
             if ($cookieStore.get('localtoken')) {
-                this.isLogged = true;
+                scope.isLogged = true;
 
                 $http.defaults.headers.common['Authorization'] = 'Token ' + $cookieStore.get('localtoken'); // jshint ignore:line
 

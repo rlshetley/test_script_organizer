@@ -1,7 +1,30 @@
 function mockNotifyService(){
   return {
     onSuccess: jasmine.createSpy("onSuccess"),
-    onError: jasmine.createSpy("onError")
+    onError: jasmine.createSpy("onError"),
+    alerts: [{}, {}, {}]
+  };
+}
+
+function mockBase64Service(){
+  return {
+    encode: function(){return 'test';}
+  };
+}
+
+function mockUserService($q){
+  return{
+    logout: function(){},
+    name: 'test',
+    isLogged: true,
+    checkLogin: function(){ return false; },
+    login: function(){
+      var defer = $q.defer();
+
+      defer.resolve();
+
+      return defer.promise;
+    }
   };
 }
 

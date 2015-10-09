@@ -31,7 +31,6 @@
     <script src="app/services/userAdminService.js" type="text/javascript"></script>
     <script src="app/services/roleManagementService.js" type="text/javascript"></script>
     <script src="app/services/testSuiteService.js" type="text/javascript"></script>
-    <script src="app/services/setupService.js" type="text/javascript"></script>
     <script src="app/services/notifyService.js" type="text/javascript"></script>
     <script src="app/controllers/projectController.js" type="text/javascript"></script>
     <script src="app/controllers/testController.js" type="text/javascript"></script>
@@ -46,7 +45,6 @@
     <script src="app/controllers/menuController.js" type="text/javascript"></script>
     <script src="app/controllers/testSuiteController.js" type="text/javascript"></script>
     <script src="app/controllers/projectTestEventListController.js" type="text/javascript"></script>
-    <script src="app/controllers/setupController.js" type="text/javascript"></script>
     <script src="app/controllers/logoutController.js"></script>
     <script src="app/controllers/dashboardController.js"></script>
     <script src="app/directives/tsoclick.js" type="text/javascript"></script>
@@ -55,9 +53,9 @@
     <link href="scripts/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    
+
     <!-- header -->
-    <div id="top-nav" class="navbar navbar-default navbar-static-top"  ng-controller="menuController">
+    <div id="top-nav" class="navbar navbar-default navbar-static-top"  ng-controller="menuController as vm">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -69,10 +67,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-show="loggedIn" class="dropdown">
+                    <li ng-show="vm.loggedIn" class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                            <i class="glyphicon glyphicon-user"></i> 
-                            Admin 
+                            <i class="glyphicon glyphicon-user"></i>
+                            Admin
                             <span class="caret"></span>
                         </a>
                         <ul id="g-account-menu" class="dropdown-menu" role="menu">
@@ -87,10 +85,10 @@
                             </li>
                         </ul>
                     </li>
-                    <li ng-show="loggedIn"><a href="#/logout"><i class="glyphicon glyphicon-lock"></i>Logout</a></li>
+                    <li ng-show="vm.loggedIn"><a href="#/logout"><i class="glyphicon glyphicon-lock"></i>Logout</a></li>
                 </ul>
             </div>
-            <div ng-repeat="alert in alerts">
+            <div ng-repeat="alert in vm.alerts">
                 <div class="alert {{alert.type}}" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
