@@ -18,7 +18,6 @@
                 <tr>
                     <th>Name</th>
                     <th>Date</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -28,9 +27,6 @@
                     </td>
                     <td>
                         {{testEvent.date | date:'MM-dd-yyyy'}}
-                    </td>
-                    <td>
-                        <button ng-click="vm.delete(testEvent.id)">Delete</button>
                     </td>
                 </tr>
             </tbody>
