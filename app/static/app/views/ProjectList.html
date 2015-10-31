@@ -23,7 +23,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-hover">
                 <tr ng-repeat="project in vm.projects | filter:query | orderBy:orderProp | offset: currentPage*itemsPerPage | limitTo: itemsPerPage">
                     <td>
                         <span editable-text="project.name" e-name="name" e-form="rowform">
@@ -44,8 +44,8 @@
                             </button>
                         </form>
                         <div class="buttons" ng-show="!rowform.$visible">
-                            <button class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
-                            <button class="btn btn-danger" ng-click="vm.remove(project.id)">Del</button>
+                            <button class="btn btn-primary btn-sm" ng-click="rowform.$show()">Edit</button>
+                            <button class="btn btn-danger btn-sm" ng-click="vm.remove(project.id)">Del</button>
                         </div>
                     </td>
                 </tr>

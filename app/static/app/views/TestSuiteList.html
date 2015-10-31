@@ -33,21 +33,21 @@
                         <a href="#/testEvents/{{testSuite.id}}">Test Events</a>
                     </td>
                     <td>
-                        <button ng-click="vm.createTestEvent(testSuite.id)" class="btn btn-warning">Create Test Event</button>
+                        <button ng-click="vm.createTestEvent(testSuite.id)" class="btn btn-warning btn-sm">Create Test Event</button>
                     </td>
                     <td style="white-space: nowrap">
                         <!-- form -->
                         <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline" onaftersave="saveTestSuite(testSuite)">
-                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary btn-sm">
                                 Save
                             </button>
-                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default btn-sm">
                                 Cancel
                             </button>
                         </form>
                         <div class="buttons" ng-show="!rowform.$visible">
-                            <button class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
-                            <button class="btn btn-danger" ng-click="vm.delete(testSuite.id)">Del</button>
+                            <button class="btn btn-primary btn-sm" ng-click="rowform.$show()">Edit</button>
+                            <button class="btn btn-danger btn-sm" ng-click="vm.delete(testSuite.id)">Del</button>
                         </div>
                     </td>
                 </tr>
