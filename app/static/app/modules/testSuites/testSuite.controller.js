@@ -35,7 +35,7 @@
 
         function _add() {
             var modalInstance = $modal.open({
-                templateUrl: 'app/views/TestSuiteModalDialog.html',
+                templateUrl: 'app/modules/testSuites/testSuiteModal.tmpl.html',
                 controller: modalTestSuiteController,
                 resolve:{
                     testSuite: function (){
@@ -67,7 +67,7 @@
 
         function _createTestEvent(testSuiteId) {
             var modalInstance = $modal.open({
-                templateUrl: 'app/views/TestEventModalDialog.html',
+                templateUrl: 'app/modules/testSuites/testEventModal.tmpl.html',
                 controller: modalTestEventController,
                 resolve:{
                     testEvent: function () {

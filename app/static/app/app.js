@@ -1,123 +1,23 @@
-var app = angular.module('app', ['ui.bootstrap', 'ngResource', 'ngRoute', 'ui.sortable', 'ngCookies', 'xeditable']).
-  config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
+var app = angular.module('app', [
+    'ui.bootstrap', 
+    'ngResource', 
+    'ngRoute', 
+    'ui.sortable', 
+    'ngCookies', 
+    'xeditable',
+    'ProjectModule',
+    'TestEventModule',
+    'TestSessionModule',
+    'TestSuiteModule',
+    'UserModule',
+    'TestModule']).
+  config(['$routeProvider', function ($routeProvider) {
       $routeProvider
-          .when(
-            '/projects',
-            {
-                templateUrl: 'app/views/ProjectList.html',
-                controller: 'projectController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/tests/:testSuiteId',
-            {
-                templateUrl: 'app/views/TestList.html',
-                controller: 'testController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/edittest/:testId',
-            {
-                templateUrl: 'app/views/EditTest.html',
-                controller: 'editTestController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/addtest/:testId/:testSuiteId',
-            {
-                templateUrl: 'app/views/EditTest.html',
-                controller: 'editTestController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/createTestSession/:testId/:testEventId',
-            {
-                templateUrl: 'app/views/CreateTestSession.html',
-                controller: 'createTestSessionController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/executeTest/:testSessionId/:testId',
-            {
-                templateUrl: 'app/views/ExecuteTest.html',
-                controller: 'executeTestController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/completeTest/:testSessionId',
-            {
-                templateUrl: 'app/views/CompleteTest.html',
-                controller: 'completeTestController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/testEvent/:testEventId',
-            {
-                templateUrl: 'app/views/TestEvent.html',
-                controller: 'testEventController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/projectTestEvents/:projectId',
-            {
-                templateUrl: 'app/views/TestEventList.html',
-                controller: 'projectTestEventListController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/testEvents/:testSuiteid',
-            {
-                templateUrl: 'app/views/TestEventList.html',
-                controller: 'testEventListController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/testSuites/:projectId',
-            {
-                templateUrl: 'app/views/TestSuiteList.html',
-                controller: 'testSuiteController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/login',
-            {
-                templateUrl: 'app/views/Login.html',
-                controller: 'loginController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/admin/user',
-            {
-                templateUrl: 'app/views/UserAdmin.html',
-                controller: 'userAdminController',
-                controllerAs: 'vm',
-                role: 'Admin'
-            })
-          .when(
-            '/profile/user',
-            {
-                templateUrl: 'app/views/Profile.html',
-                controller: 'editProfileController',
-                controllerAs: 'vm'
-            })
-          .when(
-            '/admin/setup',
-            {
-                templateUrl: 'app/views/Setup.html',
-                controller: 'setupController',
-                controllerAs: 'vm'
-            })
           .when(
             '/error/unauthorized',
             {
                 templateUrl: 'app/views/Unauthorized.html',
                 controller: 'errorController',
-                controllerAs: 'vm'
-            })
-          .when('/logout',
-            {
-                templateUrl: 'app/views/logout.html',
-                controller: 'logoutController',
                 controllerAs: 'vm'
             })
           .when('/dashboard',

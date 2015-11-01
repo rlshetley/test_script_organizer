@@ -78,7 +78,7 @@
                 groups: []
             };
 
-            var modalInstance = _buildModalInstance(newUser, "Add a User", 'app/views/AddUserModalDialog.html');
+            var modalInstance = _buildModalInstance(newUser, "Add a User", 'app/modules/users/addUserModal.tmpl.html');
 
             modalInstance.result.then(function (user){
                 userAdminService.users.save(user).$promise
@@ -98,7 +98,7 @@
         }
 
         function _edit(value){
-            var modalInstance = _buildModalInstance(value, "Edit User", 'app/views/EditUserModalDialog.html');
+            var modalInstance = _buildModalInstance(value, "Edit User", 'app/modules/users/editUserModal.tmpl.html');
 
             modalInstance.result.then(function (user){
                 userAdminService.users.update(user).$promise

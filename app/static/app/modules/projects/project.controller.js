@@ -53,7 +53,7 @@
         function _add(){
 
             var modalInstance = $modal.open({
-                templateUrl: 'app/views/ProjectModalDialog.html',
+                templateUrl: 'app/modules/projects/projectModal.tmpl.html',
                 controller: modalProjectController,
                 resolve:{
                     project: function () {
