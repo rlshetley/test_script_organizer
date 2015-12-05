@@ -18,6 +18,8 @@ function mockUserService($q){
     name: 'test',
     isLogged: true,
     checkLogin: function(){ return false; },
+    getUser: function(){ return { name: 'test' }; },
+    isLoggedIn: function() { return true; },
     login: function(){
       var defer = $q.defer();
 

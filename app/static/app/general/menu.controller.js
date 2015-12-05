@@ -8,6 +8,7 @@
     menuController.$inject = ['$scope', 'userService', 'notifyService', '$location'];
 
     function menuController($scope, userService, notifyService, $location){
+        /* jshint validthis: true */
         var vm = this;
 
         vm.name = userService.getUser().name;

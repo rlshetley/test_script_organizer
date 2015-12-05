@@ -4,7 +4,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         jshint: {
-            files: ['app/**/*.js'],
+            files: ['app/**/*.js', 'app/modules/**/*.js'],
             options: {
                 globals: {
                     jQuery: true
@@ -25,7 +25,7 @@ module.exports = function (grunt) {
         },
         jasmine: {
           tso: {
-            src: ['app/**/*.js', 'app/app.js'],
+            src: ['app/**/*.js', 'app/app.js', 'app/modules/**/*.js'],
             options: {
               specs: 'spec/**/*spec.js',
               helpers: 'spec/helpers/*.js',
@@ -41,18 +41,26 @@ module.exports = function (grunt) {
               ]
             }
           }
+        },
+        injector: {
+            options: {},
+            local_dependencies: {
+                files: {
+                    'index.html': ['app/**/*.js', 'app/modules/**/*.js', '**/*.css'],
+                }
+            }
         }
     });
-
-    // Load the bower js plugin
+    
     grunt.loadNpmTasks('grunt-wiredep');
-
-    // Load the jshint plugin
+    
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    
+    grunt.loadNpmTasks('grunt-injector');
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint', 'wiredep', 'jasmine']);
+    grunt.registerTask('default', ['jshint', 'wiredep', 'jasmine', 'injector']);
 
 };
