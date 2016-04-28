@@ -4,3 +4,5 @@
 app.db
 /app/static/scripts
 /app/static/node_modules
+/client/node_modules
+/client/dist
