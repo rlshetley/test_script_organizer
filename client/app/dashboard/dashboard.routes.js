@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('testScriptOrganizer.projects')
+        .module('testScriptOrganizer.dashboard')
         .config(configureRoutes);
 
     configureRoutes.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -10,10 +10,10 @@
     function configureRoutes($stateProvider, $urlRouterProvider) {
 
         $stateProvider
-            .state('Projects', {
-                url: '/projects',
-                templateUrl: 'app/projects/projects.html',
-                controller: 'projectsController',
+            .state('MainDashboard', {
+                url: '/main_dashboard',
+                templateUrl: 'app/dashboard/mainDashboard.html',
+                controller: 'mainDashboardController',
                 controllerAs: 'vm'
             });
     }

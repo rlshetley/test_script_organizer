@@ -7,13 +7,12 @@ module.exports = function(config) {
         files: [
             'dist/index.js',
             'node_modules/angular-mocks/angular-mocks.js',
-            'spec/helpers/*.js',
-            'js/app/app.js',
-            'js/app/**/*.module.js',
-            'js/app/**/*.js',
-            'js/app/**/**/*.js',
-            'js/test/**/**spec.js',
-            'js/app/**/*.html'
+            'app/app.js',
+            'app/**/*.module.js',
+            'app/**/*.js',
+            'app/**/**/*.js',
+            'spec/**/**.spec.js',
+            'app/**/*.html'
         ],
 
 
@@ -21,8 +20,8 @@ module.exports = function(config) {
         exclude: [],
 
         preprocessors: {
-            'js/app/**/!(*routes|*module).js': ['coverage'],
-            'js/app/**/*.html': 'ng-html2js'
+            'app/**/!(*routes|*module).js': ['coverage'],
+            'app/**/*.html': 'ng-html2js'
         },
 
         coverageReporter: {
@@ -43,7 +42,7 @@ module.exports = function(config) {
 
         autoWatch: false,
 
-        browsers: ['PhantomJS'],
+        browsers: ['PhantomJS2'],
 
         singleRun: false
     });

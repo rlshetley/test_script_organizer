@@ -2,13 +2,12 @@
     'use strict';
 
     angular
-        .module('app')
+        .module('testScriptOrganizer')
         .config(configureApp);
 
-    configureApp.$inject = ['editableOptions', '$resourceProvider'];
+    configureApp.$inject = ['$resourceProvider'];
 
-    function configureApp(editableOptions, $resourceProvider) {
-        editableOptions.theme = 'bs3';
+    function configureApp($resourceProvider) {
         $resourceProvider.defaults.stripTrailingSlashes = false;
     }
 })();

@@ -15,7 +15,6 @@ module.exports = function (gulp, plugins, config) {
 
         return gulp.src(config.indexHtmlTemplate)
             .pipe(plugins.inject(gulp.src(config.indexjsOutput, { read: false }), { starttag: '<!-- inject:indexjs -->' }))
-            .pipe(plugins.inject(gulp.src(config.tinyMceFiles, { read: false }), { starttag: '<!-- inject:tinymce -->' }))
             .pipe(plugins.inject(gulp.src(config.applicationMinifiedFile, { read: false }, { starttag: '<!-- inject:js -->' })))
             .pipe(plugins.inject(gulp.src(config.cssOutput, { read: false })))
             .pipe(plugins.inject(gulp.src(config.templateCache.file, { read: false }), { starttag: '<!-- inject:templates -->' }))

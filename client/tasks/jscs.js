@@ -5,7 +5,7 @@
 module.exports = function (gulp, plugins, config) {
     return function () {
         return gulp.src(config.sourceFiles)
-            .pipe(plugins.jscs())
+            .pipe(plugins.jscs({fix: true}))
             .pipe(plugins.jscs.reporter());
     };
 };

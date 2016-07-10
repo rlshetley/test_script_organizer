@@ -15,13 +15,13 @@ module.exports = function () {
     var config = {
         indexjs: ['./index.js'],
         indexjsOutput: [buildResultsDirectory + '/index.js'],
-        indexHtmlTemplate: 'index.tmpl.html',
+        indexHtmlTemplate: 'index.html.tmpl',
         indexHtmlOutput: 'index.html',
         lessSrc: './less/*.less',
         templateCache: {
             file: 'dist/templates.js',
             options: {
-                module: 'rewards',
+                module: 'testScriptOrganizer',
                 root: 'app/',
                 standAlone: false
             }
@@ -46,11 +46,7 @@ module.exports = function () {
         cssOutput: cssDirectory + '/*.css',
         buildResultsDirectory: buildResultsDirectory,
         cssFiles: [
-            'css/*.css',
-            'node_modules/angucomplete-alt/angucomplete-alt.css',
-            'node_modules/angular-block-ui/dist/angular-block-ui.css',
-            'node_modules/angular-ui-select/select.css',
-            'node_modules/spinkit/css/spinkit.css'
+            'css/*.css'
         ],
         fonts: {
             bootstrapFonts: 'node_modules/bootstrap/fonts/**.*',

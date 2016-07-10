@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app')
+        .module('testScriptOrganizer')
         .constant('$appConfig', {
             APP_NAME: 'TEST SCRIPT ORGANIZER',
             APP_VERSION: '1.0.0',
