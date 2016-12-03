@@ -1,0 +1,36 @@
+﻿<form name="=" createTestSessionFrm">
+    <div class="control-group">
+        <label class="control-label" for="testNameText">Test Name</label>
+        <div class="controls">
+            <input name="testNameText" class="input-xlarge" id="testNameText" type="text" ng-model="vm.test.name">
+        </div>
+    </div>
+    <!-- Text input-->
+    <div class="control-group">
+        <label class="control-label" for="textBrowser">Browser</label>
+        <div class="controls">
+            <input name="textBrowser" class="input-xlarge" id="textBrowser" type="text" placeholder="Enter the Browser Name" ng-model="vm.testSession.browser">
+        </div>
+    </div>
+    <!-- Text input-->
+    <div class="control-group">
+        <label class="control-label" for="textServer">Server</label>
+        <div class="controls">
+            <input name="textServer" class="input-xlarge" id="textServer" type="text" placeholder="Enter the Server Name" ng-model="vm.testSession.server">
+        </div>
+    </div>
+    <!-- Text input-->
+    <div class="control-group">
+        <label class="control-label" for="textTester">Tester</label>
+        <div class="controls">
+            <input name="textTester" class="input-xlarge" id="textTester" type="text" placeholder="Enter Your Name" ng-model="vm.testSession.tester">
+        </div>
+    </div>
+    <!-- Button -->
+    <div class="control-group">
+        <label class="control-label" for="buttonStart"></label>
+        <div class="controls">
+            <button name="buttonStart" class="btn btn-primary" id="buttonStart" ng-click="vm.startTest()">Start</button>
+        </div>
+    </div>
+</form>

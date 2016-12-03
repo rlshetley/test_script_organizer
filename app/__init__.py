@@ -1,5 +1,5 @@
 # Import flask and template operators
-from flask import Flask, request, g, jsonify, send_from_directory
+from flask import Flask, request, g, jsonify, send_from_directory, make_response
 import json
 import os
 import logging
@@ -69,3 +69,8 @@ from app.users.controllers import UserController, UserListController
 def get_auth_token():
     token = g.user.generate_auth_token(600)
     return jsonify({'token': token.decode('ascii'), 'duration': 600, 'user': g.user.serialize()})
+
+@app.route('/') 
+def basic_pages(**kwargs): 
+    return make_response(open('app/static/index.html').read()) 
+

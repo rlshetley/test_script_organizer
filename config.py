@@ -5,7 +5,7 @@ class Config(object):
 
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-    SQLALCHEMY_DATABASE_URI = 'postgresql://tso:password1@192.168.1.112/tso'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://tso:password1@192.168.1.106/tso'
     DATABASE_CONNECT_OPTIONS = {}
 
     THREADS_PER_PAGE = 2

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html ng-app="app" xmlns="http://www.w3.org/1999/xhtml">
+<html ng-app="testScriptOrganizer" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Test Script Organizer</title>
-    <!-- bower:css -->
-    <link rel="stylesheet" href="scripts/angular-xeditable/dist/css/xeditable.css" />
-    <link rel="stylesheet" href="scripts/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/static/dist/css/main.css">
+    <!-- endinject -->
 
 </head>
 <body>
@@ -44,74 +43,80 @@
                     <li ng-show="vm.loggedIn"><a href="#/logout"><i class="glyphicon glyphicon-lock"></i>Logout</a></li>
                 </ul>
             </div>
-            <div ng-repeat="alert in vm.alerts">
-                <div class="alert {{alert.type}}" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{alert.msg}}
-                </div>
-            </div>
         </div>
         <!-- /container -->
     </div>
 
-    <div ng-view></div>
-    
-    <!-- bower:js -->
-    <script src="scripts/jquery/jquery.js"></script>
-    <script src="scripts/angular/angular.js"></script>
-    <script src="scripts/angular-xeditable/dist/js/xeditable.js"></script>
-    <script src="scripts/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="scripts/angular-route/angular-route.js"></script>
-    <script src="scripts/angular-cookies/angular-cookies.js"></script>
-    <script src="scripts/angular-resource/angular-resource.js"></script>
-    <script src="scripts/moment/moment.js"></script>
-    <script src="scripts/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="scripts/jquery-ui/jquery-ui.js"></script>
-    <!-- endbower -->
-    
-    <!-- injector:js -->
-    <script src="/app/app.js"></script>
-    <script src="/app/directives/tsoclick.js"></script>
-    <script src="/app/directives/uiSortable.js"></script>
-    <script src="/app/general/dashboard.controller.js"></script>
-    <script src="/app/general/error.controller.js"></script>
-    <script src="/app/general/menu.controller.js"></script>
-    <script src="/app/modules/projects/project.controller.js"></script>
-    <script src="/app/modules/projects/project.module.js"></script>
-    <script src="/app/modules/testEvents/projectTestEventList.controller.js"></script>
-    <script src="/app/modules/testEvents/testEvent.controller.js"></script>
-    <script src="/app/modules/testEvents/testEvent.module.js"></script>
-    <script src="/app/modules/testEvents/testEventList.controller.js"></script>
-    <script src="/app/modules/testSessions/createTestSession.controller.js"></script>
-    <script src="/app/modules/testSessions/testSession.module.js"></script>
-    <script src="/app/modules/testSuites/testSuite.controller.js"></script>
-    <script src="/app/modules/testSuites/testSuite.module.js"></script>
-    <script src="/app/modules/tests/completeTest.controller.js"></script>
-    <script src="/app/modules/tests/editTest.controller.js"></script>
-    <script src="/app/modules/tests/executeTest.controller.js"></script>
-    <script src="/app/modules/tests/test.controller.js"></script>
-    <script src="/app/modules/tests/test.module.js"></script>
-    <script src="/app/modules/users/editProfile.controller.js"></script>
-    <script src="/app/modules/users/login.controller.js"></script>
-    <script src="/app/modules/users/logout.controller.js"></script>
-    <script src="/app/modules/users/user.module.js"></script>
-    <script src="/app/modules/users/userAdmin.controller.js"></script>
-    <script src="/app/services/base64Service.js"></script>
-    <script src="/app/services/notifyService.js"></script>
-    <script src="/app/services/profileService.js"></script>
-    <script src="/app/services/projectService.js"></script>
-    <script src="/app/services/roleManagementService.js"></script>
-    <script src="/app/services/testEventResultsService.js"></script>
-    <script src="/app/services/testEventService.js"></script>
-    <script src="/app/services/testResultService.js"></script>
-    <script src="/app/services/testService.js"></script>
-    <script src="/app/services/testSessionService.js"></script>
-    <script src="/app/services/testStepService.js"></script>
-    <script src="/app/services/testSuiteService.js"></script>
-    <script src="/app/services/userAdminService.js"></script>
-    <script src="/app/services/userService.js"></script>
-    <!-- endinjector -->
+    <div class="row" ng-controller="sideMenuController as vm">
+      <div class="col-sm-3 col-md-2 sidebar" ng-show="vm.loggedIn">
+        <ul class="nav nav-sidebar">
+          <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+          <li><a href="#">Reports</a></li>
+          <li><a href="#">Analytics</a></li>
+          <li><a href="#">Export</a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li><a href="">Nav item</a></li>
+          <li><a href="">Nav item again</a></li>
+          <li><a href="">One more nav</a></li>
+          <li><a href="">Another nav item</a></li>
+          <li><a href="">More navigation</a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li><a href="">Nav item again</a></li>
+          <li><a href="">One more nav</a></li>
+          <li><a href="">Another nav item</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ui-view></div>
+    <!-- inject:indexjs -->
+    <script src="/static/dist/index.js"></script>
+    <!-- endinject -->
+    <!-- inject:mocks -->
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="/static/app/app.js"></script>
+    <script src="/static/app/admin/admin.module.js"></script>
+    <script src="/static/app/dashboard/dashboard.module.js"></script>
+    <script src="/static/app/projects/projects.module.js"></script>
+    <script src="/static/app/security/security.module.js"></script>
+    <script src="/static/app/testEventManagement/testEventManagement.module.js"></script>
+    <script src="/static/app/testManagement/testManagement.module.js"></script>
+    <script src="/static/app/utility/utility.module.js"></script>
+    <script src="/static/app/app.config.js"></script>
+    <script src="/static/app/app.constants.js"></script>
+    <script src="/static/app/app.routes.js"></script>
+    <script src="/static/app/menu.controller.js"></script>
+    <script src="/static/app/sideMenu.controller.js"></script>
+    <script src="/static/app/dashboard/dashboard.routes.js"></script>
+    <script src="/static/app/dashboard/mainDashboard.controller.js"></script>
+    <script src="/static/app/projects/editProject.controller.js"></script>
+    <script src="/static/app/projects/project.routes.js"></script>
+    <script src="/static/app/projects/project.service.js"></script>
+    <script src="/static/app/projects/testSuitesList.controller.js"></script>
+    <script src="/static/app/security/login.controller.js"></script>
+    <script src="/static/app/security/security.routes.js"></script>
+    <script src="/static/app/testEventManagement/createTestSession.controller.js"></script>
+    <script src="/static/app/testEventManagement/testEventManagement.routes.js"></script>
+    <script src="/static/app/testEventManagement/testEventManagement.service.js"></script>
+    <script src="/static/app/testEventManagement/testEventManager.controller.js"></script>
+    <script src="/static/app/testEventManagement/testEventsList.controller.js"></script>
+    <script src="/static/app/testEventManagement/testSessionDetailsController.js"></script>
+    <script src="/static/app/testManagement/editTest.controller.js"></script>
+    <script src="/static/app/testManagement/test.service.js"></script>
+    <script src="/static/app/testManagement/testList.controller.js"></script>
+    <script src="/static/app/testManagement/testManagement.routes.js"></script>
+    <script src="/static/app/utility/base64.service.js"></script>
+    <script src="/static/app/utility/notify.service.js"></script>
+    <script src="/static/app/utility/user.service.js"></script>
+    <script src="/static/app/projects/projectsList/projectsList.controller.js"></script>
+    <script src="/static/app/projects/projectsList/projectsList.directive.js"></script>
+    <script src="/static/app/testEventManagement/activeTestSessions/activeTestSessions.controller.js"></script>
+    <script src="/static/app/testEventManagement/activeTestSessions/activeTestSessions.directive.js"></script>
+    <!-- endinject -->
+    <!-- inject:templates -->
+    <script src="/static/dist/templates.js"></script>
+    <!-- endinject -->
 </body>
 </html>

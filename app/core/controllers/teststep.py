@@ -61,7 +61,7 @@ class TestStepListController(MethodView):
         else:
             results = TestStep.query.all()
 
-        resp = jsonify(test_steps=[i.serialize() for i in results])
+        resp = jsonify(testSteps=[i.serialize() for i in results])
         resp.status_code = 200
         return resp
 

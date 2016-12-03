@@ -4,8 +4,10 @@
 app.db
 /app/static/scripts
 /app/static/node_modules
-/client/node_modules
-/client/dist
-/client/coverage
+/app/static/index.html
+/app/static/coverage
 *.log
 /runenv
+/.vs
+/.vscode
+/env

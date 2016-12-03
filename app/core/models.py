@@ -1,5 +1,6 @@
 from app import db
 from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, Boolean
+from sqlalchemy.orm import relationship
 
 class Base(db.Model):
     __abstract__ = True
@@ -9,11 +10,15 @@ class Base(db.Model):
 class Project(Base):
     __tablename__ = 'projects'
     name = Column(String(225),  nullable=False)
+    test_suites= relationship("TestSuite", back_populates="projectInstance")
+    
 
     def serialize(self):
+        test_suites = [i.serialize() for i in self.test_suites]
         return {
             'id': self.id,
-            'name': self.name
+            'name': self.name,
+            'testSuitesCount': len(test_suites)
         }
 
 
@@ -21,6 +26,7 @@ class TestSuite(Base):
     __tablename__ = 'test-suites'
     name = Column(String(225),  nullable=False)
     project = Column(Integer, ForeignKey('projects.id'))
+    projectInstance = relationship("Project", back_populates="test_suites")
 
     def serialize(self):
         return {

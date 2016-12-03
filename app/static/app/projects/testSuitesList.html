@@ -1,0 +1,39 @@
+﻿<table st-table="vm.displayTestSuites" st-safe-src="vm.testSuites" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Test Events</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="testSuite in vm.displayTestSuites">
+            <td>
+                <a href="#/tests/{{testSuite.id}}">
+                    {{testSuite.name}}
+                </a>
+            </td>
+            <td>Events</td>
+            <td>
+                <button type="button" ng-click="vm.editTestSuite(testSuite)" class="btn btn-sm btn-warning">
+                    <i class="glyphicon glyphicon-pencil">
+                    </i>
+                </button>
+                <button type="button" ng-click="vm.removeTestSuite(testSuite)" class="btn btn-sm btn-danger">
+                    <i class="glyphicon glyphicon-remove-circle">
+                    </i>
+                </button>
+                <button type="button" ng-click="vm.startTestEvent(testSuite)" class="btn btn-sm btn-info">
+                    <i class="glyphicon glyphicon-play-circle">
+                    </i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<button type="button" ng-click="vm.createTestSuite()" class="btn btn-primary">
+    <i class="glyphicon glyphicon-plus">
+    </i>
+    Create Test Suite
+</button>
