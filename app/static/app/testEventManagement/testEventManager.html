@@ -1,0 +1,11 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Test Event</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row-fluid" ng-repeat="test in vm.tests">
+            <div class="col-md-8">{{test.name}}</div>
+            <div class="col-md-4"><button ng-click="vm.startTest(test.id)">Start Test</button></div>
+        </div>
+    </div>
+</div>

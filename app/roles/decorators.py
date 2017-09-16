@@ -17,7 +17,7 @@ class Authorized_Roles(object):
                 "Return HTTP code for login"
                 return
 
-            if Not any(x for x in user.roles if x.name == auth_role):
+            if not any(x for x in user.roles if x.name == auth_role):
                 'Not authorized'
                 return
 

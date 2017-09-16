@@ -3,7 +3,7 @@ from flask import make_response, request
 from flask.views import MethodView
 from flask.json import jsonify
 from app import db, register_controller
-from app.core.models import Project
+from app.core.models import Project, TestSuite, TestEvent
 import json
 
 
